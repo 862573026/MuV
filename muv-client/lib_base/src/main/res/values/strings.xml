@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">lib_base</string>
+
+    <string name="toast_message_text">Toast message</string>
+
+    <string name="search_text">搜索</string>
+
+</resources>

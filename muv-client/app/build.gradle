@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    defaultConfig {
+        applicationId "com.newx.muv"
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(APP_VERSION_CODE)
+        versionName APP_VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+
+        renderscriptTargetApi Integer.parseInt(COMPILE_SDK_VERSION)
+        renderscriptSupportModeEnabled true    // Enable RS support
+
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+// ============================================================
+// ==================== 平时编译的时候注释  ====================
+//apply plugin: 'replugin-plugin-gradle'
+//repluginPluginConfig {
+//    pluginName = "plugin_muv"
+//    hostApplicationId = "com.newx.muv.host"
+//    hostAppLauncherActivity = "com.newx.muv.host.HostActivity"
+//}
+// ============================================================
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.support.multidex
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    //    implementation rootProject.ext.dependencies.jiaozivideoplayer
+    //    implementation rootProject.ext.dependencies.GSYVideoPlayer
+    annotationProcessor project(':lib-compiler')
+    implementation project(':lib-annotation')
+    implementation project(':lib_test')
+    implementation project(':lib_service')
+    implementation project(':lib_media')
+    implementation project(':lib_armv64')
+    implementation project(':lib_armv5')
+    implementation project(':lib_armv7a')
+    implementation project(':lib_x86')
+    implementation project(':lib_x86_64')
+    api rootProject.ext.dependencies.dagger
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+//    implementation project(':lib_so') //暂时不要jni处理加密，编译调试比较卡
+    implementation files('lib/netty-all-4.1.25.Final.jar')
+
+//    api project(':lib-replugin-plugin')
+    api(rootProject.ext.dependencies["replugin-plugin-lib"])
+}

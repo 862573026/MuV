@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+dependencies {
+    implementation rootProject.ext.dependencies.javapoet
+
+    implementation rootProject.ext.dependencies["auto-service"]
+    implementation rootProject.ext.dependencies["commons-lang3"]
+    implementation rootProject.ext.dependencies["commons-collections"]
+
+    implementation project(':lib-annotation')
+}
+

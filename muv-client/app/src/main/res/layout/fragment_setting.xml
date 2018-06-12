@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="settingVM"
+            type="com.newx.muv.vm.SettingVM"></variable>
+    </data>
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/label_network"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/network_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_switch_server"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/standard_column_height"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:text="@string/switch_server_text"
+                android:background="@drawable/item_background_underline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{()->settingVM.switchServer()}"
+                app:layout_constraintTop_toBottomOf="@+id/label_network" />
+
+            <TextView
+                android:id="@+id/tv_scan_local_video"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/standard_column_height"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:text="@string/scan_local_video_text"
+                android:background="@drawable/item_background_underline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{()->settingVM.scanLocalVideo()}"
+                app:layout_constraintTop_toBottomOf="@+id/tv_switch_server" />
+
+        </android.support.constraint.ConstraintLayout>
+    <!--</ScrollView>-->
+
+</layout>

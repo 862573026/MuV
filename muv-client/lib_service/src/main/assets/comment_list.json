@@ -1,0 +1,151 @@
+{
+  "hotComment": "热门评论",
+  "hotComments": [
+    {
+      "comment": "赞赞赞",
+      "commentId": "819aa5fc-3252-4899-bbac-3a184d1822cf",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "115",
+      "repliesNum": "15",
+      "likeNum": "2236",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "398db706-0c96-4dc7-91f9-6f8d10ab731a",
+      "uName": "西门让"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "1831a149-a0d0-4e1b-ba97-fae773e39a9a",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "182",
+      "repliesNum": "52",
+      "likeNum": "15540",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "c7d487ad-da19-4f0a-bde3-18a71ecc10ec",
+      "uName": "魏虞瑟"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "7f861d39-1bcc-429d-9b89-ed3b6f7c277b",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "106",
+      "repliesNum": "61",
+      "likeNum": "5852",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "b043c5c0-408d-4983-8083-581e5307148e",
+      "uName": "令狐代舶"
+    }
+  ],
+  "newestComment": "最新评论",
+  "newestComments": [
+    {
+      "comment": "赞赞赞",
+      "commentId": "819aa5fc-3252-4899-bbac-3a184d1822cf",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "115",
+      "repliesNum": "15",
+      "likeNum": "2236",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "398db706-0c96-4dc7-91f9-6f8d10ab731a",
+      "uName": "西门让"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "1831a149-a0d0-4e1b-ba97-fae773e39a9a",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "182",
+      "repliesNum": "52",
+      "likeNum": "15540",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "c7d487ad-da19-4f0a-bde3-18a71ecc10ec",
+      "uName": "魏虞瑟"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "39dca712-e0d4-4df6-8a9c-beb076d55839",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "46",
+      "repliesNum": "63",
+      "likeNum": "13738",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "9bf83593-c616-4457-b024-d3c6acf6602c",
+      "uName": "宇文潜"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "d2e3920c-7fa7-49b4-a4f0-8aec0e604748",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "159",
+      "repliesNum": "93",
+      "likeNum": "6976",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "217674c7-9780-44a6-b4b1-2057b3a38970",
+      "uName": "萧涅蚕"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "c5f4e188-09cc-4e9d-bcc2-6d3e04692e05",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "94",
+      "repliesNum": "24",
+      "likeNum": "2054",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "f63592c3-f695-444a-befb-debe7fb1ef50",
+      "uName": "萧游"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "23655cb8-d083-48b2-a558-0fea0b2341d8",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "47",
+      "repliesNum": "24",
+      "likeNum": "4908",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "e11d11a9-9c05-4561-8742-b1af3338665f",
+      "uName": "任减碱"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "7f861d39-1bcc-429d-9b89-ed3b6f7c277b",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "106",
+      "repliesNum": "61",
+      "likeNum": "5852",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "b043c5c0-408d-4983-8083-581e5307148e",
+      "uName": "令狐代舶"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "5de7ffa7-d93f-443c-9037-09c4eb2afef7",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "87",
+      "repliesNum": "77",
+      "likeNum": "17641",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "0648e96e-ac09-4a82-9fb3-28aca649534c",
+      "uName": "傅蔼"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "aaa0340c-9f5f-4e2e-8f0f-eb370d059127",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "128",
+      "repliesNum": "67",
+      "likeNum": "577",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "953d9ef7-20ae-4c72-8029-f6e49167beb2",
+      "uName": "宇文看"
+    },
+    {
+      "comment": "赞赞赞",
+      "commentId": "63789a02-87ce-4f65-a31b-086ac5c58324",
+      "commentTime": "02-04 10:12",
+      "dislikeNum": "125",
+      "repliesNum": "32",
+      "likeNum": "10829",
+      "uIcon": "https://timgsa.baidu.com/timg?image0026quality003d800026size003db9999_100000026sec003d15234443298820026di003d2c53139c8931bc3e9d2b116040eefafc0026imgtype003d00026src003dhttp%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201404%2F04%2F20140404124416_yEBzN.png",
+      "uId": "5a1f7bea-3eb9-4098-ae47-c20edaf4a196",
+      "uName": "左丘卸"
+    }
+  ]
+}

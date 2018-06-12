@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:muv="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="uploadVM"
+            type="com.newx.muv.vm.UploadVM" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="com.newx.muv.helper.recyclerview.LineManagers"></import>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_block_height"
+            android:background="@color/Gray_78"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tv_recording"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/recording_text" />
+
+            <TextView
+                android:id="@+id/tv_start_live"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/start_live_text" />
+
+        </LinearLayout>
+
+        <com.newx.base.ui.refreshlayout.SmartRefreshLayout
+            android:id="@+id/layout_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            muv:onLoadMoreCommand="@{uploadVM.onLoadMoreCommand}"
+            muv:srlEnableAutoLoadMore="true"
+            muv:srlEnablePureScrollMode="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_local_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                muv:itemBinding="@{uploadVM.mItemBinding}"
+                muv:items="@{uploadVM.mLocalVideoList}"
+                muv:layoutManager="@{LayoutManagers.grid(2)}">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.newx.base.ui.refreshlayout.SmartRefreshLayout>
+    </LinearLayout>
+</layout>

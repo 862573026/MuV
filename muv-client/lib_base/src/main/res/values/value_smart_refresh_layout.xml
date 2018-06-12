@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- attr start -->
+    <!-- SmartRefreshLayout-->
+    <attr name="srlDrawableSize" format="dimension"/><!--图片尺寸-->
+    <attr name="srlDrawableArrowSize" format="dimension"/><!--箭头图片尺寸-->
+    <attr name="srlDrawableProgressSize" format="dimension"/><!--箭头图片尺寸-->
+    <attr name="srlDrawableMarginRight" format="dimension"/><!--图片和文字的间距-->
+    <attr name="srlTextSizeTitle" format="dimension"/><!--标题字体-->
+    <attr name="srlTextSizeTime" format="dimension"/><!--时间字体-->
+    <attr name="srlFinishDuration" format="integer"/><!--完成时停留时间-->
+    <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
+    <attr name="srlAccentColor" format="color"/><!--强调颜色-->
+    <attr name="srlDrawableArrow" format="reference"/><!--箭头图片-->
+    <attr name="srlDrawableProgress" format="reference"/><!--转动图片-->
+    <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
+
+    <attr name="srlClassicsSpinnerStyle" format="enum">
+        <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="Scale" value="1"/><!--拉伸形变-->
+        <enum name="FixedBehind" value="2"/><!--固定在背后-->
+    </attr>
+
+    <attr name="layout_srlSpinnerStyle" format="enum">
+        <enum name="Translate" value="0"/><!--平行移动-->
+        <enum name="Scale" value="1"/><!--拉伸形变-->
+        <enum name="FixedBehind" value="2"/><!--固定在背后-->
+        <enum name="FixedFront" value="3"/><!--固定在前面-->
+        <enum name="MatchLayout" value="4"/><!--填满布局-->
+    </attr>
+
+    <declare-styleable name="SmartRefreshLayout">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlReboundDuration" format="integer"/>
+        <attr name="srlHeaderHeight" format="dimension"/>
+        <attr name="srlFooterHeight" format="dimension"/>
+        <attr name="srlHeaderInsetStart" format="dimension"/>
+        <attr name="srlFooterInsetStart" format="dimension"/>
+        <attr name="srlDragRate" format="float"/>
+        <attr name="srlHeaderMaxDragRate" format="float"/>
+        <attr name="srlFooterMaxDragRate" format="float"/>
+        <attr name="srlHeaderTriggerRate" format="float"/>
+        <attr name="srlFooterTriggerRate" format="float"/>
+        <attr name="srlEnableRefresh" format="boolean"/>
+        <attr name="srlEnableLoadMore" format="boolean"/>
+        <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
+        <attr name="srlEnableFooterTranslationContent" format="boolean"/>
+        <attr name="srlEnablePreviewInEditMode" format="boolean"/>
+        <attr name="srlEnableAutoLoadMore" format="boolean"/>
+        <attr name="srlEnableOverScrollBounce" format="boolean"/>
+        <attr name="srlEnablePureScrollMode" format="boolean"/>
+        <attr name="srlEnableNestedScrolling" format="boolean"/>
+        <attr name="srlEnableScrollContentWhenLoaded" format="boolean"/>
+        <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
+        <attr name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
+        <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
+        <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
+        <attr name="srlEnableOverScrollDrag" format="boolean"/>
+        <attr name="srlDisableContentWhenRefresh" format="boolean"/>
+        <attr name="srlDisableContentWhenLoading" format="boolean"/>
+        <attr name="srlFixedHeaderViewId" format="reference"/>
+        <attr name="srlFixedFooterViewId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SmartRefreshLayout_Layout">
+        <attr name="layout_srlSpinnerStyle"/>
+        <attr name="layout_srlBackgroundColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="BezierRadarHeader">
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlEnableHorizontalDrag"/>
+    </declare-styleable>
+
+    <declare-styleable name="BallPulseFooter">
+        <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlAnimatingColor" format="color"/>
+        <attr name="srlNormalColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ClassicsHeader">
+        <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlFinishDuration"/>
+        <attr name="srlDrawableArrow"/>
+        <attr name="srlDrawableProgress"/>
+        <attr name="srlDrawableMarginRight"/>
+        <attr name="srlDrawableSize"/>
+        <attr name="srlDrawableArrowSize"/>
+        <attr name="srlDrawableProgressSize"/>
+        <attr name="srlTextSizeTitle"/>
+        <attr name="srlTextSizeTime"/>
+        <attr name="srlTextTimeMarginTop" format="dimension"/>
+        <attr name="srlEnableLastTime" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ClassicsFooter">
+        <attr name="srlClassicsSpinnerStyle"/>
+        <attr name="srlPrimaryColor"/>
+        <attr name="srlAccentColor"/>
+        <attr name="srlFinishDuration"/>
+        <attr name="srlTextSizeTitle"/>
+        <attr name="srlDrawableArrow"/>
+        <attr name="srlDrawableProgress"/>
+        <attr name="srlDrawableMarginRight"/>
+        <attr name="srlDrawableSize"/>
+        <attr name="srlDrawableArrowSize"/>
+        <attr name="srlDrawableProgressSize"/>
+    </declare-styleable>
+
+    <declare-styleable name="TwoLevelHeader">
+        <attr name="srlMaxRage" format="float"/>
+        <attr name="srlFloorRage" format="float"/>
+        <attr name="srlRefreshRage" format="float"/>
+        <attr name="srlFloorDuration" format="integer"/>
+        <attr name="srlEnableTwoLevel" format="boolean"/>
+        <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
+    </declare-styleable>
+    <!-- attr end -->
+
+    <!-- string start-->
+    <string name="refreshing_text">正在刷新...</string>
+    <string name="refresh_done_text">刷新完成</string>
+    <string name="loading_text">正在加载...</string>
+    <string name="load_failed_text">加载失败，请点我重试</string>
+    <string name="load_end_text">没有更多数据</string>
+    <string name="load_done_text">加载完毕</string>
+
+    <string name="listview_header_hint_normal_text">下拉刷新</string>
+    <string name="listview_header_hint_release_text">松开刷新</string>
+    <string name="listview_header_last_time_text">上次刷新：</string>
+
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新…</string>
+    <string name="srl_header_loading">正在加载…</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_release">释放立即加载</string>
+    <string name="srl_footer_loading">正在加载…</string>
+    <string name="srl_footer_refreshing">正在刷新…</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_nothing">没有更多数据了</string>
+
+    <string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>
+    <string name="srl_component_falsify" formatted="false">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
+    <!-- string end -->
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:muv="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="meVM"
+            type="com.newx.muv.vm.MeVM"></variable>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_me"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{meVM.username}"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_background_underline"
+            android:onClick="@{()->meVM.userSettingClick()}"
+            android:text="@string/user_setting_text" />
+
+        <TextView
+            android:text="测试"
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>

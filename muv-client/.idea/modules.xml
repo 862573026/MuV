@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://D:\StudySpace\Github\NC\NS\NewShot.iml" filepath="D:\StudySpace\Github\NC\NS\NewShot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NS\app\app.iml" filepath="D:\StudySpace\Github\NC\NS\app\app.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NewShot\lib-annotation\arouter-annotation.iml" filepath="D:\StudySpace\Github\NC\NewShot\lib-annotation\arouter-annotation.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NewShot\lib_route\arouter-api.iml" filepath="D:\StudySpace\Github\NC\NewShot\lib_route\arouter-api.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NS\arouter-api\arouter-api.iml" filepath="D:\StudySpace\Github\NC\NS\arouter-api\arouter-api.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NewShot\lib-compiler\arouter-compiler.iml" filepath="D:\StudySpace\Github\NC\NewShot\lib-compiler\arouter-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/host/host.iml" filepath="$PROJECT_DIR$/host/host.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-annotation/lib-annotation.iml" filepath="$PROJECT_DIR$/lib-annotation/lib-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-compiler/lib-compiler.iml" filepath="$PROJECT_DIR$/lib-compiler/lib-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-replugin-host/lib-replugin-host.iml" filepath="$PROJECT_DIR$/lib-replugin-host/lib-replugin-host.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-replugin-plugin/lib-replugin-plugin.iml" filepath="$PROJECT_DIR$/lib-replugin-plugin/lib-replugin-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_armv5/lib_armv5.iml" filepath="$PROJECT_DIR$/lib_armv5/lib_armv5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_armv64/lib_armv64.iml" filepath="$PROJECT_DIR$/lib_armv64/lib_armv64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_armv7a/lib_armv7a.iml" filepath="$PROJECT_DIR$/lib_armv7a/lib_armv7a.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_base/lib_base.iml" filepath="$PROJECT_DIR$/lib_base/lib_base.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NS\lib_base\lib_base.iml" filepath="D:\StudySpace\Github\NC\NS\lib_base\lib_base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_camera/lib_camera.iml" filepath="$PROJECT_DIR$/lib_camera/lib_camera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_entity/lib_entity.iml" filepath="$PROJECT_DIR$/lib_entity/lib_entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_media/lib_media.iml" filepath="$PROJECT_DIR$/lib_media/lib_media.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_res/lib_res.iml" filepath="$PROJECT_DIR$/lib_res/lib_res.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NC\NS\lib_res\lib_res.iml" filepath="D:\StudySpace\Github\NC\NS\lib_res\lib_res.iml" />
+      <module fileurl="file://D:\StudySpace\Github\NewShot\NewShot\lib_route\lib_route.iml" filepath="D:\StudySpace\Github\NewShot\NewShot\lib_route\lib_route.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_service/lib_service.iml" filepath="$PROJECT_DIR$/lib_service/lib_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_test/lib_test.iml" filepath="$PROJECT_DIR$/lib_test/lib_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_x86/lib_x86.iml" filepath="$PROJECT_DIR$/lib_x86/lib_x86.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_x86_64/lib_x86_64.iml" filepath="$PROJECT_DIR$/lib_x86_64/lib_x86_64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/muv-client.iml" filepath="$PROJECT_DIR$/muv-client.iml" />
+    </modules>
+  </component>
+</project>

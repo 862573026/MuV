@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:newx="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.newx.base.ui.loading.WaveLoadingView
+            android:id="@+id/view_wavingLoading"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            newx:wlv_borderColor="@color/primary"
+            newx:wlv_borderWidth="@dimen/border_medium_width"
+            newx:wlv_round_rectangle="true"
+            newx:wlv_shapeType="circle"
+            newx:wlv_titleCenterColor="@color/primary_light"
+            newx:wlv_titleCenterSize="@dimen/font_medium"
+            newx:wlv_triangle_direction="north"
+            newx:wlv_waveAmplitude="70"
+            newx:wlv_waveColor="@color/primary" />
+
+    </RelativeLayout>
+</layout>

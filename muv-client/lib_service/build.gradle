@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    api rootProject.ext.dependencies.retrofit2
+    api rootProject.ext.dependencies["retrofit2:converter-gson"]
+    api rootProject.ext.dependencies["retrofit2:converter-scalars"]
+    api rootProject.ext.dependencies["retrofit2:adapter-rxjava2"]
+    api rootProject.ext.dependencies["retrofit-url-manager"]
+
+
+    api rootProject.ext.dependencies.okhttp3
+    api rootProject.ext.dependencies["okhttp3:logging-interceptor"]
+
+    api 'com.jakewharton:disklrucache:2.0.2'
+
+    api project(':lib_entity')
+    api project(':lib_base')
+}

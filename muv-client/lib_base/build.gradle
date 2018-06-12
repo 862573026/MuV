@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api(rootProject.ext.support["appcompat-v7"])
+    api(rootProject.ext.support["recyclerview-v7"])
+    api(rootProject.ext.support["cardview-v7"])
+    api(rootProject.ext.support["support-annotations"])
+    api rootProject.ext.support.percent
+    api rootProject.ext.support.design
+    api rootProject.ext.support["constraint-layout"]
+    api rootProject.ext.dependencies.gson
+    // RxJava2
+    api rootProject.ext.dependencies.rxjava2
+    api rootProject.ext.dependencies.rxandroid2
+    api rootProject.ext.dependencies.rxbinding2
+    //rx管理View的生命周期 -> 避免内存泄漏
+    api rootProject.ext.dependencies.rxlifecycle2
+    api(rootProject.ext.dependencies["rxlifecycle2-components"])
+    //Glide
+    api rootProject.ext.dependencies.glide4
+    annotationProcessor(rootProject.ext.dependencies["glide4-compiler"])
+    //RecyclerView使用DataBinding
+    api rootProject.ext.dependencies.bindingcollectionadapter
+    api rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
+    //    api rootProject.ext.dependencies.barlibrary
+    api rootProject.ext.dependencies.dagger
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+    //Project
+    annotationProcessor project(':lib-compiler')
+    implementation project(':lib-annotation')
+    implementation project(':lib_res')
+    api project(':lib_entity')
+
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    api('com.mikepenz:materialdrawer:6.0.7@aar') {
+        transitive = true
+    }
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
+    api files('libs/libJni.jar')
+}

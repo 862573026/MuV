@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:muv="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="searchVM"
+            type="com.newx.muv.vm.SearchVM"></variable>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_25"
+            android:background="@drawable/round2rect_grey_bg"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            muv:layout_constraintLeft_toLeftOf="parent"
+            muv:layout_constraintRight_toRightOf="parent"
+            muv:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:background="@mipmap/icon_search" />
+
+            <EditText
+                android:id="@+id/tv_popular_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/search_text"
+                android:paddingBottom="@dimen/default_small_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingTop="@dimen/default_small_padding"
+                android:text="@={searchVM.mSearchText}" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
