@@ -42,25 +42,9 @@ public class ActivityMain extends Activity implements OnClickListener {
         findViewById(R.id.button_gallery).setOnClickListener(this);
         findViewById(R.id.button_camera).setOnClickListener(this);
 
-        PermissionUtils.permission(PermissionConstants.CAMERA, PermissionConstants.STORAGE)
-                .request();
+
 
         SPUtil.init(this);
-        findViewById(R.id.btn_sp_test).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                int num = (int) SPUtil.get("_test", 0);
-//                SPUtil.put("_test", num + 1);
-//                int result = (int) SPUtil.get("_test", 0);
-//                Log.e("NewX", "SPTest:" + result);
-
-                int count = (int) SPUtil.get("test_file","_test", 0);
-                SPUtil.put("test_file","_test",count+1);
-                int countR = (int) SPUtil.get("test_file","_test", 0);
-                Log.e("NewX", "SPTest file:" + countR);
-
-            }
-        });
 
     }
 

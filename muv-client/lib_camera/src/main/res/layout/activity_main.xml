@@ -25,11 +25,6 @@
             android:drawableTop="@android:drawable/ic_menu_camera"
             android:text="Camera" />
 
-        <TextView
-            android:id="@+id/btn_sp_test"
-            android:text="SP Test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </FrameLayout>

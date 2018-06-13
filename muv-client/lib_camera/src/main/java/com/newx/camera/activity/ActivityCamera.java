@@ -129,10 +129,11 @@ public class ActivityCamera extends Activity implements OnSeekBarChangeListener,
         // TODO get a size that is about the size of the screen
         Parameters params = mCamera.mCameraInstance.getParameters();
         params.setRotation(90);
-        mCamera.mCameraInstance.setParameters(params);
         for (Camera.Size size : params.getSupportedPictureSizes()) {
             Log.i("ASDF", "Supported: " + size.width + "x" + size.height);
+            params.setPictureSize(size.width,size.height);
         }
+        mCamera.mCameraInstance.setParameters(params); //熟悉下Camera的Api,很多参数可以自定义
         mCamera.mCameraInstance.takePicture(null, null,
                 new Camera.PictureCallback() {
 
