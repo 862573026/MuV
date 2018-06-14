@@ -63,7 +63,6 @@ ext {
             javapoet                               : 'com.squareup:javapoet:1.7.0',
 
             //沉浸式
-            barlibrary                             : 'com.gyf.barlibrary:barlibrary:2.3.0',
             joda                                   : "net.danlew:android.joda:2.9.9.3",
             guava                                  : "com.google.guava:guava:24.1-android",
 

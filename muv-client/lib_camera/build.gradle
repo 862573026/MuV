@@ -17,6 +17,8 @@ android {
             }
         }
 
+        multiDexEnabled true
+
     }
 
     compileOptions {
@@ -31,14 +33,18 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
-apply plugin: 'replugin-plugin-gradle'
-repluginPluginConfig {
-    pluginName = "plugin_camera"
-    hostApplicationId = "com.newx.muv.host"
-    hostAppLauncherActivity = "com.newx.muv.host.HostActivity"
-}
+//apply plugin: 'replugin-plugin-gradle'
+//repluginPluginConfig {
+//    pluginName = "plugin_camera"
+//    hostApplicationId = "com.newx.muv.host"
+//    hostAppLauncherActivity = "com.newx.muv.host.HostActivity"
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,8 +53,7 @@ dependencies {
     annotationProcessor project(':lib-compiler')
     implementation project(':lib-annotation')
 
-//    api project(':lib-replugin-plugin')
-    api(rootProject.ext.dependencies["replugin-plugin-lib"])
+    api project(':lib-replugin-plugin')
 
     api 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 }

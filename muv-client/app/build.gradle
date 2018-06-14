@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+
     defaultConfig {
         applicationId "com.newx.muv"
         minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
@@ -80,6 +81,5 @@ dependencies {
 //    implementation project(':lib_so') //暂时不要jni处理加密，编译调试比较卡
     implementation files('lib/netty-all-4.1.25.Final.jar')
 
-//    api project(':lib-replugin-plugin')
-    api(rootProject.ext.dependencies["replugin-plugin-lib"])
+    api project(':lib-replugin-plugin')
 }

@@ -31,6 +31,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -56,13 +60,13 @@ dependencies {
     //RecyclerView使用DataBinding
     api rootProject.ext.dependencies.bindingcollectionadapter
     api rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
-    //    api rootProject.ext.dependencies.barlibrary
+
     api rootProject.ext.dependencies.dagger
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
     //Project
     annotationProcessor project(':lib-compiler')
-    implementation project(':lib-annotation')
-    implementation project(':lib_res')
+    api project(':lib-annotation')
+    api project(':lib_res')
     api project(':lib_entity')
 
     api 'com.afollestad.material-dialogs:core:0.9.6.0'
@@ -70,7 +74,7 @@ dependencies {
     api('com.mikepenz:materialdrawer:6.0.7@aar') {
         transitive = true
     }
-    compile 'com.daimajia.easing:library:2.0@aar'
-    compile 'com.daimajia.androidanimations:library:2.3@aar'
+    api 'com.daimajia.easing:library:2.0@aar'
+    api 'com.daimajia.androidanimations:library:2.3@aar'
     api files('libs/libJni.jar')
 }

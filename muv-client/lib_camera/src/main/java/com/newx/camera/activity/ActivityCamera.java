@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.newx.base.frameworks.route.facade.annotation.Route;
+import com.newx.base.frameworks.support.activity.NxActivity;
 import com.newx.camera.GPUImageFilterTools;
 import com.newx.camera.R;
 import com.newx.camera.utils.CameraHelper;
@@ -50,7 +51,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImage.OnPictureSavedListener;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 
 @Route(path = ACTIVITY.ActivityCamera)
-public class ActivityCamera extends Activity implements OnSeekBarChangeListener, OnClickListener {
+public class ActivityCamera extends NxActivity implements OnSeekBarChangeListener, OnClickListener {
 
     private GPUImage mGPUImage;
     private CameraHelper mCameraHelper;
