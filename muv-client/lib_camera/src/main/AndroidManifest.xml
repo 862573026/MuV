@@ -15,25 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.FileActivity">
-
-        </activity>
 
         <activity android:name=".activity.ActivityRoot">
-
-        </activity>
-
-        <activity android:name=".activity.ActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ActivityGallery" />
-        <activity
-            android:name=".activity.ActivityCamera"
-            android:screenOrientation="portrait" />
+
 
         <activity android:name="com.newx.base.utils.utilcode.util.PermissionUtils$PermissionActivity"></activity>
     </application>
