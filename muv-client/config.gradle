@@ -85,9 +85,6 @@ ext {
             "okhttp3:logging-interceptor"          : 'com.squareup.okhttp3:logging-interceptor:3.10.0',
 
             //RePlugin
-            "replugin-host-lib"                    : 'com.qihoo360.replugin:replugin-host-lib:2.2.4',
-            "replugin-plugin-lib"                  : 'com.qihoo360.replugin:replugin-plugin-lib:2.2.4',
-
 
     ]
 

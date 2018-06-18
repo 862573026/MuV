@@ -27,7 +27,6 @@ public class CameraApp extends BaseApp{
         Utils.init(this);
         SPUtil.init(this);
 
-        ARouter.setPlugin("");
         ARouter.init(this);
 
         ResourceProxy.init(this);

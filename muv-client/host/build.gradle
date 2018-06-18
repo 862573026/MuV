@@ -56,6 +56,5 @@ dependencies {
     annotationProcessor project(':lib-compiler')
     implementation project(':lib-annotation')
 
-//    api project(':lib-replugin-host')
-    api(rootProject.ext.dependencies["replugin-host-lib"])
+    api project(':lib-replugin-host')
 }

@@ -45,11 +45,9 @@ final class _ARouter {
     static ILogger logger = new DefaultLogger(Consts.TAG); // 日志工具
     private volatile static boolean monitorMode = false;
     private volatile static boolean debuggable = false;
-    private volatile static boolean isPlugin = false; //是否是插件
     private volatile static boolean autoInject = false;
     private volatile static _ARouter instance = null;
     private volatile static boolean hasInit = false;
-    private volatile static String pluginPath = ""; //插件地址
     private volatile static ThreadPoolExecutor executor = DefaultPoolExecutor.getInstance();
     private static Context mContext;
 
@@ -109,12 +107,6 @@ final class _ARouter {
         logger.info(Consts.TAG, "ARouter openLog");
     }
 
-    static synchronized void setPlugin(String path) {
-        pluginPath = path;
-        isPlugin = true;
-        logger.info(Consts.TAG, "ARouter plugin path :" + pluginPath);
-    }
-
     @Deprecated
     static synchronized void enableAutoInject() {
         autoInject = true;
@@ -168,14 +160,6 @@ final class _ARouter {
 
     static boolean debuggable() {
         return debuggable;
-    }
-
-    static boolean isPlugin(){
-        return isPlugin;
-    }
-
-    static String pluginPath(){
-        return pluginPath;
     }
 
     static void setLogger(ILogger userLogger) {
