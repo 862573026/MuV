@@ -20,6 +20,7 @@ import com.newx.base.ui.viewpager.indicator.slidebar.ColorBar;
 import com.newx.base.ui.viewpager.indicator.transition.OnTransitionTextListener;
 import com.newx.muv.R;
 import com.newx.base.frameworks.support.mvvm.NxMvvMFragment;
+import com.newx.muv.base.def.KEY;
 import com.newx.muv.databinding.FragmentMuvBinding;
 import com.newx.muv.proxy.MiddlewareProxy;
 import com.newx.muv.view.route.FRAGMENT;
@@ -65,10 +66,32 @@ public class MuVFragment extends NxMvvMFragment<FragmentMuvBinding, BaseViewMode
 
         // 注意这里 的FragmentManager 是 getChildFragmentManager(); 因为是在Fragment里面
         // 而在activity里面用FragmentManager 是 getSupportFragmentManager()
-        mIndicatorViewPager.setAdapter(new MicroShotAdapter(getChildFragmentManager()));
+        mIndicatorViewPager.setAdapter(new MuVAdapter(getChildFragmentManager()));
 
         mIndicatorViewPager.setCurrentItem(1, false);
         viewPager.setOffscreenPageLimit(4);
+
+        mIndicatorViewPager.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                switch (position) {
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         ToastUtil.showShort("初始化完毕");
     }
@@ -83,7 +106,7 @@ public class MuVFragment extends NxMvvMFragment<FragmentMuvBinding, BaseViewMode
         return 0;
     }
 
-    private class MicroShotAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
+    private class MuVAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
 
         private String[] tabNames = {
                 ResourceProxy.getString(R.string.live_text),
@@ -92,7 +115,7 @@ public class MuVFragment extends NxMvvMFragment<FragmentMuvBinding, BaseViewMode
                 ResourceProxy.getString(R.string.same_city_text),};
 
 
-        public MicroShotAdapter(FragmentManager fragmentManager) {
+        public MuVAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
@@ -117,7 +140,9 @@ public class MuVFragment extends NxMvvMFragment<FragmentMuvBinding, BaseViewMode
                 case 0:
                     return MiddlewareProxy.findFragment(FRAGMENT.LiveFragment);
                 case 1:
-                    return MiddlewareProxy.findFragment(FRAGMENT.PopularFragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putFloat(KEY.KEY_BUNDLE_PADDING_BOTTOM, ResourceProxy.getDimension(R.dimen.default_bar_height));
+                    return MiddlewareProxy.findFragment(FRAGMENT.PopularFragment,bundle);
                 case 2:
                     return MiddlewareProxy.findFragment(FRAGMENT.FeaturedFragment);
                 case 3:

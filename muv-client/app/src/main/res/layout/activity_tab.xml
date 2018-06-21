@@ -8,16 +8,14 @@
         <com.newx.base.ui.viewpager.SViewPager
             android:id="@+id/tab_main_viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:layout_above="@+id/tab_main_indicator" />
+            android:layout_height="match_parent" />
 
         <com.newx.base.ui.viewpager.indicator.FixedIndicatorView
             android:id="@+id/tab_main_indicator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_bar_height"
             android:layout_alignParentBottom="true"
-            android:background="@color/background_color" />
+            android:background="@color/Transparent"/>
 
     </RelativeLayout>
 </layout>

@@ -6,6 +6,6 @@ package com.newx.muv.base.def;
 
 public class KEY {
 
-    public static final String KEY_BUNDLE_PADDING_TOP = "_key_bundle_padding_top";
+    public static final String KEY_BUNDLE_PADDING_BOTTOM = "_key_bundle_padding_bottom";
 
 }

@@ -4,9 +4,13 @@ import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.newx.base.frameworks.route.facade.annotation.Route;
 import com.newx.base.frameworks.util.log.NXLog;
+import com.newx.base.proxy.ResourceProxy;
 import com.newx.base.ui.refreshlayout.api.RefreshFooter;
 import com.newx.base.ui.refreshlayout.api.RefreshHeader;
 import com.newx.base.ui.refreshlayout.api.RefreshLayout;
@@ -39,13 +43,13 @@ public class PopularFragment extends NxMvvMFragment<FragmentPopularBinding, Popu
 
     private Disposable taskSearchScroll;
     private int mRecyclerViewMaxOffset = BindDefine.DEFAULT_MAX_Y_OFFSET;
-
-    private float paddingTop = 0;
+    private int mPaddingBottom;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        paddingTop = getArguments().getFloat(KEY.KEY_BUNDLE_PADDING_TOP);
+    public void onCreateView(@Nullable Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
+        mPaddingBottom = (int) getArguments().getFloat(KEY.KEY_BUNDLE_PADDING_BOTTOM);
+        contentView.setPadding(0, (int) ResourceProxy.getDimension(R.dimen.default_bar_height), 0, mPaddingBottom);
     }
 
     @Override
@@ -58,9 +62,6 @@ public class PopularFragment extends NxMvvMFragment<FragmentPopularBinding, Popu
         super.onLazyInitView(savedInstanceState);
 
         bindTransfer();
-
-        contentView.setPadding(0, (int) paddingTop, 0, 0);
-
         taskSearchScroll = Flowable.interval(2000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(count -> {

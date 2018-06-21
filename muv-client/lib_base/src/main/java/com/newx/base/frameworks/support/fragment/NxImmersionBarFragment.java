@@ -15,11 +15,7 @@ class NxImmersionBarFragment extends NxSupportFragment {
     @Override
     public void onSupportVisible() {
         //如果要在Fragment单独使用沉浸式，请在onSupportVisible实现沉浸式
-
-        if (isImmersionBarEnabled()) {
-            mImmersionBar = ImmersionBar.with(this);
-            mImmersionBar.navigationBarWithKitkatEnable(false).init();
-        }
+        setImmersionBar();
     }
 
     @Override
@@ -31,8 +27,14 @@ class NxImmersionBarFragment extends NxSupportFragment {
         }
     }
 
-    protected boolean isImmersionBarEnabled() {
-        return false;
+    /**
+     * 默认不要沉浸式
+     */
+    protected void setImmersionBar(){
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.fitsSystemWindows(true)
+                .navigationBarWithKitkatEnable(false)
+                .init();
     }
 
 }

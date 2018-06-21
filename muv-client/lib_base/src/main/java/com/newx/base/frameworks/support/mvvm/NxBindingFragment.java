@@ -35,7 +35,7 @@ public abstract class NxBindingFragment<V extends ViewDataBinding> extends NxFra
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mLayoutId = initContentView();
         setToolbar(container);
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.newx.base.frameworks.route.facade.annotation.Route;
+import com.newx.base.frameworks.widget.bar.ImmersionBar;
 import com.newx.base.frameworks.widget.toast.ToastUtil;
 import com.newx.muv.R;
 import com.newx.base.frameworks.support.mvvm.NxMvvMFragment;
@@ -38,15 +39,11 @@ public class FeaturedFragment extends NxMvvMFragment<FragmentFeaturedBinding, Fe
         ToastUtil.showShort("懒加载调用");
     }
 
-//    @Override
-//    protected void immersionInit() {
-//        super.immersionInit();
-//        ImmersionBar.with(this)
-//                .transparentBar()
-//                .fullScreen(true)
-//                .init();
-//    }
-
-
-
+    @Override
+    protected void setImmersionBar() {
+        super.setImmersionBar();
+        ImmersionBar.with(this)
+                .transparentStatusBar()
+                .init();
+    }
 }

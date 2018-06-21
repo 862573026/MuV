@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <com.newx.base.ui.viewpager.indicator.FixedIndicatorView
-            android:id="@+id/fragment_tab_main_indicator"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/dp_100"
-            android:layout_marginRight="@dimen/dp_100"
-            android:layout_height="@dimen/dp_45" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/fragment_tab_main_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+        <com.newx.base.ui.viewpager.indicator.FixedIndicatorView
+            android:id="@+id/fragment_tab_main_indicator"
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/dp_100"
+            android:paddingRight="@dimen/dp_100"
+            android:layout_height="@dimen/default_bar_height" />
+
+    </FrameLayout>
 </layout>

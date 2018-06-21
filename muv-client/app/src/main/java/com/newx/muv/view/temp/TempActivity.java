@@ -1,6 +1,5 @@
 package com.newx.muv.view.temp;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.android.databinding.library.baseAdapters.BR;
 import com.mikepenz.materialdrawer.Drawer;
 import com.newx.base.frameworks.route.facade.annotation.Route;
-import com.newx.base.frameworks.widget.bar.ImmersionBar;
 import com.newx.base.proxy.ResourceProxy;
 import com.newx.base.ui.viewpager.indicator.IndicatorViewPager;
 import com.newx.base.ui.viewpager.indicator.slidebar.ColorBar;
@@ -23,7 +21,6 @@ import com.newx.base.utils.view.DisplayUtil;
 import com.newx.muv.R;
 import com.newx.muv.base.page.activity.NxInjectMvvMActivity;
 import com.newx.muv.databinding.ActivityTempBinding;
-import com.newx.muv.base.def.KEY;
 import com.newx.muv.base.def.TAG;
 import com.newx.muv.ioc.util.InjectConfig;
 import com.newx.muv.proxy.MiddlewareProxy;
@@ -41,8 +38,6 @@ import com.newx.muv.vm.TempVM;
 public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, TempVM> {
 
     private IndicatorViewPager indicatorViewPager;
-
-//    public ActivityTempBinding mViewBinding;
 
     private Drawer settingDrawer;
 
@@ -66,7 +61,6 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
     }
 
     private void initView() {
-//        mViewBinding = mBinding;
         float barHeight = ResourceProxy.getDimension(R.dimen.px_5);
 
         int selectColor = ResourceProxy.getColor(R.color.DodgerBlue);
@@ -80,7 +74,6 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
                 .setColor(selectColor, unSelectColor)
                 .setSize(selectSize, unSelectSize));
 
-
         indicatorViewPager = new IndicatorViewPager(mBinding.tabTempIndicator, mBinding.tabTempViewPager);
 
         TempAdapter adapter = new TempAdapter(getSupportFragmentManager());
@@ -89,10 +82,6 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
         mBinding.tabTempViewPager.setCurrentItem(1, false);
 
         mBinding.tabTempViewPager.setOffscreenPageLimit(3);
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            setStatusPadding();
-        }
 
         mBinding.tvToLogin.setProperty(BindProperty.newBuilder()
                 .dimOut()
@@ -135,10 +124,6 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
 //        mViewBinding.ivSearch.setVisibility(View.INVISIBLE);
 //
 //        mViewBinding.ivSearch.setEventTag(TAG.EVENT_POPULAR_LIST_SCROLL);
-    }
-
-    private void setStatusPadding() {
-        mBinding.layoutTemp.setPadding(0, ImmersionBar.getStatusBarHeight(TempActivity.this), 0, 0);
     }
 
 
@@ -211,9 +196,7 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
                 case 0:
                     return MiddlewareProxy.findFragment(FRAGMENT.LiveFragment);
                 case 1:
-                    Bundle bundle = new Bundle();
-                    bundle.putFloat(KEY.KEY_BUNDLE_PADDING_TOP, ResourceProxy.getDimension(R.dimen.indicator_height));
-                    Fragment popularFragment = MiddlewareProxy.findFragment(FRAGMENT.PopularFragment, bundle);
+                    Fragment popularFragment = MiddlewareProxy.findFragment(FRAGMENT.PopularFragment);
                     return popularFragment;
                 case 2:
                     return MiddlewareProxy.findFragment(FRAGMENT.FeaturedFragment);
@@ -227,11 +210,6 @@ public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, Temp
             // 表示数据没变化不用更新.notifyDataChange的时候重新调用getViewForPage
             return PagerAdapter.POSITION_UNCHANGED;
         }
-    }
-
-
-    public int getIndicatorHeight() {
-        return mBinding.tabTempIndicator.getHeight();
     }
 
 

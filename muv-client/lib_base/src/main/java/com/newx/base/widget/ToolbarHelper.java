@@ -18,6 +18,7 @@ import java.lang.ref.WeakReference;
 
 /**
  * Created by newx on 18-5-27.
+ * Toolbar 帮助类
  */
 
 public class ToolbarHelper {

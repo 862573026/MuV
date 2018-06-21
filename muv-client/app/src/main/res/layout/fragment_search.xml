@@ -10,6 +10,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -30,6 +31,7 @@
                 android:id="@+id/iv_search"
                 android:layout_width="@dimen/dp_15"
                 android:layout_height="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/default_margin"
                 android:background="@mipmap/icon_search" />
 
             <EditText

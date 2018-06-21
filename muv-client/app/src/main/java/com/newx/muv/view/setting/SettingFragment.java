@@ -1,6 +1,7 @@
 package com.newx.muv.view.setting;
 
 import com.newx.base.frameworks.route.facade.annotation.Route;
+import com.newx.base.frameworks.widget.bar.ImmersionBar;
 import com.newx.muv.BR;
 import com.newx.muv.R;
 import com.newx.base.frameworks.support.mvvm.NxMvvMFragment;
@@ -39,4 +40,5 @@ public class SettingFragment extends NxMvvMFragment<FragmentSettingBinding, Sett
     public boolean showToolbar() {
         return true;
     }
+
 }

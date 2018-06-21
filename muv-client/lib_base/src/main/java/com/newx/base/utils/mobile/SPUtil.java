@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import com.newx.base.frameworks.util.log.NXLog;
 import com.newx.base.utils.encrypt.DESUtil;
 import com.newx.base.utils.encrypt.MD5Util;
-import com.newx.res.debug.DEBUG;
 
 import java.util.Map;
 
@@ -246,7 +245,7 @@ public class SPUtil {
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         apply(editor);
-        NXLog.e(DEBUG.MESSAGE.CLEAR_ALL_SP);
+        NXLog.e("请注意：清除了所有SharedPreferences");
     }
 
     public static boolean contains(String key) {
