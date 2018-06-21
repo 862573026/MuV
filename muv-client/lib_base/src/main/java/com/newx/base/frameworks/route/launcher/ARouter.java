@@ -77,18 +77,6 @@ public final class ARouter {
         return _ARouter.debuggable();
     }
 
-    public static boolean isPlugin() {
-        return _ARouter.isPlugin();
-    }
-
-    public static String pluginPath() {
-        return _ARouter.pluginPath();
-    }
-
-    public static synchronized void setPlugin(String path) {
-        _ARouter.setPlugin(path);
-    }
-
     public static synchronized void openLog() {
         _ARouter.openLog();
     }

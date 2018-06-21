@@ -6,7 +6,4 @@ package com.newx.muv.view.route;
 
 public class ACTIVITY {
 
-    public static final String ActivityGallery = "/camera/ActivityGallery";
-    public static final String ActivityCamera = "/camera/ActivityCamera";
-
 }
