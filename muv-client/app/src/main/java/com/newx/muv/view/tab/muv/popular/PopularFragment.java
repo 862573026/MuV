@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.newx.base.frameworks.route.facade.annotation.Route;
+import com.newx.base.frameworks.util.log.NXLog;
 import com.newx.base.ui.refreshlayout.api.RefreshFooter;
 import com.newx.base.ui.refreshlayout.api.RefreshHeader;
 import com.newx.base.ui.refreshlayout.api.RefreshLayout;
@@ -110,64 +111,6 @@ public class PopularFragment extends NxMvvMFragment<FragmentPopularBinding, Popu
      * 绑定联动
      */
     private void bindTransfer() {
-
-        mBinding.refreshLayout.setOnMultiPurposeListener(new OnMultiPurposeListener() {
-            @Override
-            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                mBinding.layoutSearch.setAlpha(1 - percent);
-            }
-
-            @Override
-            public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
-
-            }
-
-            @Override
-            public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int maxDragHeight) {
-
-            }
-
-            @Override
-            public void onHeaderFinish(RefreshHeader header, boolean success) {
-
-            }
-
-            @Override
-            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
-
-            }
-
-            @Override
-            public void onFooterReleased(RefreshFooter footer, int footerHeight, int maxDragHeight) {
-
-            }
-
-            @Override
-            public void onFooterStartAnimator(RefreshFooter footer, int footerHeight, int maxDragHeight) {
-
-            }
-
-            @Override
-            public void onFooterFinish(RefreshFooter footer, boolean success) {
-
-            }
-
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-            }
-
-            @Override
-            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-
-            }
-        });
-
 
         mBinding.listPopular.setEventTag(TAG.EVENT_POPULAR_LIST_SCROLL);
 

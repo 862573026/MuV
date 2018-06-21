@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.newx.muv.view.temp.TempMvvMActivity"></activity>
+        <activity android:name="com.newx.muv.view.temp.TempActivity"></activity>
 
 
         <activity

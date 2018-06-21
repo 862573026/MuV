@@ -38,7 +38,7 @@ import com.newx.muv.vm.TempVM;
  * Created by xuzhijian on 2018/4/23 0023.
  */
 @Route(path = ACTIVITY.TempActivity)
-public class TempMvvMActivity extends NxInjectMvvMActivity<ActivityTempBinding, TempVM> {
+public class TempActivity extends NxInjectMvvMActivity<ActivityTempBinding, TempVM> {
 
     private IndicatorViewPager indicatorViewPager;
 
@@ -138,7 +138,7 @@ public class TempMvvMActivity extends NxInjectMvvMActivity<ActivityTempBinding, 
     }
 
     private void setStatusPadding() {
-        mBinding.layoutTemp.setPadding(0, ImmersionBar.getStatusBarHeight(TempMvvMActivity.this), 0, 0);
+        mBinding.layoutTemp.setPadding(0, ImmersionBar.getStatusBarHeight(TempActivity.this), 0, 0);
     }
 
 

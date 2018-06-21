@@ -67,24 +67,13 @@ public class LoginByPswVM extends NSBaseVM {
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                             Message message = GsonUtil.toEntity(response, Message.class);
-                            if (message.getMeta().isSuccess()) {
-
+                            if (!message.isSuccess()) {
+                                return;
                             }
 
-                            String userKey = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("data")
-                                    .getAsJsonPrimitive("userKey")
-                                    .getAsString();
-
-                            String tokenKey = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("data")
-                                    .getAsJsonPrimitive("tokenKey")
-                                    .getAsString();
-
-                            String timestamp = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("meta")
-                                    .getAsJsonPrimitive("timestamp")
-                                    .getAsString();
+                            String userKey = (String) message.getData().get("userKey");
+                            String tokenKey = (String) message.getData().get("tokenKey");
+                            String timestamp = message.getTimestamp().toString();
                             loginRequest(timestamp, userKey, tokenKey);
                         },
                         throwable -> DialogBuilderHelper.showTipDialog(mContext, throwable.getMessage()));
@@ -104,7 +93,7 @@ public class LoginByPswVM extends NSBaseVM {
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                             Message message = GsonUtil.toEntity(response, Message.class);
-                            if (message.getMeta().isSuccess()) {
+                            if (message.isSuccess()) {
                                 LoginResult loginResult = GsonUtil.toEntity(GsonUtil.toJson(message.getData()),
                                         LoginResult.class);
                                 uid = loginResult.getUser().getUid();
@@ -125,7 +114,7 @@ public class LoginByPswVM extends NSBaseVM {
                                         .navigation();
                                 exit(mContext);
                             } else {
-                                DialogBuilderHelper.showTipDialog(mContext, message.getMeta().getMsg());
+                                DialogBuilderHelper.showTipDialog(mContext, message.getMessage());
                             }
                         },
                         throwable -> DialogBuilderHelper.showTipDialog(mContext, throwable.getMessage()));

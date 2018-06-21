@@ -39,20 +39,11 @@ public class RegisterVM extends NSBaseVM {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
-                            String userKey = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("data")
-                                    .getAsJsonPrimitive("userKey")
-                                    .getAsString();
+                            Message message = GsonUtil.toEntity(response, Message.class);
 
-                            String tokenKey = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("data")
-                                    .getAsJsonPrimitive("tokenKey")
-                                    .getAsString();
-
-                            String timestamp = GsonUtil.toJsonObject(response)
-                                    .getAsJsonObject("meta")
-                                    .getAsJsonPrimitive("timestamp")
-                                    .getAsString();
+                            String userKey = (String) message.getData().get("userKey");
+                            String tokenKey = (String) message.getData().get("tokenKey");
+                            String timestamp = message.getTimestamp().toString();
 
                             registerRequest(timestamp, userKey, tokenKey);
                         },
@@ -73,7 +64,7 @@ public class RegisterVM extends NSBaseVM {
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                             Message message = GsonUtil.toEntity(response, Message.class);
-                            DialogBuilderHelper.showTipDialog(mContext, message.getMeta().getMsg());
+                            DialogBuilderHelper.showTipDialog(mContext, message.getMessage());
                         },
                         throwable -> DialogBuilderHelper.showTipDialog(mContext, throwable.getMessage()));
     }

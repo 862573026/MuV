@@ -72,7 +72,7 @@ public class ItemLocalVideoVM extends NSBaseVM {
                 .subscribe(response -> {
                             NXLog.e(response.toString());
                             Message message = GsonUtil.toEntity(response, Message.class);
-                            int code = message.getMeta().getCode();
+                            int code = message.getCode();
                             if (code == 2000) { //文件不存在，开始上传
                                 uploadFile(filePath, fileDir, 0);
                             } else if (code == 2001) {//文件已存在，不用上传
