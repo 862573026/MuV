@@ -1,11 +1,9 @@
 package com.newx.muv.entity.vo;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/* *
+/**
  * @Author newx
  * @Description 前后端统一消息定义协议 Message  之后前后端数据交互都按照规定的类型进行交互
  * {
@@ -22,6 +20,7 @@ public class Message {
     private boolean success;
     private int code;
     private String message;
+    private Long timestamp;
 
     // 消息头meta 存放额外状态信息 code message
     private Map<String,Object> meta = new HashMap<String,Object>();
@@ -50,6 +49,14 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Map<String, Object> getMeta() {
@@ -86,12 +93,15 @@ public class Message {
         this.success = Boolean.TRUE;
         this.code = statusCode;
         this.message = statusMsg;
+        this.timestamp = System.currentTimeMillis();
         return this;
     }
     public Message error(int statusCode, String statusMsg) {
         this.success = Boolean.FALSE;
         this.code = statusCode;
         this.message = statusMsg;
+        this.timestamp = System.currentTimeMillis();
         return this;
     }
+
 }
