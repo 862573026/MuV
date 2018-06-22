@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+    <el-form class="login-form" autoComplete="on" :model="loginInfo" :rules="loginRules" ref="loginInfo" label-position="left">
       <div class="title-container">
         <h3 class="title">{{$t('login.title')}}</h3>
         <lang-select class="set-language"></lang-select>
@@ -9,14 +9,14 @@
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="username" type="text" v-model="loginInfo.username" autoComplete="on" placeholder="username" />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password" />
+        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginInfo.password" autoComplete="on" placeholder="password" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
@@ -65,16 +65,17 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 3) {
+        callback(new Error('The password can not be less than 3 digits'))
       } else {
         callback()
       }
     }
     return {
-      loginForm: {
+      loginInfo: {
         username: 'admin',
-        password: '1111111'
+        password: '123456',
+        message: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -94,19 +95,20 @@ export default {
       }
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginInfo.validate(valid => {
         if (valid) {
           this.loading = true
 
-          this.$store.dispatch('GetTokenKey')
-            .then(res => {
+          this.$store.dispatch('LoginByPsw')
+            .then(resp => {
               this.loading = false
-              console.log(res)
+              this.loginInfo.message = resp
+              this.$store.dispatch('LoginCommit', this.loginInfo)
             })
             .catch(err => {
               console.log(err)
             })
-          // this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          // this.$store.dispatch('LoginByUsername', this.loginInfo).then(() => {
           //   this.loading = false
           //   this.$router.push({ path: '/' })
           // }).catch(() => {

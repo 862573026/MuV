@@ -8,15 +8,14 @@ export function getTokenKey() {
   })
 }
 
-export function loginByUsername(username, password) {
-  const data = {
-    username,
-    password
-  }
+export function loginByPsw(params) {
   return request({
-    url: '/login/login',
+    url: '/account/login',
     method: 'post',
-    data
+    data: params,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
 }
 

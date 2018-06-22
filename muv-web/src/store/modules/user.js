@@ -1,4 +1,4 @@
-import { getTokenKey, loginByUsername, logout, getUserInfo } from '@/api/login'
+import { getTokenKey, loginByPsw, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -45,30 +45,46 @@ const user = {
 
   actions: {
     // 获取tokenKey
-    GetTokenKey({ commit }) {
+    LoginByPsw({ commit }) {
       return new Promise((resolve, reject) => {
         getTokenKey().then(response => {
-          console.log(response)
+          // console.log(response)
+          // resolve(response)
+          var message = response.data
+          var success = message.success
+          if (success === true) {
+            resolve(response.data)
+          }
         }).catch(error => {
           reject(error)
         })
       })
     },
     // 用户名登录
-    LoginByUsername({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+    LoginCommit({ commit }, loginInfo) {
+      const username = loginInfo.username.trim()
+      const psw = loginInfo.password.trim()
+      const message = loginInfo.message
+      var params = {
+        appId: username,
+        password: psw,
+        timestamp: message.timestamp,
+        userKey: message.data.userKey,
+        methodName: 'login'
+      }
+      console.log(params)
       return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
+        loginByPsw(params).then(response => {
           const data = response.data
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
+          console.log(data)
+          // commit('SET_TOKEN', data.token)
+          // setToken(response.data.token)
           resolve()
         }).catch(error => {
           reject(error)
         })
       })
     },
-
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
