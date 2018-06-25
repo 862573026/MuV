@@ -1,5 +1,6 @@
 import { getTokenKey, loginByPsw, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import CryptoJS from 'crypto-js/crypto-js'
 
 const user = {
   state: {
@@ -48,6 +49,8 @@ const user = {
     LoginByPsw({ commit }) {
       return new Promise((resolve, reject) => {
         getTokenKey().then(response => {
+          // console.log(response)
+          // resolve(response)
           var message = response.data
           var success = message.success
           if (success === true) {
@@ -61,21 +64,29 @@ const user = {
     // 用户名登录
     LoginCommit({ commit }, loginInfo) {
       const username = loginInfo.username.trim()
-      const psw = loginInfo.password.trim()
       const message = loginInfo.message
+      var tokenKey = message.data.tokenKey
+      var password = loginInfo.password.trim()
+      console.log('加密:' + tokenKey + ' ' + password)
+      tokenKey = CryptoJS.enc.Utf8.parse(tokenKey)
+      console.log('加密:' + tokenKey + ' ' + password)
+      // AES CBC加密模式
+      password = CryptoJS.AES.encrypt(password, tokenKey, { iv: tokenKey, mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }).toString()
+      console.log('加密:' + tokenKey + ' ' + password)
       var params = {
         appId: username,
-        password: psw,
+        password: password,
         timestamp: message.timestamp,
         userKey: message.data.userKey,
         methodName: 'login'
       }
-      console.log(params)
+      console.log('Param:' + JSON.stringify(params))
       return new Promise((resolve, reject) => {
         loginByPsw(params).then(response => {
           const data = response.data
           console.log(data)
-          // 暂时
+          // commit('SET_TOKEN', data.token)
+          // setToken(response.data.token)
           commit('SET_TOKEN', 'admin')
           setToken('admin')
           resolve()

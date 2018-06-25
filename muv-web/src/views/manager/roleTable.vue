@@ -29,21 +29,45 @@
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
+
       <el-table-column align="center" :label="$t('role.roleCode')" min-width="65px">
         <template slot-scope="scope">
           <span>{{scope.row.code}}</span>
         </template>
       </el-table-column>
+
       <el-table-column align="center" :label="$t('role.roleName')" min-width="65px">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
+
       <el-table-column class-name="status-col" align="center" :label="$t('role.enable')" width="100px">
         <template slot-scope="scope">
           <el-tag :type="scope.row.enable | enableFilter">{{handleEnable(scope.row.enable)}}</el-tag>
         </template>
       </el-table-column>
+
+      <el-table-column align="center" :label="$t('role.actions')" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('table.edit')}}</el-button>
+          <el-button v-if="scope.row.enable!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{$t('table.delete')}}
+          </el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" :label="$t('role.createTime')" min-width="65px">
+        <template slot-scope="scope">
+          <span>{{scope.row.createTime}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" :label="$t('role.updateTime')" min-width="65px">
+        <template slot-scope="scope">
+          <span>{{scope.row.updateTime}}</span>
+        </template>
+      </el-table-column>
+
     </el-table>
 
     <div class="pagination-container">
@@ -58,10 +82,6 @@
         </el-form-item>
         <el-form-item :label="$t('role.roleName')" prop="name">
           <el-input v-model="temp.name"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('role.createTime')" prop="createTime">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="Please pick a date">
-          </el-date-picker>
         </el-form-item>
         <el-form-item :label="$t('role.enableImmediately')" prop="enable">
           <el-select class="filter-item" v-model="temp.enable" placeholder="Please select">
@@ -129,11 +149,8 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
         code: undefined,
         name: undefined,
-        createTime: new Date(),
-        updateTime: undefined,
         enable: true
       },
       dialogFormVisible: false,
@@ -212,8 +229,6 @@ export default {
         id: undefined,
         code: undefined,
         name: undefined,
-        createTime: new Date(),
-        updateTime: undefined,
         enable: true
       }
     },

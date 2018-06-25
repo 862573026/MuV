@@ -74,7 +74,7 @@ export default {
     return {
       loginInfo: {
         username: 'admin',
-        password: '123456',
+        password: '123',
         message: ''
       },
       loginRules: {
@@ -97,16 +97,28 @@ export default {
     handleLogin() {
       this.$refs.loginInfo.validate(valid => {
         if (valid) {
-          this.loading = false
+          this.loading = true
+
           this.$store.dispatch('LoginByPsw')
             .then(resp => {
-              this.loading = false
               this.loginInfo.message = resp
               this.$store.dispatch('LoginCommit', this.loginInfo)
+                .then(() => {
+                  this.loading = false
+                  this.$router.replace({ path: '' })
+                  // this.$router.push({ path: '' })
+                  console.log('登录成功')
+                })
             })
             .catch(err => {
               console.log(err)
             })
+          // this.$store.dispatch('LoginByUsername', this.loginInfo).then(() => {
+          //   this.loading = false
+          //   this.$router.push({ path: '/' })
+          // }).catch(() => {
+          //   this.loading = false
+          // })
         } else {
           console.log('error submit!!')
           return false

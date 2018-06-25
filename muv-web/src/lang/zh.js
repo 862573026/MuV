@@ -79,7 +79,8 @@ export default {
     createTime: '创建时间',
     updateTime: '更新时间',
     enableImmediately: '立即激活',
-    enable: '激活'
+    enable: '激活',
+    actions: '操作'
   },
   user: {
     id: '用户id',

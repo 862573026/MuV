@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import Qs from 'qs'
 
 // 获取tokenKey
 export function getTokenKey() {
@@ -12,7 +13,7 @@ export function loginByPsw(params) {
   return request({
     url: '/account/login',
     method: 'post',
-    data: params,
+    data: Qs.stringify(params),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

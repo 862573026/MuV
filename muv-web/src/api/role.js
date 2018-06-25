@@ -10,9 +10,9 @@ export function roleList(query) {
 
 export function addRole(data) {
   return request({
-    url: '/role/add',
+    url: '/role/addRole',
     method: 'post',
-    params: data
+    data: data
   })
 }
 
