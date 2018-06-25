@@ -17,15 +17,12 @@ import java.lang.ref.WeakReference;
 
 public abstract class BaseApp extends Application {
 
-//    private static BaseApp mApp;
-
     //为避免内存泄漏使用弱引用
     private WeakReference<Activity> mCurrentActivity;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        mApp = this;
         registerActivityLifecycleCallbacks();
 
         SPUtil.init(this);
@@ -78,7 +75,4 @@ public abstract class BaseApp extends Application {
         return mCurrentActivity;
     }
 
-//    public static BaseApp getApp() {
-//        return mApp;
-//    }
 }

@@ -17,6 +17,10 @@
 
 
         <activity android:name=".activity.ActivityRoot">
+
+        </activity>
+
+        <activity android:name=".focus.CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

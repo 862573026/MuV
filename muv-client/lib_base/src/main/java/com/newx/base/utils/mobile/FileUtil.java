@@ -15,7 +15,7 @@ public class FileUtil {
     /**
      * 检查SD卡是否存在
      */
-    private static boolean checkSdCard() {
+    public static boolean checkSdCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 

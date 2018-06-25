@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">lib_camera</string>
+    <string name="app_name">相机</string>
+
+    <!--自定义相机-->
+    <string name="tips_camera_not_exist">不存在相机设备</string>
+    <string name="topic_camera_flashlight_off">关闭</string>
+    <string name="topic_camera_flashlight_on">开启</string>
+    <string name="topic_camera_flashlight_auto">自动</string>
+    <string name="topic_camera_front">前镜头</string>
+    <string name="topic_camera_back">后镜头</string>
+    <string name="topic_camera_takephoto_failure">拍照竟然失败了！</string>
+    <string name="tips_camera_forbidden">相机被禁用 请修改应用权限</string>
+
+    <string name="tips_sdcard_notexist">SD卡不存在</string>
 </resources>
