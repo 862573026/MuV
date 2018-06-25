@@ -33,6 +33,8 @@ export default {
     dragTable: '拖拽Table',
     inlineEditTable: 'Table内编辑',
     complexTable: '综合Table',
+    roleTable: '角色列表',
+    userTable: '用户列表',
     treeTable: '树形表格',
     customTreeTable: '自定义树表',
     tab: 'Tab',
@@ -69,6 +71,21 @@ export default {
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
+  },
+  role: {
+    id: '角色id',
+    roleCode: '角色Code',
+    roleName: '角色名称',
+    createTime: '创建时间',
+    updateTime: '更新时间',
+    enableImmediately: '立即激活',
+    enable: '激活'
+  },
+  user: {
+    id: '用户id',
+    username: '用户名',
+    createTime: '创建时间',
+    updateTime: '最后更新'
   },
   documentation: {
     documentation: '文档',

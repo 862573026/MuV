@@ -48,8 +48,6 @@ const user = {
     LoginByPsw({ commit }) {
       return new Promise((resolve, reject) => {
         getTokenKey().then(response => {
-          // console.log(response)
-          // resolve(response)
           var message = response.data
           var success = message.success
           if (success === true) {
@@ -77,8 +75,9 @@ const user = {
         loginByPsw(params).then(response => {
           const data = response.data
           console.log(data)
-          // commit('SET_TOKEN', data.token)
-          // setToken(response.data.token)
+          // 暂时
+          commit('SET_TOKEN', 'admin')
+          setToken('admin')
           resolve()
         }).catch(error => {
           reject(error)

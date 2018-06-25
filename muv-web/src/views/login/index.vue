@@ -97,8 +97,7 @@ export default {
     handleLogin() {
       this.$refs.loginInfo.validate(valid => {
         if (valid) {
-          this.loading = true
-
+          this.loading = false
           this.$store.dispatch('LoginByPsw')
             .then(resp => {
               this.loading = false
@@ -108,12 +107,6 @@ export default {
             .catch(err => {
               console.log(err)
             })
-          // this.$store.dispatch('LoginByUsername', this.loginInfo).then(() => {
-          //   this.loading = false
-          //   this.$router.push({ path: '/' })
-          // }).catch(() => {
-          //   this.loading = false
-          // })
         } else {
           console.log('error submit!!')
           return false
