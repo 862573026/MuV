@@ -14,13 +14,13 @@ import com.newx.muv.service.UserService;
 import com.newx.muv.shiro.filter.ShiroFilterChainManager;
 import com.newx.muv.util.RequestResponseUtil;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -145,13 +145,18 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "添加角色", httpMethod = "POST")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public Message addRole(HttpServletRequest request) {
-        Role role = null;
+        Role role = new Role();
         LOGGER.info(role.toString());
-        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
+        Map<String, String> paramsMap = RequestResponseUtil.getRequestBodyMap(request);
         String code = paramsMap.get("code");
         String name = paramsMap.get("name");
-        String createTime = paramsMap.get("createTime");
         String enable = paramsMap.get("enable");
+        role.setCode(code);
+        role.setName(name);
+        Date date = new Date();
+        role.setCreateTime(date);
+        role.setUpdateTime(date);
+        role.setEnable(Boolean.parseBoolean(enable));
 
         boolean flag = roleService.addRole(role);
         if (flag) {
@@ -160,6 +165,20 @@ public class RoleController extends BasicAction {
             return new Message().error(RespCode.ERROR, "add role fail");
         }
     }
+
+    @ApiOperation(value = "添加角色-测试", httpMethod = "POST")
+    @RequestMapping(path = "/addRole", method = RequestMethod.POST)
+    public Message addRoles(@RequestBody Role role) {
+        LOGGER.info(role.toString());
+
+        boolean flag = roleService.addRole(role);
+        if (flag) {
+            return new Message().ok(RespCode.OK, "add role success");
+        } else {
+            return new Message().error(RespCode.ERROR, "add role fail");
+        }
+    }
+
 
     @ApiOperation(value = "更新角色", httpMethod = "PUT")
     @PutMapping("")
