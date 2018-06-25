@@ -3,6 +3,7 @@ package com.newx.muv.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.newx.muv.common.RespCode;
+import com.newx.muv.common.RespKey;
 import com.newx.muv.entity.bo.Resource;
 import com.newx.muv.entity.bo.Role;
 import com.newx.muv.entity.bo.User;
@@ -11,7 +12,9 @@ import com.newx.muv.service.ResourceService;
 import com.newx.muv.service.RoleService;
 import com.newx.muv.service.UserService;
 import com.newx.muv.shiro.filter.ShiroFilterChainManager;
+import com.newx.muv.util.RequestResponseUtil;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +48,14 @@ public class RoleController extends BasicAction {
     private ShiroFilterChainManager shiroFilterChainManager;
 
     @SuppressWarnings("unchecked")
-    @ApiOperation(value = "获取角色关联的(roleId)对应用户列表",httpMethod = "GET")
+    @ApiOperation(value = "获取角色关联的(roleId)对应用户列表", httpMethod = "GET")
     @GetMapping("user/{roleId}/{currentPage}/{pageSize}")
     public Message getUserListByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<User> users = userService.getUserListByRoleId(roleId);
-        users.forEach(user->user.setPassword(null));
+        users.forEach(user -> user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
-        return new Message().ok(RespCode.OK,"return users success").addData("data",pageInfo);
+        return new Message().ok(RespCode.OK, "return users success").addData("data", pageInfo);
     }
 
     @SuppressWarnings("unchecked")
@@ -107,45 +110,54 @@ public class RoleController extends BasicAction {
         return new Message().ok(RespCode.OK, "return api success").addData("data", pageInfo);
     }
 
-    @ApiOperation(value = "授权资源给角色",httpMethod = "POST")
+    @ApiOperation(value = "授权资源给角色", httpMethod = "POST")
     @PostMapping("/authority/resource")
     public Message authorityRoleResource(HttpServletRequest request) {
-        Map<String,String> map = getRequestParameter(request);
+        Map<String, String> map = getRequestParameter(request);
         int roleId = Integer.valueOf(map.get("roleId"));
         int resourceId = Integer.valueOf(map.get("resourceId"));
-        boolean flag = roleService.authorityRoleResource(roleId,resourceId);
+        boolean flag = roleService.authorityRoleResource(roleId, resourceId);
         shiroFilterChainManager.reloadFilterChain();
-        return flag ? new Message().ok(RespCode.OK,"authority success") : new Message().error(RespCode.ERROR,"authority error");
+        return flag ? new Message().ok(RespCode.OK, "authority success") : new Message().error(RespCode.ERROR, "authority error");
     }
 
-    @ApiOperation(value = "删除对应的角色的授权资源",httpMethod = "DELETE")
+    @ApiOperation(value = "删除对应的角色的授权资源", httpMethod = "DELETE")
     @DeleteMapping("/authority/resource/{roleId}/{resourceId}")
-    public Message deleteAuthorityRoleResource(@PathVariable Integer roleId, @PathVariable Integer resourceId ) {
-        boolean flag = roleService.deleteAuthorityRoleResource(roleId,resourceId);
+    public Message deleteAuthorityRoleResource(@PathVariable Integer roleId, @PathVariable Integer resourceId) {
+        boolean flag = roleService.deleteAuthorityRoleResource(roleId, resourceId);
         shiroFilterChainManager.reloadFilterChain();
-        return flag ? new Message().ok(RespCode.OK,"authority success") : new Message().error(RespCode.ERROR,"authority error");
+        return flag ? new Message().ok(RespCode.OK, "authority success") : new Message().error(RespCode.ERROR, "authority error");
     }
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色LIST", httpMethod = "GET")
-    @GetMapping("{currentPage}/{pageSize}")
-    public Message getRoles(@PathVariable Integer currentPage, @PathVariable Integer pageSize) {
-
-        PageHelper.startPage(currentPage, pageSize);
+    @GetMapping("/list")
+    public Message getRoles(HttpServletRequest request) {
+        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
+        int pageIndex = Integer.parseInt(paramsMap.get("pageIndex"));
+        int pageSize = Integer.parseInt(paramsMap.get("pageSize"));
+        PageHelper.startPage(pageIndex, pageSize);
         List<Role> roles = roleService.getRoleList();
         PageInfo pageInfo = new PageInfo(roles);
-        return new Message().ok(RespCode.OK, "return roles success").addData("data", pageInfo);
+        return new Message().ok(RespCode.OK, "return roles success").addData(RespKey.PAGE_INFO, pageInfo);
     }
 
     @ApiOperation(value = "添加角色", httpMethod = "POST")
-    @PostMapping("")
-    public Message addRole(@RequestBody Role role) {
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public Message addRole(HttpServletRequest request) {
+        Role role = null;
         LOGGER.info(role.toString());
+        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
+        String code = paramsMap.get("code");
+        String name = paramsMap.get("name");
+        String createTime = paramsMap.get("createTime");
+        String enable = paramsMap.get("enable");
+
         boolean flag = roleService.addRole(role);
         if (flag) {
             return new Message().ok(RespCode.OK, "add role success");
         } else {
-            return new Message().error(111, "add role fail");
+            return new Message().error(RespCode.ERROR, "add role fail");
         }
     }
 

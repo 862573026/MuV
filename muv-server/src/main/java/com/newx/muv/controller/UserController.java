@@ -3,10 +3,12 @@ package com.newx.muv.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.newx.muv.common.RespCode;
+import com.newx.muv.common.RespKey;
 import com.newx.muv.entity.bo.User;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.UserService;
 import com.newx.muv.util.JsonWebTokenUtil;
+import com.newx.muv.util.RequestResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,14 +52,16 @@ public class UserController extends BasicAction{
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取用户列表",notes = "GET获取所有注册用户的信息列表")
-    @GetMapping("/list/{start}/{limit}")
-    public Message getUserList(@PathVariable Integer start, @PathVariable Integer limit) {
-
-        PageHelper.startPage(start,limit);
+    @GetMapping("/list")
+    public Message getUserList(HttpServletRequest request) {
+        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
+        int pageIndex = Integer.parseInt(paramsMap.get("pageIndex"));
+        int pageSize = Integer.parseInt(paramsMap.get("pageSize"));
+        PageHelper.startPage(pageIndex, pageSize);
         List<User> users = userService.getUserList();
         users.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
-        return new Message().ok(RespCode.OK,"return user list success").addData("pageInfo",pageInfo);
+        return new Message().ok(RespCode.OK, "return user list success").addData(RespKey.PAGE_INFO, pageInfo);
     }
 
     @ApiOperation(value = "给用户授权添加角色",httpMethod = "POST")

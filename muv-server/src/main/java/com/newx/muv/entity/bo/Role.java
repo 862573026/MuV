@@ -9,11 +9,11 @@ public class Role {
 
     private String name;
 
-    private Short status;
-
     private Date createTime;
 
     private Date updateTime;
+
+    private boolean enable;
 
     public Integer getId() {
         return id;
@@ -39,14 +39,6 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
-    public Short getStatus() {
-        return status;
-    }
-
-    public void setStatus(Short status) {
-        this.status = status;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -61,5 +53,13 @@ public class Role {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
