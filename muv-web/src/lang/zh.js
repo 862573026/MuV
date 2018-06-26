@@ -3,6 +3,7 @@ export default {
     dashboard: '首页',
     userManager: '用户管理',
     logQuery: '日志查询',
+    apkManager: 'Apk管理',
     accountLog: '用户日志',
     introduction: '简述',
     documentation: '文档',
@@ -62,7 +63,8 @@ export default {
   base: {
     yes: '是',
     no: '否',
-    operateSuccess: '操作成功'
+    operateSuccess: '操作成功',
+    dropTip: '拖动文件到这里'
   },
   navbar: {
     logOut: '退出登录',
@@ -104,6 +106,15 @@ export default {
     succeed: '成功',
     message: '消息',
     createTime: '创建时间'
+  },
+  apk: {
+    id: 'ApkId',
+    name: '名称',
+    version: '版本',
+    importance: '重要性',
+    path: '路径',
+    description: '描述',
+    enable: '激活'
   },
   documentation: {
     documentation: '文档',

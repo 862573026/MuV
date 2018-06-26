@@ -70,6 +70,17 @@ export const constantRouterMap = [
     ]
   },
   {
+    // apk管理
+    path: '/apkManager',
+    component: Layout,
+    children: [{
+      path: 'apkManager',
+      component: () => import('@/views/manager/apkManager'),
+      name: 'apkManager',
+      meta: { title: 'apkManager', icon: 'documentation', noCache: true }
+    }]
+  },
+  {
     path: '/documentation',
     component: Layout,
     redirect: '/documentation/index',
