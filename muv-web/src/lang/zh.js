@@ -1,6 +1,9 @@
 export default {
   route: {
     dashboard: '首页',
+    userManager: '用户管理',
+    logQuery: '日志查询',
+    accountLog: '用户日志',
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',
@@ -56,6 +59,11 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化'
   },
+  base: {
+    yes: '是',
+    no: '否',
+    operateSuccess: '操作成功'
+  },
   navbar: {
     logOut: '退出登录',
     dashboard: '首页',
@@ -75,18 +83,27 @@ export default {
   role: {
     id: '角色id',
     roleCode: '角色Code',
-    roleName: '角色名称',
-    createTime: '创建时间',
-    updateTime: '更新时间',
+    roleDescription: '角色描述',
     enableImmediately: '立即激活',
     enable: '激活',
-    actions: '操作'
+    actions: '操作',
+    createTime: '创建时间',
+    updateTime: '最后更新'
   },
   user: {
     id: '用户id',
     username: '用户名',
     createTime: '创建时间',
     updateTime: '最后更新'
+  },
+  log: {
+    id: '日志id',
+    logName: '名称',
+    userId: '用户id',
+    ip: 'IP',
+    succeed: '成功',
+    message: '消息',
+    createTime: '创建时间'
   },
   documentation: {
     documentation: '文档',

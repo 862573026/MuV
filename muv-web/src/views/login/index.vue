@@ -105,9 +105,7 @@ export default {
               this.$store.dispatch('LoginCommit', this.loginInfo)
                 .then(() => {
                   this.loading = false
-                  this.$router.replace({ path: '' })
-                  // this.$router.push({ path: '' })
-                  console.log('登录成功')
+                  this.$router.push({ path: '' })
                 })
             })
             .catch(err => {

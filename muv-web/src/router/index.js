@@ -41,6 +41,35 @@ export const constantRouterMap = [
     }]
   },
   {
+    // 用户管理
+    path: '/userManager',
+    component: Layout,
+    redirect: '/userManager/user-table',
+    name: 'userManager',
+    meta: {
+      title: 'userManager',
+      icon: 'user'
+    },
+    children: [
+      { path: 'user-table', component: () => import('@/views/manager/userTable'), name: 'userTable', meta: { title: 'userTable' }},
+      { path: 'role-table', component: () => import('@/views/manager/roleTable'), name: 'roleTable', meta: { title: 'roleTable' }}
+    ]
+  },
+  {
+    // 日志查看
+    path: '/logQuery',
+    component: Layout,
+    redirect: '/logQuery/account-log',
+    name: 'logQuery',
+    meta: {
+      title: 'logQuery',
+      icon: 'component'
+    },
+    children: [
+      { path: 'account-log', component: () => import('@/views/manager/accountLogTable'), name: 'accountLog', meta: { title: 'accountLog', icon: 'documentation' }}
+    ]
+  },
+  {
     path: '/documentation',
     component: Layout,
     redirect: '/documentation/index',
@@ -163,7 +192,6 @@ export const asyncRouterMap = [
       meta: { title: 'tab', icon: 'tab' }
     }]
   },
-
   {
     path: '/table',
     component: Layout,
@@ -179,13 +207,9 @@ export const asyncRouterMap = [
       { path: 'inline-edit-table', component: () => import('@/views/table/inlineEditTable'), name: 'inlineEditTable', meta: { title: 'inlineEditTable' }},
       { path: 'tree-table', component: () => import('@/views/table/treeTable/treeTable'), name: 'treeTableDemo', meta: { title: 'treeTable' }},
       { path: 'custom-tree-table', component: () => import('@/views/table/treeTable/customTreeTable'), name: 'customTreeTableDemo', meta: { title: 'customTreeTable' }},
-      { path: 'complex-table', component: () => import('@/views/table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }},
-      { path: 'user-table', component: () => import('@/views/manager/userTable'), name: 'userTable', meta: { title: '用户列表' }},
-      { path: 'role-table', component: () => import('@/views/manager/roleTable'), name: 'roleTable', meta: { title: '角色列表' }}
-
+      { path: 'complex-table', component: () => import('@/views/table/complexTable'), name: 'complexTable', meta: { title: 'complexTable' }}
     ]
   },
-
   {
     path: '/example',
     component: Layout,

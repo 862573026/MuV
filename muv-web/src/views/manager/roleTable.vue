@@ -17,51 +17,54 @@
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
+      <!-- 添加 -->
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.add')}}</el-button>
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('table.export')}}</el-button>
       <el-checkbox class="filter-item" style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">{{$t('table.reviewer')}}</el-checkbox>
     </div>
 
+    <!--角色展示表-->
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
+      <!--ID-->
       <el-table-column align="center" :label="$t('role.id')" width="65">
         <template slot-scope="scope">
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
-
+      <!--代码-->
       <el-table-column align="center" :label="$t('role.roleCode')" min-width="65px">
         <template slot-scope="scope">
           <span>{{scope.row.code}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" :label="$t('role.roleName')" min-width="65px">
+      <!--描述-->
+      <el-table-column align="center" :label="$t('role.roleDescription')" min-width="65px">
         <template slot-scope="scope">
-          <span>{{scope.row.name}}</span>
+          <span>{{scope.row.description}}</span>
         </template>
       </el-table-column>
-
+      <!--状态-->
       <el-table-column class-name="status-col" align="center" :label="$t('role.enable')" width="100px">
         <template slot-scope="scope">
           <el-tag :type="scope.row.enable | enableFilter">{{handleEnable(scope.row.enable)}}</el-tag>
         </template>
       </el-table-column>
-
+      <!--编辑-->
       <el-table-column align="center" :label="$t('role.actions')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('table.edit')}}</el-button>
-          <el-button v-if="scope.row.enable!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{$t('table.delete')}}
+          <el-button v-if="scope.row.enable!='deleted'" size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('table.delete')}}
           </el-button>
         </template>
       </el-table-column>
-
+      <!--创建时间-->
       <el-table-column align="center" :label="$t('role.createTime')" min-width="65px">
         <template slot-scope="scope">
           <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
-
+      <!--更新时间-->
       <el-table-column align="center" :label="$t('role.updateTime')" min-width="65px">
         <template slot-scope="scope">
           <span>{{scope.row.updateTime}}</span>
@@ -71,19 +74,21 @@
     </el-table>
 
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.pageIndex" :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
         <el-form-item :label="$t('role.roleCode')" prop="code">
-          <el-input v-model="temp.code"></el-input>
+          <span v-if="dialogStatus=='delete'">{{temp.code}}</span>
+          <el-input v-else v-model="temp.code"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('role.roleName')" prop="name">
-          <el-input v-model="temp.name"></el-input>
+        <el-form-item :label="$t('role.roleDescription')" prop="name">
+          <span v-if="dialogStatus=='delete'">{{temp.description}}</span>
+          <el-input v-else v-model="temp.description"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('role.enableImmediately')" prop="enable">
+        <el-form-item v-if="dialogStatus!='delete'" :label="$t('role.enableImmediately')" prop="enable">
           <el-select class="filter-item" v-model="temp.enable" placeholder="Please select">
             <el-option v-for="item in  enableOptions" :key="item.key" :label="item.display_name"
                        :value="item.key">
@@ -94,7 +99,8 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
+        <el-button v-else-if="dialogStatus=='update'" type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
+        <el-button v-else-if="dialogStatus=='delete'" type="primary" @click="deleteData">{{$t('table.confirm')}}</el-button>
       </div>
     </el-dialog>
 
@@ -112,21 +118,9 @@
 </template>
 
 <script>
-import { fetchPv, updateArticle } from '@/api/article'
-import { roleList, addRole } from '@/api/role'
+import { roleList, addRole, updateRole, deleteRole } from '@/api/role'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
-
-const enableOptions = [
-  { key: true, display_name: '是' },
-  { key: false, display_name: '否' }
-]
-
-// arr to obj ,such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = enableOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
 
 export default {
   name: 'roleTable',
@@ -144,29 +138,37 @@ export default {
         pageSize: 20
       },
       importanceOptions: [1, 2, 3],
-      enableOptions,
+      enableOptions: [
+        { key: true, display_name: this.$t('base.yes') },
+        { key: false, display_name: this.$t('base.no') }
+      ],
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
         code: undefined,
-        name: undefined,
+        description: undefined,
         enable: true
       },
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
         update: 'Edit',
-        create: 'Create'
+        create: 'Create',
+        delete: 'Delete'
       },
       dialogPvVisible: false,
       pvData: [],
       rules: {
         code: [{ required: true, message: 'title is required', trigger: 'blur' }],
-        name: [{ required: true, message: 'title is required', trigger: 'blur' }],
-        enable: [{ required: true, message: 'type is required', trigger: 'change' }]
+        description: [{ required: true, message: 'description is required', trigger: 'blur' }],
+        enable: [{ required: true, message: 'enable is required', trigger: 'change' }]
       },
       downloadLoading: false
+    }
+  },
+  computed: {
+    yes() {
+      return this.$t('yes')
     }
   },
   filters: {
@@ -176,9 +178,6 @@ export default {
         false: 'danger'
       }
       return enableMap[status]
-    },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
     }
   },
   created() {
@@ -188,8 +187,6 @@ export default {
     getList() {
       this.listLoading = true
       roleList(this.listQuery).then(response => {
-        // this.list = response.data.items
-        // this.total = response.data.total
         const resp = response.data // 返回数据
         this.list = resp.data.pageInfo.list
         this.total = resp.data.pageInfo.total
@@ -200,26 +197,26 @@ export default {
     },
     handleEnable(enable) {
       if (enable) {
-        return '是'
+        return this.$t('base.yes')
       } else {
-        return '否'
+        return this.$t('base.no')
       }
     },
     handleFilter() {
-      this.listQuery.page = 1
+      this.listQuery.pageIndex = 1
       this.getList()
     },
     handleSizeChange(val) {
-      this.listQuery.limit = val
+      this.listQuery.pageSize = val
       this.getList()
     },
     handleCurrentChange(val) {
-      this.listQuery.page = val
+      this.listQuery.pageIndex = val
       this.getList()
     },
     handleModifyStatus(row, status) {
       this.$message({
-        message: '操作成功',
+        message: this.$t('base.operateSuccess'),
         type: 'success'
       })
       row.status = status
@@ -228,7 +225,7 @@ export default {
       this.temp = {
         id: undefined,
         code: undefined,
-        name: undefined,
+        description: undefined,
         enable: true
       }
     },
@@ -244,7 +241,8 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           addRole(this.temp).then(() => {
-            this.list.unshift(this.temp)
+            // this.list.unshift(this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -258,7 +256,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -269,15 +266,8 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
+          updateRole(tempData).then(() => {
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -290,26 +280,40 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$notify({
-        title: '成功',
-        message: '删除成功',
-        type: 'success',
-        duration: 2000
+      this.temp = Object.assign({}, row) // copy obj
+      this.dialogStatus = 'delete'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
       })
-      const index = this.list.indexOf(row)
-      this.list.splice(index, 1)
     },
-    handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
-      })
+    deleteData() {
+      const id = this.temp.id
+      if (id !== undefined) {
+        deleteRole(id).then(() => {
+          this.getList()
+          this.dialogFormVisible = false
+          this.$notify({
+            title: '成功',
+            message: '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+        })
+      } else {
+        this.$notify({
+          title: '失败',
+          message: '删除失败',
+          type: 'error',
+          duration: 2000
+        })
+      }
     },
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['id', 'roleCode', 'roleDescription', 'enable', 'createTime', 'updateTime']
+        const filterVal = ['id', 'roleCode', 'roleDescription', 'enable', 'createTime', 'updateTime']
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({
           header: tHeader,

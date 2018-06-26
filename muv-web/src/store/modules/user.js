@@ -67,12 +67,9 @@ const user = {
       const message = loginInfo.message
       var tokenKey = message.data.tokenKey
       var password = loginInfo.password.trim()
-      console.log('加密:' + tokenKey + ' ' + password)
       tokenKey = CryptoJS.enc.Utf8.parse(tokenKey)
-      console.log('加密:' + tokenKey + ' ' + password)
       // AES CBC加密模式
       password = CryptoJS.AES.encrypt(password, tokenKey, { iv: tokenKey, mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }).toString()
-      console.log('加密:' + tokenKey + ' ' + password)
       var params = {
         appId: username,
         password: password,
