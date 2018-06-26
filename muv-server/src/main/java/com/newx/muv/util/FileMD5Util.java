@@ -1,4 +1,4 @@
-package com.newx.muv.upload.utils;
+package com.newx.muv.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.newx.muv.upload.param;
+package com.newx.muv.entity.ao;
 
 
 import org.springframework.web.multipart.MultipartFile;

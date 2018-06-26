@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AuthController {
-
-
     @ApiOperation(value = "jwt验证", notes = "jwt验证")
     @PostMapping("/jwt/auth")
     public Message auth() {

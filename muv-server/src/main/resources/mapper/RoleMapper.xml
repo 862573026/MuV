@@ -4,13 +4,13 @@
   <resultMap id="BaseResultMap" type="com.newx.muv.entity.bo.Role">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="CODE" jdbcType="VARCHAR" property="code" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="ENABLE" jdbcType="SMALLINT" property="enable" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, CODE, NAME, ENABLE, CREATE_TIME, UPDATE_TIME
+    ID, CODE, DESCRIPTION, ENABLE, CREATE_TIME, UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,9 +23,9 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.newx.muv.entity.bo.Role" useGeneratedKeys="true">
-    insert into role (CODE, NAME, ENABLE,
+    insert into role (CODE, DESCRIPTION, ENABLE,
       CREATE_TIME, UPDATE_TIME)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enable,jdbcType=SMALLINT},
+    values (#{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{enable,jdbcType=SMALLINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.newx.muv.entity.bo.Role" useGeneratedKeys="true">
@@ -34,8 +34,8 @@
       <if test="code != null">
         CODE,
       </if>
-      <if test="name != null">
-        NAME,
+      <if test="description != null">
+        DESCRIPTION,
       </if>
       <if test="enable != null">
         ENABLE,
@@ -51,8 +51,8 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="enable != null">
         #{enable,jdbcType=SMALLINT},
@@ -71,8 +71,8 @@
       <if test="code != null">
         CODE = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
       </if>
       <if test="enable != null">
         ENABLE = #{enable,jdbcType=SMALLINT},
@@ -89,7 +89,7 @@
   <update id="updateByPrimaryKey" parameterType="com.newx.muv.entity.bo.Role">
     update role
     set CODE = #{code,jdbcType=VARCHAR},
-      NAME = #{name,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
       ENABLE = #{enable,jdbcType=SMALLINT},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}

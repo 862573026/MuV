@@ -2,6 +2,7 @@ package com.newx.muv.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.newx.muv.support.XssSqlHttpServletRequestWrapper;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -165,6 +166,16 @@ public class RequestResponseUtil {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 分页帮助
+     */
+    public static void pageHelper(ServletRequest request){
+        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
+        int pageIndex = Integer.parseInt(paramsMap.get("pageIndex"));
+        int pageSize = Integer.parseInt(paramsMap.get("pageSize"));
+        PageHelper.startPage(pageIndex, pageSize);
     }
 
 }

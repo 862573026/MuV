@@ -1,7 +1,10 @@
 package com.newx.muv.dao;
 
 import com.newx.muv.entity.bo.UserRole;
+import com.newx.muv.entity.bo.UserRoleInfo;
 import org.springframework.dao.DataAccessException;
+
+import java.util.List;
 
 public interface UserRoleMapper {
 
@@ -18,4 +21,6 @@ public interface UserRoleMapper {
     int updateByPrimaryKey(UserRole record) throws DataAccessException;
 
     int deleteByUniqueKey(UserRole record) throws DataAccessException;
+
+    List<UserRoleInfo> getUserRoleByUid(Integer uid) throws DataAccessException;
 }

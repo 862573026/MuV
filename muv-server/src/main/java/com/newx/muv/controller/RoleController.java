@@ -133,10 +133,7 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "获取角色LIST", httpMethod = "GET")
     @GetMapping("/list")
     public Message getRoles(HttpServletRequest request) {
-        Map<String, String> paramsMap = RequestResponseUtil.getRequestParameters(request);
-        int pageIndex = Integer.parseInt(paramsMap.get("pageIndex"));
-        int pageSize = Integer.parseInt(paramsMap.get("pageSize"));
-        PageHelper.startPage(pageIndex, pageSize);
+        RequestResponseUtil.pageHelper(request);
         List<Role> roles = roleService.getRoleList();
         PageInfo pageInfo = new PageInfo(roles);
         return new Message().ok(RespCode.OK, "return roles success").addData(RespKey.PAGE_INFO, pageInfo);
@@ -144,30 +141,6 @@ public class RoleController extends BasicAction {
 
     @ApiOperation(value = "添加角色", httpMethod = "POST")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public Message addRole(HttpServletRequest request) {
-        Role role = new Role();
-        LOGGER.info(role.toString());
-        Map<String, String> paramsMap = RequestResponseUtil.getRequestBodyMap(request);
-        String code = paramsMap.get("code");
-        String name = paramsMap.get("name");
-        String enable = paramsMap.get("enable");
-        role.setCode(code);
-        role.setName(name);
-        Date date = new Date();
-        role.setCreateTime(date);
-        role.setUpdateTime(date);
-        role.setEnable(Boolean.parseBoolean(enable));
-
-        boolean flag = roleService.addRole(role);
-        if (flag) {
-            return new Message().ok(RespCode.OK, "add role success");
-        } else {
-            return new Message().error(RespCode.ERROR, "add role fail");
-        }
-    }
-
-    @ApiOperation(value = "添加角色-测试", httpMethod = "POST")
-    @RequestMapping(path = "/addRole", method = RequestMethod.POST)
     public Message addRoles(@RequestBody Role role) {
         LOGGER.info(role.toString());
 
@@ -181,7 +154,7 @@ public class RoleController extends BasicAction {
 
 
     @ApiOperation(value = "更新角色", httpMethod = "PUT")
-    @PutMapping("")
+    @PutMapping("/update")
     public Message updateRole(@RequestBody Role role) {
         LOGGER.info(role.toString());
         boolean flag = roleService.updateRole(role);
@@ -193,7 +166,7 @@ public class RoleController extends BasicAction {
     }
 
     @ApiOperation(value = "根据角色ID删除角色", httpMethod = "DELETE")
-    @DeleteMapping("{roleId}")
+    @DeleteMapping("/delete/{roleId}")
     public Message deleteRoleByRoleId(@PathVariable Integer roleId) {
         LOGGER.info(roleId.toString() + "==========");
         boolean flag = roleService.deleteRoleByRoleId(roleId);

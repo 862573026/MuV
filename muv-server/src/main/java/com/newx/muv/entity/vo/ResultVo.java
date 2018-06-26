@@ -1,4 +1,4 @@
-package com.newx.muv.upload.vo;
+package com.newx.muv.entity.vo;
 
 /**
  * 统一返回结果pojo

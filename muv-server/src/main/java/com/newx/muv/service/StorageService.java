@@ -1,5 +1,4 @@
-package com.newx.muv.upload.service;
-
+package com.newx.muv.service;
 
 
 import javax.servlet.ServletRequest;
@@ -30,7 +29,6 @@ public interface StorageService {
      * @throws IOException
      */
 
-    void uploadFileByMappedByteBuffer(ServletRequest request) throws IOException;
-
+    void uploadFileByMappedByteBuffer(ServletRequest request, String uploadDir) throws IOException;
 
 }

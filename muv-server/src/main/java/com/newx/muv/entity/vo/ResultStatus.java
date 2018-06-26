@@ -1,4 +1,4 @@
-package com.newx.muv.upload.vo;
+package com.newx.muv.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

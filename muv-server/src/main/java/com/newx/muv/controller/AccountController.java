@@ -3,6 +3,7 @@ package com.newx.muv.controller;
 import com.newx.muv.common.Constant;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.entity.bo.User;
+import com.newx.muv.entity.bo.UserRoleInfo;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.AccountService;
 import com.newx.muv.service.UserService;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -70,10 +72,14 @@ public class AccountController extends BasicAction {
         redisTemplate.opsForValue().set(Constant.JWT_PREFIX + user.getUid(), jwt, refreshPeriodTime, TimeUnit.SECONDS);
         user.setPassword(null);
         user.setSalt(null);
+        List<UserRoleInfo> listRole = userService.getUserRoleByUid(Integer.parseInt(user.getUid()));
 
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "登录成功"));
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(user.getUid(), IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "登录成功"));
 
-        return new Message().ok(1003, "issue jwt success").addData("jwt", jwt).addData("user", user);
+        return new Message().ok(1003, "issue jwt success")
+                .addData("jwt", jwt)
+                .addData("user", user)
+                .addData("role", listRole);
     }
 
     /* *
@@ -102,7 +108,7 @@ public class AccountController extends BasicAction {
         user.setUsername(username);
 
         // 从Redis取出密码传输加密解密秘钥
-        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey);
+        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase() + userKey);
         String realPassword = AESUtil.aesDecode(password, tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
@@ -145,17 +151,17 @@ public class AccountController extends BasicAction {
     @PostMapping("/logout")
     public Message logout(HttpServletRequest request) {
         SecurityUtils.getSubject().logout();
-        Map<String,String > map = getRequestHeader(request);
+        Map<String, String> map = getRequestHeader(request);
         String uid = map.get("uid");
         if (StringUtils.isEmpty(uid)) {
             return new Message().error(RespCode.ERROR, "用户未登录无法登出");
         }
-        String jwt = redisTemplate.opsForValue().get(Constant.JWT_PREFIX+uid);
+        String jwt = redisTemplate.opsForValue().get(Constant.JWT_PREFIX + uid);
         if (StringUtils.isEmpty(jwt)) {
             return new Message().error(RespCode.ERROR, "用户未登录无法登出");
         }
-        redisTemplate.opsForValue().getOperations().delete(Constant.JWT_PREFIX+uid);
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.exitLog(uid,request.getRemoteAddr(),(short)1,""));
+        redisTemplate.opsForValue().getOperations().delete(Constant.JWT_PREFIX + uid);
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.exitLog(uid, request.getRemoteAddr(), (short) 1, ""));
 
         return new Message().ok(RespCode.OK, "用户退出成功");
     }

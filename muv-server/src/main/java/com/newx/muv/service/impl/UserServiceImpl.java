@@ -4,6 +4,7 @@ import com.newx.muv.dao.UserMapper;
 import com.newx.muv.dao.UserRoleMapper;
 import com.newx.muv.entity.bo.User;
 import com.newx.muv.entity.bo.UserRole;
+import com.newx.muv.entity.bo.UserRoleInfo;
 import com.newx.muv.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleMapper mUserRoleMapper;
+
+//    @Autowired
+//    private VUserRoleMapper mVUserRoleMapper;
 
     @Override
     public String loadAccountRole(String appId) throws DataAccessException {
@@ -70,5 +74,10 @@ public class UserServiceImpl implements UserService {
     public List<User> getNotAuthorityUserListByRoleId(Integer roleId) throws DataAccessException {
 
         return userMapper.selectUserListExtendByRoleId(roleId);
+    }
+
+    @Override
+    public List<UserRoleInfo> getUserRoleByUid(Integer uId) {
+        return mUserRoleMapper.getUserRoleByUid(uId);
     }
 }

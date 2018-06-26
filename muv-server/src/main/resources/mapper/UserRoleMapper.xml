@@ -8,8 +8,19 @@
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
+  <resultMap id="RoleResultMap" type="com.newx.muv.entity.bo.UserRoleInfo">
+    <id column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     ID, USER_ID, ROLE_ID, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <sql id="Role_Column_List">
+    USER_ID, ROLE_ID, CODE, DESCRIPTION
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -17,6 +28,14 @@
     from user_role
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <!--根据userId查询角色-->
+  <select id="getUserRoleByUid" parameterType="java.lang.Integer" resultMap="RoleResultMap">
+    select
+    <include refid="Role_Column_List" />
+    from view_user_role
+    where USER_ID = #{id,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_role
     where ID = #{id,jdbcType=INTEGER}

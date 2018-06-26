@@ -1,10 +1,9 @@
-package com.newx.muv.upload.service.impl;
+package com.newx.muv.service.impl;
 
+import com.newx.muv.common.Constant;
 import com.newx.muv.test.FileSplitUtil;
-import com.newx.muv.upload.param.MultipartFileParam;
-import com.newx.muv.upload.service.StorageService;
-import com.newx.muv.upload.utils.Constants;
-import com.newx.muv.upload.utils.FileMD5Util;
+import com.newx.muv.service.StorageService;
+import com.newx.muv.util.FileMD5Util;
 import com.newx.muv.util.RequestResponseUtil;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletRequest;
@@ -30,19 +28,19 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 /**
- * Created by 超文 on 2017/5/2.
+ * Created by NewX on 2017/5/2.
  */
 @Service
 public class StorageServiceImpl implements StorageService {
 
     private final Logger logger = LoggerFactory.getLogger(StorageServiceImpl.class);
-    // 保存文件的根目录
-    private Path rootPath;
+    // 保存文件的根目录 - 项目配置
+    private final Path rootPath;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    private final String uploadDir = "/tmp/";
+    private final String tempDir = "/tmp/";
 
     @Autowired
     public StorageServiceImpl(@Value("${breakpoint.upload.dir}") String location) {
@@ -53,8 +51,8 @@ public class StorageServiceImpl implements StorageService {
     public void deleteAll() {
         logger.info("开发初始化清理数据，start");
         FileSystemUtils.deleteRecursively(rootPath.toFile());
-        redisTemplate.delete(Constants.FILE_UPLOAD_STATUS);
-        redisTemplate.delete(Constants.FILE_MD5_KEY);
+        redisTemplate.delete(Constant.FILE_UPLOAD_STATUS);
+        redisTemplate.delete(Constant.FILE_MD5_KEY);
         logger.info("开发初始化清理数据，end");
     }
 
@@ -69,17 +67,22 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-
     @Override
-    public void uploadFileByMappedByteBuffer(ServletRequest request) throws IOException {
+    public void uploadFileByMappedByteBuffer(ServletRequest request, String uploadDir) throws IOException {
         Map<String, String> paramMap = RequestResponseUtil.getRequestParameters(request);
         MultipartFile file = RequestResponseUtil.getRequestMultiParameters(request, "file");
 
         String fileName = paramMap.get("name");
         String md5 = paramMap.get("md5");
 
-        String uploadDirPath = rootPath +"/"+ md5;
-        String uploadDirTmpPath = uploadDirPath + uploadDir;
+        StringBuffer sb = new StringBuffer();
+        sb.append(rootPath);
+        if (null != uploadDir) {
+            sb.append("/").append(uploadDir);
+        }
+        sb.append("/").append(md5);
+        String uploadDirPath = sb.toString();
+        String uploadDirTmpPath = uploadDirPath + tempDir;
         String tempFileName = file.getOriginalFilename();
         File tmpDir = new File(uploadDirTmpPath);
         File tmpFile = new File(uploadDirTmpPath, tempFileName);
@@ -103,6 +106,10 @@ public class StorageServiceImpl implements StorageService {
         if (isOk) {
             FileSplitUtil.merge(uploadDirTmpPath, uploadDirPath, fileName);
             boolean flag = renameFile(tmpFile, fileName);
+            // 重命名后删除临时的分片文件
+            if (flag) {
+                com.newx.muv.util.FileUtils.deleteDir(uploadDirTmpPath);
+            }
         }
     }
 
@@ -137,15 +144,15 @@ public class StorageServiceImpl implements StorageService {
 
         accessConfFile.close();
         if (isComplete == Byte.MAX_VALUE) {
-            redisTemplate.opsForHash().put(Constants.FILE_UPLOAD_STATUS, md5, "true");
-            redisTemplate.opsForValue().set(Constants.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName);
+            redisTemplate.opsForHash().put(Constant.FILE_UPLOAD_STATUS, md5, "true");
+            redisTemplate.opsForValue().set(Constant.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName);
             return true;
         } else {
-            if (!redisTemplate.opsForHash().hasKey(Constants.FILE_UPLOAD_STATUS, md5)) {
-                redisTemplate.opsForHash().put(Constants.FILE_UPLOAD_STATUS, md5, "false");
+            if (!redisTemplate.opsForHash().hasKey(Constant.FILE_UPLOAD_STATUS, md5)) {
+                redisTemplate.opsForHash().put(Constant.FILE_UPLOAD_STATUS, md5, "false");
             }
-            if (!redisTemplate.hasKey(Constants.FILE_MD5_KEY + md5)) {
-                redisTemplate.opsForValue().set(Constants.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName + ".conf");
+            if (!redisTemplate.hasKey(Constant.FILE_MD5_KEY + md5)) {
+                redisTemplate.opsForValue().set(Constant.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName + ".conf");
             }
             return false;
         }
@@ -169,5 +176,4 @@ public class StorageServiceImpl implements StorageService {
         //修改文件名
         return toBeRenamed.renameTo(newFile);
     }
-
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newx.muv.dao.ApkMapper">
+    <resultMap id="ApkResultMap" type="com.newx.muv.entity.bo.Apk">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USER_ID" jdbcType="VARCHAR" property="user_id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="VERSION" jdbcType="VARCHAR" property="version"/>
+        <result column="IMPORTANCE" jdbcType="INTEGER" property="importance"/>
+        <result column="PATH" jdbcType="VARCHAR" property="path"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="ENABLE" jdbcType="SMALLINT" property="enable"/>
+    </resultMap>
+    <sql id="Apk_Column_List">
+    ID, USER_ID, NAME, VERSION, IMPORTANCE, PATH,DESCRIPTION,ENABLE
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ApkResultMap">
+        select
+        <include refid="Apk_Column_List"/>
+        from apk
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from apk
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.newx.muv.entity.bo.Apk"
+            useGeneratedKeys="true">
+    insert into apk (USER_ID, NAME, VERSION, IMPORTANCE, PATH, DESCRIPTION, ENABLE)
+    values (#{user_id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR},
+      #{importance,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{enable,jdbcType=SMALLINT})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.newx.muv.entity.bo.Apk">
+    update apk
+    set USER_ID = #{user_id,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=VARCHAR},
+      IMPORTANCE = #{importance,jdbcType=INTEGER},
+      PATH = #{path,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      ENABLE = #{enable,jdbcType=SMALLINT},
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectApkList" resultMap="ApkResultMap">
+    select * from apk
+  </select>
+</mapper>
