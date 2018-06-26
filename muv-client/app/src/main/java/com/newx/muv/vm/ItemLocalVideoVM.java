@@ -12,6 +12,7 @@ import com.newx.entity.local.VideoInfo;
 import com.newx.muv.base.databinding.command.BindingCommand;
 import com.newx.muv.base.page.NSBaseVM;
 import com.newx.muv.http.Http;
+import com.newx.muv.task.FileMergeTask;
 import com.newx.muv.task.FileSplitTask;
 import com.newx.muv.utils.VideoUtil;
 import com.newx.muv.utils.dialog.DialogBuilderHelper;
@@ -44,16 +45,16 @@ public class ItemLocalVideoVM extends NSBaseVM {
     //条目的点击事件
     public BindingCommand itemClick = new BindingCommand(() -> {
 
-//        String filePath = PathUtils.getExtDownloadsPath() + "/Android.pdf";
-//        FileSplitTask.newBuilder()
-//                .filePath(PathUtils.getExtDownloadsPath() + "/Android.pdf")
-//                .chunkSizeMB(1)
-//                .onProgress(position -> NXLog.e("正在分片，当前是第" + position + "片"))
-//                .onComplete(path -> {
-//                    checkFileMD5(filePath, path);
-//                    NXLog.e("全部分片完成，存储路径是：" + path);
-//                })
-//                .execute();
+        String filePath = PathUtils.getExtDownloadsPath() + "/Android.pdf";
+        FileSplitTask.newBuilder()
+                .filePath(PathUtils.getExtDownloadsPath() + "/Android.pdf")
+                .chunkSizeMB(1)
+                .onProgress(position -> NXLog.e("正在分片，当前是第" + position + "片"))
+                .onComplete(path -> {
+                    checkFileMD5(filePath, path);
+                    NXLog.e("全部分片完成，存储路径是：" + path);
+                })
+                .execute();
 
 //        FileMergeTask.newBuilder()
 //                .filePath(PathUtils.getExtDownloadsPath() + "/HK_Buy22114.PNG")
@@ -103,7 +104,7 @@ public class ItemLocalVideoVM extends NSBaseVM {
 
         Http.getApi().fileUpload("testUid", "taskId", file.getName(),
                 chunks, chunk, fileSize, md5,
-                MultipartBody.Part.createFormData("file",file.getName(), RequestBody.create(MultipartBody.FORM,files.get(chunk))))
+                MultipartBody.Part.createFormData("file",files.get(chunk).getName(), RequestBody.create(MultipartBody.FORM,files.get(chunk))))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> checkFileMD5(filePath, dirPath),

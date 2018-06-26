@@ -49,11 +49,11 @@ public interface Api {
                                      @Query("userKey") String userKey,
                                      @Query("timestamp") String timestamp);
 
-    @POST("/upload/checkFileMd5")
+    @POST("/upload/file/checkFileMd5")
     Observable<String> checkFileMd5(@Query("md5") String fileMd5);
 
     @Multipart
-    @POST("/upload/fileUpload")
+    @POST("/upload/file/fileUpload")
     Observable<String> fileUpload(@Query("uid") String uid,
                                   @Query("id") String taskId,
                                   @Query("name") String filename,
