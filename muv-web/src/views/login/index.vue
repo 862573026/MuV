@@ -104,8 +104,9 @@ export default {
               this.loginInfo.message = resp
               this.$store.dispatch('LoginCommit', this.loginInfo)
                 .then(() => {
+                  console.log('登录成功')
                   this.loading = false
-                  this.$router.push({ path: '' })
+                  this.$router.push({ path: '/' })
                 })
             })
             .catch(err => {

@@ -27,9 +27,6 @@
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
                  icon="el-icon-edit">{{$t('table.add')}}
       </el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download"
-                 @click="handleDownload">{{$t('table.export')}}
-      </el-button>
       <el-checkbox class="filter-item" style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">
         {{$t('table.reviewer')}}
       </el-checkbox>
@@ -96,22 +93,36 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item  :label="$t('apk.name')" prop="code">
+        <el-form-item  :label="$t('apk.name')">
           <span v-if="dialogStatus=='delete'">{{temp.name}}</span>
           <div v-else>
-            <input id="upload-input" type="file" accept=".apk" class="c-hide"
+            <input id="upload-input"  ref="upload-input" type="file" accept=".apk" class="c-hide"
                    @change="handleFileChange">
-            <div id="drop" @drop="handleDrop" @dragover="handleDragOver" @dragenter="handleDragOver">
-              <span>{{fileTip}}</span>
-              <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
+            <div id="drop">
+              <span v-if="this.tempFile === undefined" v-text="$t('base.fileInputHint')" ></span>
+              <span v-else>{{temp.name}}</span>
+              <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleBrowse" v-text="$t('base.browse')"></el-button>
+            </div>
+            <div>
+              <el-button  v-if="this.tempFile !== undefined" size="mini" type="danger" @click="handleUpload" v-text="$t('base.upload')"></el-button>
             </div>
           </div>
         </el-form-item>
-
-        <el-form-item :label="$t('apk.description')" prop="name">
+        <!--版本-->
+        <el-form-item :label="$t('apk.version')" prop="version">
+          <span v-if="dialogStatus=='delete'">{{temp.version}}</span>
+          <el-input v-else v-model="temp.version"></el-input>
+        </el-form-item>
+        <!-- 描述 -->
+        <el-form-item :label="$t('apk.description')" prop="description">
           <span v-if="dialogStatus=='delete'">{{temp.description}}</span>
           <el-input v-else v-model="temp.description"></el-input>
         </el-form-item>
+        <!-- 重要性 -->
+        <el-form-item :label="$t('table.importance')" prop="importance">
+          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='5'></el-rate>
+        </el-form-item>
+        <!-- 立即激活 -->
         <el-form-item v-if="dialogStatus!='delete'" :label="$t('role.enableImmediately')" prop="enable">
           <el-select class="filter-item" v-model="temp.enable" placeholder="Please select">
             <el-option v-for="item in  enableOptions" :key="item.key" :label="item.display_name"
@@ -144,12 +155,12 @@
 </template>
 
 <script>
-  import { apkList, addApk, updateApk, deleteApk } from '@/api/apk'
+  import { apkList, addApk, updateApk, deleteApk, checkApkMd5, uploadApk } from '@/api/apk'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
 
   export default {
-    name: 'roleTable',
+    name: 'apkManager',
     directives: {
       waves
     },
@@ -170,17 +181,25 @@
         ],
         sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
         showReviewer: false,
+        status: {
+          fileUpload: false
+        },
         temp: {
           userId: undefined,
           name: undefined,
           version: undefined,
-          importance: undefined,
-          path: undefined,
+          importance: 1,
           description: undefined,
           enable: true
         },
-        fileTip: this.$t('base.dropTip'),
-        file: undefined,
+        tempFile: undefined,
+        rules: {
+          name: [{ required: true, message: '请选择文件', trigger: 'blur' }],
+          version: [{ required: true, message: 'version is required', trigger: 'change' }],
+          importance: [{ required: true, message: 'importance is required', trigger: 'change' }],
+          description: [{ required: true, message: 'description is required', trigger: 'blur' }],
+          enable: [{ required: true, message: 'enable is required', trigger: 'change' }]
+        },
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
@@ -190,11 +209,6 @@
         },
         dialogPvVisible: false,
         pvData: [],
-        rules: {
-          code: [{ required: true, message: 'title is required', trigger: 'blur' }],
-          description: [{ required: true, message: 'description is required', trigger: 'blur' }],
-          enable: [{ required: true, message: 'enable is required', trigger: 'change' }]
-        },
         downloadLoading: false
       }
     },
@@ -223,8 +237,6 @@
           this.list = resp.data.pageInfo.list
           this.total = resp.data.pageInfo.total
           this.listLoading = false
-
-          console.log(response.data)
         })
       },
       handleEnable(enable) {
@@ -255,14 +267,17 @@
       },
       resetTemp() {
         this.temp = {
-          id: undefined,
-          code: undefined,
+          userId: undefined,
+          name: undefined,
+          version: undefined,
+          importance: 1,
           description: undefined,
           enable: true
         }
+        this.tempFile = undefined
+        this.status.fileUpload = false
       },
       handleCreate() {
-        this.resetTemp()
         this.dialogStatus = 'create'
         this.dialogFormVisible = true
         this.$nextTick(() => {
@@ -271,18 +286,29 @@
       },
       createData() {
         this.$refs['dataForm'].validate((valid) => {
+          console.log(this.temp)
           if (valid) {
-            addApk(this.temp).then(() => {
-              // this.list.unshift(this.temp)
-              this.getList()
-              this.dialogFormVisible = false
+            if (this.status.fileUpload === false) {
               this.$notify({
-                title: '成功',
-                message: '创建成功',
-                type: 'success',
+                title: '失败',
+                message: '请先上传文件',
+                type: 'error',
                 duration: 2000
               })
-            })
+            } else {
+              addApk(this.temp).then(() => {
+                // this.list.unshift(this.temp)
+                this.resetTemp()
+                this.getList()
+                this.dialogFormVisible = false
+                this.$notify({
+                  title: '成功',
+                  message: '创建成功',
+                  type: 'success',
+                  duration: 2000
+                })
+              })
+            }
           }
         })
       },
@@ -343,38 +369,47 @@
       },
       handleFileChange(e) {
         const files = e.target.files
-        const file = files[0] // only use files[0]
-        if (!file) {
-          this.fileTip = this.$t('base.dropTip')
-          this.file = undefined
+        const select = files[0] // only use files[0]
+        if (!select) {
+          this.temp.name = undefined
+          this.tempFile = undefined
         } else {
-          this.fileTip = file.name
-          this.file
+          this.temp.name = select.name
+          this.tempFile = select
         }
-        console.log(file)
-      },
-      handleDrop() {
+        this.$refs['upload-input'].value = null // fix can't select the same excel
 
+        console.log(select)
       },
-      handleDragOver() {
-
-      },
-      handleUpload() {
+      handleBrowse() {
         document.getElementById('upload-input').click()
       },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['id', 'roleCode', 'roleDescription', 'enable', 'createTime', 'updateTime']
-          const filterVal = ['id', 'roleCode', 'roleDescription', 'enable', 'createTime', 'updateTime']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: 'table-list'
-          })
-          this.downloadLoading = false
+      // 文件上传
+      handleUpload() {
+        // 检查MD5 判断上传状态
+        console.log('检查md5')
+        var fs = require('fs')
+        var crypto = require('crypto')
+        var md5sum = crypto.createHash('md5')
+        var stream = fs.createReadStream(this.tempFile)
+        stream.on('data', function(chunk) {
+          md5sum.update(chunk)
         })
+        stream.on('end', function() {
+          var str = md5sum.digest('hex').toUpperCase()
+          console.log('md5 = ' + str)
+        })
+        // checkApkMd5(form).then(() => {
+        //   this.status.fileUpload = true
+        //   console.log('上传成功')
+        // })
+        //
+        // var form = new FormData()
+        // form.append('file', this.tempFile)
+        // uploadApk(form).then(() => {
+        //   this.status.fileUpload = true
+        //   console.log('上传成功')
+        // })
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
@@ -398,7 +433,7 @@
     border: 2px dashed #bbb;
     margin: 0px auto;
     padding: 5px;
-    font-size: 24px;
+    font-size: 20px;
     border-radius: 5px;
     text-align: center;
     color: #bbb;

@@ -63,8 +63,10 @@ export default {
   base: {
     yes: '是',
     no: '否',
+    browse: '浏览',
+    upload: '上传',
     operateSuccess: '操作成功',
-    dropTip: '拖动文件到这里'
+    fileInputHint: '请选择文件'
   },
   navbar: {
     logOut: '退出登录',

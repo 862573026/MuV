@@ -88,6 +88,7 @@
           <span v-if="dialogStatus=='delete'">{{temp.description}}</span>
           <el-input v-else v-model="temp.description"></el-input>
         </el-form-item>
+        <!-- 立即激活 -->
         <el-form-item v-if="dialogStatus!='delete'" :label="$t('role.enableImmediately')" prop="enable">
           <el-select class="filter-item" v-model="temp.enable" placeholder="Please select">
             <el-option v-for="item in  enableOptions" :key="item.key" :label="item.display_name"
