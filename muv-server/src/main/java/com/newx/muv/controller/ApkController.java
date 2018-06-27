@@ -12,8 +12,11 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -41,9 +44,9 @@ public class ApkController extends BasicAction {
                 .addData(RespKey.PAGE_INFO, pageInfo);
     }
 
-    @ApiOperation(value = "添加角色", httpMethod = "POST")
+    @ApiOperation(value = "添加Apk", httpMethod = "POST")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public Message addRoles(@RequestBody Apk apk) {
+    public Message addApk(@RequestBody Apk apk) {
         LOGGER.info(apk.toString());
 
         boolean flag = mApkService.insert(apk);
@@ -54,10 +57,26 @@ public class ApkController extends BasicAction {
         }
     }
 
+    @ApiOperation(value = "添加Apk", httpMethod = "POST")
+    @RequestMapping(path = "/upload", method = RequestMethod.POST)
+    public Message uploadApk(ServletRequest request) {
+        MultiValueMap<String,MultipartFile> fileMap = RequestResponseUtil.getRequestMultiParameters(request);
+        MultipartFile file = (MultipartFile) fileMap.get("file");
+//        LOGGER.info(apk.toString());
+//
+//        boolean flag = mApkService.insert(apk);
+//        if (flag) {
+//            return new Message().ok(RespCode.OK, RespMsg.SUCCESS);
+//        } else {
+//            return new Message().error(RespCode.ERROR, RespMsg.ERROR);
+//        }
+        return new Message().ok(RespCode.OK, RespMsg.SUCCESS);
+    }
+
 
     @ApiOperation(value = "更新Apk", httpMethod = "PUT")
     @PutMapping("/update")
-    public Message updateRole(@RequestBody Apk apk) {
+    public Message updateApk(@RequestBody Apk apk) {
         LOGGER.info(apk.toString());
         boolean flag = mApkService.update(apk);
         if (flag) {
@@ -69,7 +88,7 @@ public class ApkController extends BasicAction {
 
     @ApiOperation(value = "根据Apk的ID删除Apk", httpMethod = "DELETE")
     @DeleteMapping("/delete/{id}")
-    public Message deleteRoleByRoleId(@PathVariable Integer id) {
+    public Message deleteApkById(@PathVariable Integer id) {
         LOGGER.info(id.toString() + "==========");
         boolean flag = mApkService.deleteById(id);
         if (flag) {

@@ -34,6 +34,6 @@ public class ApkUploadController extends BasicAction {
 
     @PostMapping(path = "/fileUpload")
     public Message fileUpload(HttpServletRequest request) {
-        return mHttpUpload.fileUpload(request,"apk");
+        return mHttpUpload.fileUpload(request,request.getServletPath());
     }
 }

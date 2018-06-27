@@ -34,6 +34,6 @@ public class FileUploadController extends BasicAction {
 
     @PostMapping(path = "/fileUpload")
     public Message fileUpload(HttpServletRequest request) {
-       return mHttpUpload.fileUpload(request,"file");
+       return mHttpUpload.fileUpload(request,request.getServletPath());
     }
 }
