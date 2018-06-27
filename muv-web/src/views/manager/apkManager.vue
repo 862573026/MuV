@@ -159,6 +159,8 @@
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
 
+  var browserMD5File = require('browser-md5-file')
+
   export default {
     name: 'apkManager',
     directives: {
@@ -181,9 +183,6 @@
         ],
         sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
         showReviewer: false,
-        status: {
-          fileUpload: false
-        },
         temp: {
           userId: undefined,
           name: undefined,
@@ -193,6 +192,7 @@
           enable: true
         },
         tempFile: undefined,
+        uploadStatus: undefined,
         rules: {
           name: [{ required: true, message: '请选择文件', trigger: 'blur' }],
           version: [{ required: true, message: 'version is required', trigger: 'change' }],
@@ -275,7 +275,7 @@
           enable: true
         }
         this.tempFile = undefined
-        this.status.fileUpload = false
+        this.uploadStatus = false
       },
       handleCreate() {
         this.dialogStatus = 'create'
@@ -288,7 +288,7 @@
         this.$refs['dataForm'].validate((valid) => {
           console.log(this.temp)
           if (valid) {
-            if (this.status.fileUpload === false) {
+            if (this.uploadStatus === false) {
               this.$notify({
                 title: '失败',
                 message: '请先上传文件',
@@ -387,29 +387,60 @@
       // 文件上传
       handleUpload() {
         // 检查MD5 判断上传状态
-        console.log('检查md5')
-        var fs = require('fs')
-        var crypto = require('crypto')
-        var md5sum = crypto.createHash('md5')
-        var stream = fs.createReadStream(this.tempFile)
-        stream.on('data', function(chunk) {
-          md5sum.update(chunk)
+        var _this = this // 共享变量 或者用 =>
+        browserMD5File(this.tempFile, function(err, md5) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          const param = {
+            'md5': md5
+          }
+          console.log('_status ' + _this.uploadStatus)
+
+          checkApkMd5(param).then((resp) => {
+            const data = resp.data
+            if (data.success === true) {
+              const code = data.code
+              if (code === 2000) {
+                this.uploadFile(md5, 0, 0)
+              } else if (code === 2001) {
+                console.log('文件已存在')
+                _this.uploadStatus = true
+              } else if (code === 2002) {
+                this.uploadFile(md5, 0, 0)
+              }
+            } else {
+              console.log('上传失败')
+            }
+          })
         })
-        stream.on('end', function() {
-          var str = md5sum.digest('hex').toUpperCase()
-          console.log('md5 = ' + str)
+      // checkApkMd5(form).then(() => {
+      //   this.status.fileUpload = true
+      //   console.log('上传成功')
+      // })
+      //
+      // var form = new FormData()
+      // form.append('file', this.tempFile)
+      // uploadApk(form).then(() => {
+      //   this.status.fileUpload = true
+      //   console.log('上传成功')
+      // })
+      },
+      // 上传Apk
+      uploadFile(md5, chunks, chunk) {
+        var form = new FormData()
+        form.append('file', this.tempFile)
+        form.append('uid', this.temp.uid)
+        form.append('id', 'taskId')
+        form.append('name', this.temp.name)
+        form.append('chunks', chunks)
+        form.append('chunk', chunk)
+        form.append('md5', md5)
+        uploadApk(form).then(() => {
+          this.status.fileUpload = true
+          console.log('上传成功')
         })
-        // checkApkMd5(form).then(() => {
-        //   this.status.fileUpload = true
-        //   console.log('上传成功')
-        // })
-        //
-        // var form = new FormData()
-        // form.append('file', this.tempFile)
-        // uploadApk(form).then(() => {
-        //   this.status.fileUpload = true
-        //   console.log('上传成功')
-        // })
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {

@@ -10,14 +10,11 @@ export function apkList(query) {
 }
 
 // 检查Apk的Md5
-export function checkApkMd5(apk) {
+export function checkApkMd5(md5) {
   return request({
     url: '/upload/apk/checkFileMd5',
     method: 'post',
-    data: apk,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    params: md5
   })
 }
 
