@@ -28,4 +28,7 @@ public interface UserService {
 
     List<UserRoleInfo> getUserRoleByUid(Integer uId);
 
+    List<String> getUserRoleCodeByUid(Integer uId);
+
+
 }

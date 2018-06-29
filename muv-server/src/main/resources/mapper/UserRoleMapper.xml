@@ -36,6 +36,14 @@
     where USER_ID = #{id,jdbcType=INTEGER}
   </select>
 
+  <!--根据userId查询角色Code-->
+  <select id="getUserRoleCodeByUid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select
+    code
+    from view_user_role
+    where USER_ID = #{id,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_role
     where ID = #{id,jdbcType=INTEGER}

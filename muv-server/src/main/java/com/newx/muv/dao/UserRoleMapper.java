@@ -23,4 +23,7 @@ public interface UserRoleMapper {
     int deleteByUniqueKey(UserRole record) throws DataAccessException;
 
     List<UserRoleInfo> getUserRoleByUid(Integer uid) throws DataAccessException;
+
+    List<String> getUserRoleCodeByUid(Integer uid) throws DataAccessException;
+
 }

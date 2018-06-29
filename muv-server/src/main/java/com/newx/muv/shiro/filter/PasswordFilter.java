@@ -121,8 +121,12 @@ public class PasswordFilter extends AccessControlFilter {
                 && null != tokenKey && "get".equals(tokenKey);
     }
 
+    /**
+     * 判断是否是登录请求
+     * @param request
+     * @return
+     */
     private boolean isPasswordLoginPost(ServletRequest request) {
-
         Map<String, String> map = RequestResponseUtil.getRequestParameters(request);
         String password = map.get("password");
         String timestamp = map.get("timestamp");
@@ -137,6 +141,11 @@ public class PasswordFilter extends AccessControlFilter {
                 && methodName.equals("login");
     }
 
+    /**
+     * 判断是否是注册请求
+     * @param request
+     * @return
+     */
     private boolean isAccountRegisterPost(ServletRequest request) {
         Map<String, String> map = RequestResponseUtil.getRequestParameters(request);
 //        String uid = map.get("uid");
@@ -152,6 +161,11 @@ public class PasswordFilter extends AccessControlFilter {
                 && methodName.equals("/account/register");
     }
 
+    /**
+     * 判断是否是登出请求
+     * @param request
+     * @return
+     */
     private boolean isAccountLogoutPost(ServletRequest request) {
         Map<String, String> map = RequestResponseUtil.getRequestParameters(request);
         String uid = map.get("uid");

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,7 +59,7 @@ public class AccountController extends BasicAction {
      */
     @ApiOperation(value = "用户登录", notes = "POST用户登录签发JWT")
     @PostMapping("/login")
-    public Message accountLogin(HttpServletRequest request, HttpServletResponse response) {
+    public Message accountLogin(HttpServletRequest request) {
         Map<String, String> params = RequestResponseUtil.getRequestParameters(request);
         String appId = params.get("appId");
         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
@@ -72,14 +73,12 @@ public class AccountController extends BasicAction {
         redisTemplate.opsForValue().set(Constant.JWT_PREFIX + user.getUid(), jwt, refreshPeriodTime, TimeUnit.SECONDS);
         user.setPassword(null);
         user.setSalt(null);
-        List<UserRoleInfo> listRole = userService.getUserRoleByUid(Integer.parseInt(user.getUid()));
 
         LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(user.getUid(), IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "登录成功"));
 
-        return new Message().ok(1003, "issue jwt success")
+        return new Message().ok(RespCode.OK, "issue jwt success")
                 .addData("jwt", jwt)
-                .addData("user", user)
-                .addData("role", listRole);
+                .addData("user", user);
     }
 
     /* *

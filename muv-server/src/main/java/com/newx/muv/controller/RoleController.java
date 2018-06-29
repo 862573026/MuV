@@ -7,6 +7,7 @@ import com.newx.muv.common.RespKey;
 import com.newx.muv.entity.bo.Resource;
 import com.newx.muv.entity.bo.Role;
 import com.newx.muv.entity.bo.User;
+import com.newx.muv.entity.bo.UserRoleInfo;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.ResourceService;
 import com.newx.muv.service.RoleService;
@@ -46,6 +47,20 @@ public class RoleController extends BasicAction {
 
     @Autowired
     private ShiroFilterChainManager shiroFilterChainManager;
+
+    @ApiOperation(value = "返回用户角色", notes = "POST用户角色")
+    @PostMapping("/user/{uid}")
+    public Message queryUserRole(@PathVariable String uid) {
+        List<UserRoleInfo> listRole = userService.getUserRoleByUid(Integer.parseInt(uid));
+        return new Message().ok().addData("role", listRole);
+    }
+
+    @ApiOperation(value = "返回用户角色Code", notes = "POST用户角色Code")
+    @PostMapping("/user/code/{uid}")
+    public Message queryUserRoleCode(@PathVariable String uid) {
+        List<String> listRoleCode = userService.getUserRoleCodeByUid(Integer.parseInt(uid));
+        return new Message().ok().addData("role", listRoleCode);
+    }
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色关联的(roleId)对应用户列表", httpMethod = "GET")

@@ -80,4 +80,9 @@ public class UserServiceImpl implements UserService {
     public List<UserRoleInfo> getUserRoleByUid(Integer uId) {
         return mUserRoleMapper.getUserRoleByUid(uId);
     }
+
+    @Override
+    public List<String> getUserRoleCodeByUid(Integer uId) {
+        return mUserRoleMapper.getUserRoleCodeByUid(uId);
+    }
 }
