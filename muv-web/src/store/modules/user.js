@@ -1,7 +1,7 @@
 import { getTokenKey, loginByPsw, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import CryptoJS from 'crypto-js/crypto-js'
-
+import Cookie from 'js-cookie'
 const user = {
   state: {
     user: '',
@@ -86,6 +86,7 @@ const user = {
           // setToken(response.data.token)
           commit('SET_TOKEN', 'admin')
           setToken('admin')
+          Cookie.set('user-info', data.data.user) // 存储用户登录信息
           resolve()
         }).catch(error => {
           reject(error)
@@ -139,6 +140,7 @@ const user = {
           commit('SET_ROLES', [])
           removeToken()
           resolve()
+          Cookie.remove('user-info')
         }).catch(error => {
           reject(error)
         })
@@ -151,6 +153,7 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+        Cookie.remove('user-info')
       })
     },
 
