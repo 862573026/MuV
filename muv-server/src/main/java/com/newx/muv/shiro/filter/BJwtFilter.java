@@ -2,6 +2,7 @@ package com.newx.muv.shiro.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.newx.muv.common.Constant;
+import com.newx.muv.common.DefKey;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.AccountService;
@@ -66,7 +67,7 @@ public class BJwtFilter extends BPathMatchingFilter {
                     // 当存储在redis的JWT没有过期，即refresh time 没有过期
                     String uid = WebUtils.toHttp(servletRequest).getHeader("uid");
                     String jwt = WebUtils.toHttp(servletRequest).getHeader("authorization");
-                    String refreshJwt = redisTemplate.opsForValue().get(Constant.JWT_PREFIX+uid);
+                    String refreshJwt = redisTemplate.opsForValue().get(DefKey.JWT_PREFIX+uid);
                     if (null != refreshJwt && refreshJwt.equals(jwt)) {
                         // 重新申请新的JWT
                         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
@@ -75,7 +76,7 @@ public class BJwtFilter extends BPathMatchingFilter {
                         String newJwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),uid,
                                 "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
-                        redisTemplate.opsForValue().set(Constant.JWT_PREFIX+uid,newJwt,refreshPeriodTime, TimeUnit.SECONDS);
+                        redisTemplate.opsForValue().set(DefKey.JWT_PREFIX+uid,newJwt,refreshPeriodTime, TimeUnit.SECONDS);
                         Message message = new Message().ok(1005,"new jwt").addData("jwt",newJwt);
                         RequestResponseUtil.responseWrite(JSON.toJSONString(message),servletResponse);
                         return false;

@@ -1,6 +1,7 @@
 package com.newx.muv.controller.upload;
 
 import com.newx.muv.common.Constant;
+import com.newx.muv.common.DefKey;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.StorageService;
@@ -43,13 +44,13 @@ public class HttpUpload {
      */
     public Message checkFileMd5(HttpServletRequest request) throws IOException {
         String md5 = RequestResponseUtil.getParameter(request, "md5");
-        Object processingObj = redisTemplate.opsForHash().get(Constant.FILE_UPLOAD_STATUS, md5);
+        Object processingObj = redisTemplate.opsForHash().get(DefKey.FILE_UPLOAD_STATUS, md5);
         if (processingObj == null) {
             return new Message().ok(RespCode.UPLOAD_NO_FILE, "该文件不存在");
         }
         String processingStr = processingObj.toString();
         boolean processing = Boolean.parseBoolean(processingStr);
-        String value = redisTemplate.opsForValue().get(Constant.FILE_MD5_KEY + md5);
+        String value = redisTemplate.opsForValue().get(DefKey.FILE_MD5_KEY + md5);
         if (processing) { //上传成功
             return new Message().ok(RespCode.UPLOAD_FILE_EXIST, "该文件已存在");
         } else {

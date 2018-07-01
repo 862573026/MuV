@@ -118,9 +118,8 @@ spring:
       password:
 
 #  上传配置
-breakpoint:
-        upload:
-          dir: /upload/
+upload:
+  path: ./upload/
           #1024*1024=1 048 576,5M=5 242 880
 #          chunkSize: 5 242 880
 

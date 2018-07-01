@@ -1,6 +1,6 @@
 package com.newx.muv.service.impl;
 
-import com.newx.muv.common.Constant;
+import com.newx.muv.common.DefKey;
 import com.newx.muv.test.FileSplitUtil;
 import com.newx.muv.service.StorageService;
 import com.newx.muv.util.FileMD5Util;
@@ -43,7 +43,7 @@ public class StorageServiceImpl implements StorageService {
     private final String tempDir = "/tmp/";
 
     @Autowired
-    public StorageServiceImpl(@Value("${breakpoint.upload.dir}") String location) {
+    public StorageServiceImpl(@Value("${upload.path}") String location) {
         this.rootPath = Paths.get(System.getProperty("user.dir") + location);
     }
 
@@ -51,8 +51,8 @@ public class StorageServiceImpl implements StorageService {
     public void deleteAll() {
         logger.info("开发初始化清理数据，start");
         FileSystemUtils.deleteRecursively(rootPath.toFile());
-        redisTemplate.delete(Constant.FILE_UPLOAD_STATUS);
-        redisTemplate.delete(Constant.FILE_MD5_KEY);
+        redisTemplate.delete(DefKey.FILE_UPLOAD_STATUS);
+        redisTemplate.delete(DefKey.FILE_MD5_KEY);
         logger.info("开发初始化清理数据，end");
     }
 
@@ -144,15 +144,15 @@ public class StorageServiceImpl implements StorageService {
 
         accessConfFile.close();
         if (isComplete == Byte.MAX_VALUE) {
-            redisTemplate.opsForHash().put(Constant.FILE_UPLOAD_STATUS, md5, "true");
-            redisTemplate.opsForValue().set(Constant.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName);
+            redisTemplate.opsForHash().put(DefKey.FILE_UPLOAD_STATUS, md5, "true");
+            redisTemplate.opsForValue().set(DefKey.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName);
             return true;
         } else {
-            if (!redisTemplate.opsForHash().hasKey(Constant.FILE_UPLOAD_STATUS, md5)) {
-                redisTemplate.opsForHash().put(Constant.FILE_UPLOAD_STATUS, md5, "false");
+            if (!redisTemplate.opsForHash().hasKey(DefKey.FILE_UPLOAD_STATUS, md5)) {
+                redisTemplate.opsForHash().put(DefKey.FILE_UPLOAD_STATUS, md5, "false");
             }
-            if (!redisTemplate.hasKey(Constant.FILE_MD5_KEY + md5)) {
-                redisTemplate.opsForValue().set(Constant.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName + ".conf");
+            if (!redisTemplate.hasKey(DefKey.FILE_MD5_KEY + md5)) {
+                redisTemplate.opsForValue().set(DefKey.FILE_MD5_KEY + md5, uploadDirPath + "/" + fileName + ".conf");
             }
             return false;
         }

@@ -5,6 +5,10 @@ package com.newx.muv.common;
  */
 public class RespKey {
 
+    public final static String STATUS = "status";
+    public final static String PROGRESS = "progress";
+
+
     public final static String PAGE_INFO = "pageInfo";
 
 }

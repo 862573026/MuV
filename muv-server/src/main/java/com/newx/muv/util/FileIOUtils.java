@@ -716,4 +716,30 @@ public final class FileIOUtils {
         }
         return true;
     }
+    /**
+     * 分块写入文件
+     * @param target
+     * @param targetSize
+     * @param src
+     * @param srcSize
+     * @param chunks
+     * @param chunk
+     * @throws IOException
+     */
+    public static void writeWithBlok(String target, Long targetSize, InputStream src, Long srcSize, Integer chunks, Integer chunk) throws IOException {
+        RandomAccessFile randomAccessFile = new RandomAccessFile(target,"rw");
+        randomAccessFile.setLength(targetSize);
+        if (chunk == chunks - 1 && chunk != 0) {
+            randomAccessFile.seek(chunk * (targetSize - srcSize) / chunk);
+        } else {
+            randomAccessFile.seek(chunk * srcSize);
+        }
+        byte[] buf = new byte[1024];
+        int len;
+        while (-1 != (len = src.read(buf))) {
+            randomAccessFile.write(buf,0,len);
+        }
+        randomAccessFile.close();
+    }
+
 }

@@ -57,7 +57,7 @@ public class ApkController extends BasicAction {
         }
     }
 
-    @ApiOperation(value = "添加Apk", httpMethod = "POST")
+    @ApiOperation(value = "上传Apk", httpMethod = "POST")
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public Message uploadApk(ServletRequest request) {
         MultiValueMap<String,MultipartFile> fileMap = RequestResponseUtil.getRequestMultiParameters(request);

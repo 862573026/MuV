@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <pre>
@@ -1065,5 +1066,13 @@ public final class FileUtils {
 
     public interface OnReplaceListener {
         boolean onReplace();
+    }
+
+    /**
+     * 生成随机文件名
+     * @return
+     */
+    public static String generateFileName() {
+        return UUID.randomUUID().toString();
     }
 }

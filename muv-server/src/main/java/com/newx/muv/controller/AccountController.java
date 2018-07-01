@@ -1,6 +1,7 @@
 package com.newx.muv.controller;
 
 import com.newx.muv.common.Constant;
+import com.newx.muv.common.DefKey;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.entity.bo.User;
 import com.newx.muv.entity.bo.UserRoleInfo;
@@ -70,7 +71,7 @@ public class AccountController extends BasicAction {
                 "token-server", refreshPeriodTime >> 2, roles, null, SignatureAlgorithm.HS512);
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
         User user = userService.getUserByAppId(appId);
-        redisTemplate.opsForValue().set(Constant.JWT_PREFIX + user.getUid(), jwt, refreshPeriodTime, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(DefKey.JWT_PREFIX + user.getUid(), jwt, refreshPeriodTime, TimeUnit.SECONDS);
         user.setPassword(null);
         user.setSalt(null);
 
@@ -155,11 +156,11 @@ public class AccountController extends BasicAction {
         if (StringUtils.isEmpty(uid)) {
             return new Message().error(RespCode.ERROR, "用户未登录无法登出");
         }
-        String jwt = redisTemplate.opsForValue().get(Constant.JWT_PREFIX + uid);
+        String jwt = redisTemplate.opsForValue().get(DefKey.JWT_PREFIX + uid);
         if (StringUtils.isEmpty(jwt)) {
             return new Message().error(RespCode.ERROR, "用户未登录无法登出");
         }
-        redisTemplate.opsForValue().getOperations().delete(Constant.JWT_PREFIX + uid);
+        redisTemplate.opsForValue().getOperations().delete(DefKey.JWT_PREFIX + uid);
         LogExeManager.getInstance().executeLogTask(LogTaskFactory.exitLog(uid, request.getRemoteAddr(), (short) 1, ""));
 
         return new Message().ok(RespCode.OK, "用户退出成功");
