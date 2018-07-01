@@ -2,6 +2,8 @@ import { getTokenKey, loginByPsw, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import CryptoJS from 'crypto-js/crypto-js'
 import Cookie from 'js-cookie'
+import { getUserRoleCode } from '@/api/login'
+
 const user = {
   state: {
     user: '',
@@ -158,17 +160,19 @@ const user = {
     },
 
     // 动态修改权限
-    ChangeRoles({ commit }, role) {
+    ChangeRoles({ commit }) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', role)
-        setToken(role)
-        getUserInfo(role).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
-          resolve()
+        // commit('SET_TOKEN', role)
+        // setToken(role)
+        const user = JSON.parse(Cookie.get('user-info'))
+        var uid = user.uid
+        getUserRoleCode(uid).then(response => {
+          const data = response.data.data
+          commit('SET_ROLES', data.role)
+          // commit('SET_NAME', data.name)
+          // commit('SET_AVATAR', data.avatar)
+          // commit('SET_INTRODUCTION', data.introduction)
+          resolve(response.data)
         })
       })
     }

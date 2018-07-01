@@ -20,6 +20,13 @@ export function loginByPsw(params) {
   })
 }
 
+export function getUserRoleCode(uid) {
+  return request({
+    url: '/role/user/code/' + uid,
+    method: 'post'
+  })
+}
+
 export function logout() {
   return request({
     url: '/login/logout',

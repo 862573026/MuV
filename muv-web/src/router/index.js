@@ -70,6 +70,26 @@ export const constantRouterMap = [
     ]
   },
   {
+    // 日志查看
+    path: '/uploader',
+    component: Layout,
+    redirect: '/uploader/uploader-single',
+    name: 'uploader',
+    meta: {
+      title: 'uploader',
+      icon: 'component'
+    },
+    children: [
+      { path: 'uploader-single', component: () => import('@/views/uploader/singleFileUpload'), name: 'singleFile', meta: { title: 'singleFile', icon: 'documentation' }},
+      { path: 'uploader-multi', component: () => import('@/views/uploader/multiFileUpload'), name: 'multiFile', meta: { title: 'multiFile', icon: 'documentation' }},
+      { path: 'uploader-big', component: () => import('@/views/uploader/bigFileUpload'), name: 'bigFile', meta: { title: 'bigFile', icon: 'documentation' }},
+      { path: 'uploader-picture', component: () => import('@/views/uploader/pictureFileUpload'), name: 'pictureFile', meta: { title: 'pictureFile', icon: 'documentation' }},
+      { path: 'uploader-quick', component: () => import('@/views/uploader/quickFileUpload'), name: 'quickFile', meta: { title: 'quickFile', icon: 'documentation' }},
+      { path: 'uploader-stop', component: () => import('@/views/uploader/stopFileUpload'), name: 'stopFile', meta: { title: 'stopFile', icon: 'documentation' }}
+
+    ]
+  },
+  {
     // apk管理
     path: '/apkManager',
     component: Layout,
