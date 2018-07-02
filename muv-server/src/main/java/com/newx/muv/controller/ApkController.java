@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.common.RespKey;
 import com.newx.muv.common.RespMsg;
+import com.newx.muv.controller.upload.Uploader;
 import com.newx.muv.entity.bo.Apk;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.ApkService;
@@ -12,12 +13,10 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,6 +31,9 @@ public class ApkController extends BasicAction {
 
     @Autowired
     private ApkService mApkService;
+
+    @Autowired
+    Uploader mUploader;
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取Apk列表", httpMethod = "GET")
@@ -56,23 +58,18 @@ public class ApkController extends BasicAction {
             return new Message().error(RespCode.ERROR, RespMsg.ERROR);
         }
     }
-
-    @ApiOperation(value = "上传Apk", httpMethod = "POST")
-    @RequestMapping(path = "/upload", method = RequestMethod.POST)
-    public Message uploadApk(ServletRequest request) {
-        MultiValueMap<String,MultipartFile> fileMap = RequestResponseUtil.getRequestMultiParameters(request);
-        MultipartFile file = (MultipartFile) fileMap.get("file");
-//        LOGGER.info(apk.toString());
-//
-//        boolean flag = mApkService.insert(apk);
-//        if (flag) {
-//            return new Message().ok(RespCode.OK, RespMsg.SUCCESS);
-//        } else {
-//            return new Message().error(RespCode.ERROR, RespMsg.ERROR);
-//        }
-        return new Message().ok(RespCode.OK, RespMsg.SUCCESS);
+    @ApiOperation(value = "获取文件的上传状态", httpMethod = "GET")
+    @GetMapping("/checkMd5")
+    public int checkMd5(String md5) {
+        return mUploader.checkMd5(md5);
     }
 
+
+    @ApiOperation(value = "上传Apk", httpMethod = "POST")
+    @PostMapping("/upload")
+    public String chunkUpload(ServletRequest request) throws IOException {
+        return mUploader.upload(request);
+    }
 
     @ApiOperation(value = "更新Apk", httpMethod = "PUT")
     @PutMapping("/update")

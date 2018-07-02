@@ -100,6 +100,11 @@ jasypt:
   encryptor:
     password: e!swhdg&d763jo
 
+#  上传配置
+upload:
+  path: ./upload
+          #1024*1024=1 048 576,5M=5 242 880
+#          chunkSize: 5 242 880
 
 ---
 # 开发环境配置(配置项只包括环境不同项)
@@ -116,13 +121,10 @@ spring:
       port: 6379
       # Redis服务器连接密码（默认为空）
       password:
-
-#  上传配置
-upload:
-  path: ./upload/
-          #1024*1024=1 048 576,5M=5 242 880
-#          chunkSize: 5 242 880
-
+    mvc:
+      static-path-pattern: /**
+    resources:
+      static-locations: file:${upload.path}
 ---
 # 测试环境配置(配置项只包括不同项)
 
@@ -139,6 +141,10 @@ spring:
       port: 6379
       # Redis服务器连接密码（默认为空）
       password:
+    mvc:
+      static-path-pattern: /**
+    resources:
+      static-locations: file:${upload.path}
 ---
 # 生产环境配置(配置项只包括不同项)
 
@@ -155,3 +161,7 @@ spring:
       port: 6379
       # Redis服务器连接密码（默认为空）
       password:
+    mvc:
+      static-path-pattern: /**
+    resources:
+      static-locations: file:${upload.path}

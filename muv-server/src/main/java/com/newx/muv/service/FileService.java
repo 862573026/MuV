@@ -1,18 +1,17 @@
 package com.newx.muv.service;
 
-import com.newx.muv.entity.vo.Message;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 public interface FileService {
 
-    public void upload(String name,
+    public String upload(String name,
                        String relativePath,
                        String md5,
                        MultipartFile file) throws IOException;
 
-    public void uploadWithBlock(String name,
+    public String uploadWithBlock(String name,
                                 String relativePath,
                                 String md5,
                                 Long size,
@@ -20,6 +19,6 @@ public interface FileService {
                                 Integer chunk,
                                 MultipartFile file) throws IOException;
 
-    public Message checkMd5(String md5);
+    public int checkMd5(String md5);
 
 }

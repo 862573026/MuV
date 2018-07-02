@@ -2,6 +2,7 @@ package com.newx.muv.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -17,4 +18,10 @@ public class GlobalConfiguration implements WebMvcConfigurer {
 //        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 //    }
 
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("classpath:/upload/");
+    }
 }

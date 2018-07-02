@@ -1,83 +1,32 @@
 package com.newx.muv.util;
 
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * 分块上传工具类
  */
 public class UploadUtils {
-    /**
-     * 内部类记录分块上传文件信息
-     */
-    private static class Value {
-        String name;
-        boolean[] status;
 
-        Value(int n) {
-            this.name = FileUtils.generateFileName();
-            this.status = new boolean[n];
-        }
-    }
+    public final static String KEY_NAME = "name";
+    public final static String KEY_MD5 = "md5";
+    public final static String KEY_SIZE = "size";
+    public final static String KEY_CHUNKS = "chunks";
+    public final static String KEY_CHUNK = "chunk";
+    public final static String KEY_FILE = "file";
+    public final static String KEY_PATH = "path";
 
-    private static Map<String, Value> chunkMap = new HashMap<>();
-
-    /**
-     * 判断文件所有分块是否已上传
-     *
-     * @param key
-     * @return
-     */
-    public static boolean isUploaded(String key) {
-        if (isExist(key)) {
-            for (boolean b : chunkMap.get(key).status) {
-                if (!b) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 判断文件是否有分块已上传
-     *
-     * @param key
-     * @return
-     */
-    private static boolean isExist(String key) {
-        return chunkMap.containsKey(key);
-    }
-
-
-    /**
-     * 从map中删除键为key的键值对
-     *
-     * @param key
-     */
-    public static void removeKey(String key) {
-        if (isExist(key)) {
-            chunkMap.remove(key);
-        }
-    }
-
-    /**
-     * 获取随机生成的文件名
-     *
-     * @param key
-     * @param chunks
-     * @return
-     */
-    public static String getFileName(String key, int chunks) {
-        if (!isExist(key)) {
-            synchronized (UploadUtils.class) {
-                if (!isExist(key)) {
-                    chunkMap.put(key, new Value(chunks));
-                }
-            }
-        }
-        return chunkMap.get(key).name;
+    public static Map<String,Object> uploadParam(ServletRequest request){
+        Map<String,Object> param = new HashMap<>();
+        String relativePath = ((HttpServletRequest) request).getServletPath();
+        param.putAll(RequestResponseUtil.getRequestParameters(request));
+        param.putAll(RequestResponseUtil.getRequestMultiParameters(request));
+        param.put(KEY_PATH,relativePath);
+        return param;
     }
 }

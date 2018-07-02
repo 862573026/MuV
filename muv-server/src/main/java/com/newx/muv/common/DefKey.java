@@ -12,8 +12,9 @@ public class DefKey {
      * 保存上传文件的状态
      */
     public static final String FILE_UPLOAD_STATUS = "FILE_UPLOAD_STATUS";
-
-    public static final String FILE_UPLOAD_PROGRESS = "FILE_UPLOAD_PROGRESS";
-
+    /**
+     * 当前上传的chunk
+     */
+    public static final String FILE_UPLOAD_CHUNK = "FILE_UPLOAD_CHUNK:";
 
 }

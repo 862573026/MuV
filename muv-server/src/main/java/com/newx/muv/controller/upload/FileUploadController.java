@@ -1,13 +1,13 @@
 package com.newx.muv.controller.upload;
 
 import com.newx.muv.controller.BasicAction;
-import com.newx.muv.entity.vo.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 import java.io.IOException;
 
 /**
@@ -19,21 +19,15 @@ import java.io.IOException;
 public class FileUploadController extends BasicAction {
 
     @Autowired
-    HttpUpload mHttpUpload;
+    Uploader mUploader;
 
-    /**
-     * 秒传判断，断点判断
-     *
-     * @return
-     */
-    @PostMapping(path = "/checkFileMd5")
-    public Message checkFileMd5(HttpServletRequest request) throws IOException {
-       return mHttpUpload.checkFileMd5(request);
+    @GetMapping("/checkMd5")
+    public int checkMd5(String md5) {
+        return mUploader.checkMd5(md5);
     }
 
-
-    @PostMapping(path = "/fileUpload")
-    public Message fileUpload(HttpServletRequest request) {
-       return mHttpUpload.fileUpload(request,request.getServletPath());
+    @PostMapping("/")
+    public void chunkUpload(ServletRequest request) throws IOException {
+        mUploader.upload(request);
     }
 }
