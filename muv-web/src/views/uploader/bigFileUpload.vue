@@ -2,7 +2,7 @@
   <div>
     <uploader
         browse_button="browse_button"
-        :url="server_config.url+'/BigFile/'"
+        :url="server_config.url+'/upload/chunk/'"
         chunk_size="2MB"
         :filters="{prevent_duplicates:true}"
         :FilesAdded="filesAdded"
@@ -90,7 +90,7 @@
       filesAdded(up, files) {
         files.forEach((f) => {
           f.status = -1
-          browserMD5File(this.tempFile, function(err, md5) {
+          browserMD5File(f.getNative(), function(err, md5) {
             if (err) {
               console.log(err)
               return

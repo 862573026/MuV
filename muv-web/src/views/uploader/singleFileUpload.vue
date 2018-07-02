@@ -2,7 +2,7 @@
     <div>
       <uploader
         browse_button="browse_button"
-        :url="server_config.url+'/File/'"
+        :url="server_config.url+'/upload/file/'"
         :multi_selection="false"
         :FilesAdded="filesAdded"
         :filters="{
@@ -13,6 +13,7 @@
           max_file_size : '400kb'
         }"
         @inputUploader="inputUploader"
+        :BeforeUpload="beforeUpload"
       />
       <el-button id="browse_button" type="primary">选择文件</el-button>
       <span v-for="file in files">{{file.name}}</span>
@@ -29,6 +30,8 @@
 
 <script>
   import Uploader from './Uploader'
+  import browserMD5File from 'browser-md5-file'
+
   export default {
     name: 'SingleFileUpload',
     data() {
@@ -66,6 +69,18 @@
         if (up.files.length > 1) {
           up.removeFile(up.files[0])
         }
+        browserMD5File(up.files[0].getNative(), function(err, md5) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          up.files[0]['md5'] = md5
+          up.files[0].status = 1
+          console.log('md5=====>' + md5)
+        })
+      },
+      beforeUpload(up, file) {
+        up.setOption('multipart_params', { 'size': file.size, 'md5': file.md5 })
       },
       inputUploader(up) {
         this.up = up

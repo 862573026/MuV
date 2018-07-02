@@ -32,6 +32,7 @@
       </el-checkbox>
     </div>
 
+
     <!--角色展示表-->
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit
               highlight-current-row
@@ -93,37 +94,44 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item  :label="$t('apk.name')">
-          <span v-if="dialogStatus=='delete'">{{temp.name}}</span>
+        <el-form-item :label="$t('apk.name')">
+          <span v-if="dialogStatus!=='create'">{{temp.name}}</span>
           <div v-else>
-            <input id="upload-input"  ref="upload-input" type="file" accept=".apk" class="c-hide"
-                   @change="handleFileChange">
-            <div id="drop">
-              <span v-if="this.tempFile === undefined" v-text="$t('base.fileInputHint')" ></span>
-              <span v-else>{{temp.name}}</span>
-              <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleBrowse" v-text="$t('base.browse')"></el-button>
-            </div>
+            <uploader
+              browse_button="browse_button"
+              :url="server_config.url+'/manager/apk/upload/'"
+              :multi_selection="false"
+              chunk_size="2MB"
+              :FilesAdded="filesAdded"
+              :BeforeUpload="beforeUpload"
+              @inputUploader="inputUploader"
+              :FileUploaded="fileUploaded"
+            />
+            <span v-for="file in files">{{file.name}}</span>
+            <el-button id="browse_button" type="primary" size="mini">选择文件</el-button>
+            <el-button type="danger" @click="uploadStart()" size="mini">开始上传</el-button>
             <div>
-              <el-button  v-if="this.tempFile !== undefined" size="mini" type="danger" @click="handleUpload" v-text="$t('base.upload')"></el-button>
+              <el-progress v-if="files.length>0" :text-inside="true" :stroke-width="20" :percentage="files[0].percent"></el-progress>
             </div>
           </div>
         </el-form-item>
         <!--版本-->
         <el-form-item :label="$t('apk.version')" prop="version">
-          <span v-if="dialogStatus=='delete'">{{temp.version}}</span>
+          <span v-if="dialogStatus==='delete'">{{temp.version}}</span>
           <el-input v-else v-model="temp.version"></el-input>
         </el-form-item>
         <!-- 描述 -->
         <el-form-item :label="$t('apk.description')" prop="description">
-          <span v-if="dialogStatus=='delete'">{{temp.description}}</span>
+          <span v-if="dialogStatus==='delete'">{{temp.description}}</span>
           <el-input v-else v-model="temp.description"></el-input>
         </el-form-item>
         <!-- 重要性 -->
         <el-form-item :label="$t('table.importance')" prop="importance">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='5'></el-rate>
+          <el-rate v-if="dialogStatus==='delete'" disabled="disabled" style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='5'></el-rate>
+          <el-rate v-else style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='5'></el-rate>
         </el-form-item>
         <!-- 立即激活 -->
-        <el-form-item v-if="dialogStatus!='delete'" :label="$t('role.enableImmediately')" prop="enable">
+        <el-form-item v-if="dialogStatus!=='delete'" :label="$t('role.enableImmediately')" prop="enable">
           <el-select class="filter-item" v-model="temp.enable" placeholder="Please select">
             <el-option v-for="item in  enableOptions" :key="item.key" :label="item.display_name"
                        :value="item.key">
@@ -155,9 +163,11 @@
 </template>
 
 <script>
-  import { apkList, addApk, updateApk, deleteApk, checkApkMd5, uploadApk } from '@/api/apk'
+  import { apkList, addApk, updateApk, deleteApk } from '@/api/apk'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
+  import Uploader from '@/views/uploader/Uploader'
+  import Cookie from 'js-cookie'
 
   var browserMD5File = require('browser-md5-file')
 
@@ -169,6 +179,10 @@
     data() {
       return {
         tableKey: 0,
+        server_config: this.global.server_config,
+        up: {},
+        files: [],
+        uploadTag: undefined,
         list: null,
         total: null,
         listLoading: true,
@@ -188,11 +202,10 @@
           name: undefined,
           version: undefined,
           importance: 1,
+          path: undefined,
           description: undefined,
           enable: true
         },
-        tempFile: undefined,
-        uploadStatus: undefined,
         rules: {
           name: [{ required: true, message: '请选择文件', trigger: 'blur' }],
           version: [{ required: true, message: 'version is required', trigger: 'change' }],
@@ -215,6 +228,28 @@
     computed: {
       yes() {
         return this.$t('yes')
+      },
+      status() {
+        return this.files.length > 0 ? this.files[0].status : null
+      }
+    },
+    watch: {
+      status() {
+        if (this.status === 5) {
+          this.uploadTag = true
+          // this.temp.name = this.files[0].name
+          this.$notify({
+            title: '提示',
+            message: '文件上传成功',
+            type: 'success',
+            duration: 2000
+          })
+        }
+      },
+      dialogFormVisible() {
+        if (this.dialogFormVisible === false) {
+          this.resetTemp()
+        }
       }
     },
     filters: {
@@ -274,8 +309,8 @@
           description: undefined,
           enable: true
         }
-        this.tempFile = undefined
-        this.uploadStatus = false
+        this.files = []
+        this.uploadTag = false
       },
       handleCreate() {
         this.dialogStatus = 'create'
@@ -288,17 +323,12 @@
         this.$refs['dataForm'].validate((valid) => {
           console.log(this.temp)
           if (valid) {
-            if (this.uploadStatus === false) {
-              this.$notify({
-                title: '失败',
-                message: '请先上传文件',
-                type: 'error',
-                duration: 2000
-              })
-            } else {
+            if (this.uploadTag === true) {
+              const user = JSON.parse(Cookie.get('user-info'))
+              var uid = user.uid
+              this.temp.userId = uid
               addApk(this.temp).then(() => {
                 // this.list.unshift(this.temp)
-                this.resetTemp()
                 this.getList()
                 this.dialogFormVisible = false
                 this.$notify({
@@ -307,6 +337,13 @@
                   type: 'success',
                   duration: 2000
                 })
+              })
+            } else {
+              this.$notify({
+                title: '失败',
+                message: '请先上传文件',
+                type: 'error',
+                duration: 2000
               })
             }
           }
@@ -367,81 +404,6 @@
           })
         }
       },
-      handleFileChange(e) {
-        const files = e.target.files
-        const select = files[0] // only use files[0]
-        if (!select) {
-          this.temp.name = undefined
-          this.tempFile = undefined
-        } else {
-          this.temp.name = select.name
-          this.tempFile = select
-        }
-        this.$refs['upload-input'].value = null // fix can't select the same excel
-
-        console.log(select)
-      },
-      handleBrowse() {
-        document.getElementById('upload-input').click()
-      },
-      // 文件上传
-      handleUpload() {
-        // 检查MD5 判断上传状态
-        var _this = this // 共享变量 或者用 =>
-        browserMD5File(this.tempFile, function(err, md5) {
-          if (err) {
-            console.log(err)
-            return
-          }
-          const param = {
-            'md5': md5
-          }
-          console.log('_status ' + _this.uploadStatus)
-
-          checkApkMd5(param).then((resp) => {
-            const data = resp.data
-            if (data.success === true) {
-              const code = data.code
-              if (code === 2000) {
-                this.uploadFile(md5, 0, 0)
-              } else if (code === 2001) {
-                console.log('文件已存在')
-                _this.uploadStatus = true
-              } else if (code === 2002) {
-                this.uploadFile(md5, 0, 0)
-              }
-            } else {
-              console.log('上传失败')
-            }
-          })
-        })
-      // checkApkMd5(form).then(() => {
-      //   this.status.fileUpload = true
-      //   console.log('上传成功')
-      // })
-      //
-      // var form = new FormData()
-      // form.append('file', this.tempFile)
-      // uploadApk(form).then(() => {
-      //   this.status.fileUpload = true
-      //   console.log('上传成功')
-      // })
-      },
-      // 上传Apk
-      uploadFile(md5, chunks, chunk) {
-        var form = new FormData()
-        form.append('file', this.tempFile)
-        form.append('uid', this.temp.uid)
-        form.append('id', 'taskId')
-        form.append('name', this.temp.name)
-        form.append('chunks', chunks)
-        form.append('chunk', chunk)
-        form.append('md5', md5)
-        uploadApk(form).then(() => {
-          this.status.fileUpload = true
-          console.log('上传成功')
-        })
-      },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
           if (j === 'timestamp') {
@@ -450,7 +412,41 @@
             return v[j]
           }
         }))
+      },
+      filesAdded(up, files) {
+        if (up.files.length > 1) {
+          up.removeFile(up.files[0])
+        }
+        browserMD5File(up.files[0].getNative(), function(err, md5) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          up.files[0]['md5'] = md5.toUpperCase()
+          up.files[0].status = 1
+          console.log('md5=====>' + md5)
+        })
+        this.files = files
+        this.temp.name = files[0].name
+        console.log('file Add:' + this.files)
+      },
+      inputUploader(up) {
+        this.up = up
+        this.files = up.files
+      },
+      beforeUpload(up, file) {
+        up.setOption('multipart_params', { 'size': file.size, 'md5': file.md5 })
+      },
+      uploadStart() {
+        this.up.start()
+      },
+      fileUploaded(uploader, file, resp) {
+        this.temp.path = resp.response
+        console.log('All: ' + resp.response)
       }
+    },
+    components: {
+      'uploader': Uploader
     }
   }
 </script>
