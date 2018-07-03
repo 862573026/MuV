@@ -726,7 +726,7 @@ public final class FileIOUtils {
      * @param chunk
      * @throws IOException
      */
-    public static void writeWithBlok(String target, Long targetSize, InputStream src, Long srcSize, Integer chunks, Integer chunk) throws IOException {
+    public static void writeWithBlock(String target, Long targetSize, InputStream src, Long srcSize, Integer chunks, Integer chunk) throws IOException {
         RandomAccessFile randomAccessFile = new RandomAccessFile(target,"rw");
         randomAccessFile.setLength(targetSize);
         if (chunk == chunks - 1 && chunk != 0) {

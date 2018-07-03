@@ -11,4 +11,6 @@ public class RespKey {
 
     public final static String PAGE_INFO = "pageInfo";
 
+    public final static String INFO = "info";
+
 }

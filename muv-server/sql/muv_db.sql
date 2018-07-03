@@ -10,11 +10,8 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-05-10 17:21:59
+Date: 2018-07-03 19:32:57
 */
-DROP DATABASE IF EXISTS muv_db;
-CREATE DATABASE muv_db DEFAULT CHARACTER SET utf8;
-USE muv_db;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -32,7 +29,7 @@ CREATE TABLE `account_log` (
   `ip` varchar(255) DEFAULT NULL COMMENT '登录ip',
   `enable` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='登录注册登出记录';
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8 COMMENT='登录注册登出记录';
 
 -- ----------------------------
 -- Records of account_log
@@ -80,6 +77,139 @@ INSERT INTO `account_log` VALUES ('40', '用户登录日志', '1', '2018-06-26 1
 INSERT INTO `account_log` VALUES ('41', '用户登录日志', '1', '2018-06-26 11:40:45', '1', '登录成功', '127.0.0.1', '1');
 INSERT INTO `account_log` VALUES ('42', '用户登录日志', '1', '2018-06-26 11:47:39', '1', '登录成功', '127.0.0.1', '1');
 INSERT INTO `account_log` VALUES ('43', '用户登录日志', '1', '2018-06-26 13:53:00', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('44', '用户登录日志', '1', '2018-06-27 14:29:23', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('45', '用户登录日志', '1', '2018-06-27 14:29:26', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('46', '用户登录日志', '1', '2018-06-27 14:30:43', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('47', '用户登录日志', '1', '2018-06-27 14:31:17', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('48', '用户登录日志', '1', '2018-06-27 14:32:12', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('49', '用户登录日志', '1', '2018-06-27 14:59:48', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('50', '用户登录日志', '1', '2018-06-28 14:10:25', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('51', '用户登录日志', '1', '2018-06-29 09:30:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('52', '用户登录日志', '1', '2018-06-29 09:33:01', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('53', '用户登录日志', '1', '2018-06-29 09:36:56', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('54', '用户登录日志', '1', '2018-06-29 09:45:26', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('55', '用户登录日志', '1', '2018-06-29 09:45:30', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('56', '用户登录日志', '1', '2018-06-29 09:49:27', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('57', '用户登录日志', '1', '2018-06-29 10:17:49', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('58', '用户登录日志', '1', '2018-06-29 10:21:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('59', '用户登录日志', '1', '2018-06-29 10:25:04', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('60', '用户登录日志', '1', '2018-06-29 10:25:46', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('61', '用户登录日志', '1', '2018-06-29 10:26:06', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('62', '用户登录日志', '1', '2018-06-29 10:26:24', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('63', '用户登录日志', '1', '2018-06-29 10:27:20', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('64', '用户登录日志', '1', '2018-06-29 10:30:52', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('65', '用户登录日志', '1', '2018-06-29 10:31:02', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('66', '用户登录日志', '1', '2018-06-29 10:32:29', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('67', '用户登录日志', '1', '2018-06-29 10:33:29', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('68', '用户登录日志', '1', '2018-06-29 10:34:14', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('69', '用户登录日志', '1', '2018-06-29 10:45:46', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('70', '用户登录日志', '1', '2018-06-29 10:46:45', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('71', '用户登录日志', '1', '2018-06-29 10:47:49', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('72', '用户登录日志', '1', '2018-06-29 10:48:47', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('73', '用户登录日志', '1', '2018-06-29 10:50:07', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('74', '用户登录日志', '1', '2018-06-29 10:51:19', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('75', '用户登录日志', '1', '2018-06-29 10:53:21', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('76', '用户登录日志', '1', '2018-06-29 10:53:45', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('77', '用户登录日志', '1', '2018-06-29 10:59:51', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('78', '用户登录日志', '1', '2018-06-29 11:03:41', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('79', '用户登录日志', '1', '2018-06-29 11:07:38', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('80', '用户登录日志', '1', '2018-06-29 11:09:54', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('81', '用户登录日志', '1', '2018-06-29 11:11:26', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('82', '用户登录日志', '1', '2018-06-29 11:12:01', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('83', '用户登录日志', '1', '2018-06-29 11:12:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('84', '用户登录日志', '1', '2018-06-29 11:13:46', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('85', '用户登录日志', '1', '2018-06-29 11:15:06', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('86', '用户登录日志', '1', '2018-06-29 11:15:25', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('87', '用户登录日志', '1', '2018-06-29 11:15:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('88', '用户登录日志', '1', '2018-06-29 11:16:49', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('89', '用户登录日志', '1', '2018-06-29 11:18:15', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('90', '用户登录日志', '1', '2018-06-29 11:19:09', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('91', '用户登录日志', '1', '2018-06-29 11:19:59', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('92', '用户登录日志', '1', '2018-06-29 11:32:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('93', '用户登录日志', '1', '2018-06-29 11:40:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('94', '用户登录日志', '1', '2018-06-29 11:40:29', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('95', '用户登录日志', '1', '2018-06-29 11:42:46', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('96', '用户登录日志', '1', '2018-06-29 11:45:46', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('97', '用户登录日志', '1', '2018-06-29 11:47:57', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('98', '用户登录日志', '1', '2018-06-29 11:49:54', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('99', '用户登录日志', '1', '2018-06-29 11:50:28', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('100', '用户登录日志', '1', '2018-06-29 11:51:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('101', '用户登录日志', '1', '2018-06-29 13:10:45', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('102', '用户登录日志', '1', '2018-06-29 13:13:53', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('103', '用户登录日志', '1', '2018-06-29 13:14:38', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('104', '用户登录日志', '1', '2018-06-29 13:15:16', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('105', '用户登录日志', '1', '2018-06-29 13:16:04', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('106', '用户登录日志', '1', '2018-06-29 13:18:54', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('107', '用户登录日志', '1', '2018-06-29 13:21:01', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('108', '用户登录日志', '1', '2018-06-29 13:26:28', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('109', '用户登录日志', '1', '2018-06-29 13:27:20', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('110', '用户登录日志', '1', '2018-06-29 13:27:52', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('111', '用户登录日志', '1', '2018-06-29 13:33:20', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('112', '用户登录日志', '1', '2018-06-29 13:41:59', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('113', '用户登录日志', '1', '2018-06-29 13:45:32', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('114', '用户登录日志', '1', '2018-06-29 13:46:25', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('115', '用户登录日志', '1', '2018-06-29 13:51:29', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('116', '用户登录日志', '1', '2018-06-29 13:52:02', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('117', '用户登录日志', '1', '2018-06-29 13:57:31', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('118', '用户登录日志', '1', '2018-06-29 14:00:02', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('119', '用户登录日志', '1', '2018-06-29 14:00:39', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('120', '用户登录日志', '1', '2018-06-29 14:03:53', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('121', '用户登录日志', '1', '2018-06-29 14:04:44', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('122', '用户登录日志', '1', '2018-06-29 14:10:25', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('123', '用户登录日志', '1', '2018-06-29 14:18:19', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('124', '用户登录日志', '1', '2018-06-29 14:37:23', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('125', '用户登录日志', '1', '2018-06-29 14:39:19', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('126', '用户登录日志', '1', '2018-06-29 14:39:35', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('127', '用户登录日志', '1', '2018-06-29 14:40:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('128', '用户登录日志', '1', '2018-06-29 14:40:30', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('129', '用户登录日志', '1', '2018-06-29 14:41:30', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('130', '用户登录日志', '1', '2018-06-29 14:41:57', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('131', '用户登录日志', '1', '2018-06-29 14:44:27', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('132', '用户登录日志', '1', '2018-06-29 14:49:59', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('133', '用户登录日志', '1', '2018-06-29 14:50:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('134', '用户登录日志', '1', '2018-06-29 15:06:12', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('135', '用户登录日志', '1', '2018-06-29 15:12:31', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('136', '用户登录日志', '1', '2018-06-29 15:25:31', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('137', '用户登录日志', '1', '2018-06-29 15:26:43', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('138', '用户登录日志', '1', '2018-06-29 15:27:22', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('139', '用户登录日志', '1', '2018-06-29 15:36:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('140', '用户登录日志', '1', '2018-06-29 15:37:17', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('141', '用户登录日志', '1', '2018-06-29 15:38:24', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('142', '用户登录日志', '1', '2018-06-29 16:04:35', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('143', '用户登录日志', '1', '2018-06-29 16:06:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('144', '用户登录日志', '1', '2018-06-29 16:07:34', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('145', '用户登录日志', '1', '2018-06-29 16:14:55', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('146', '用户登录日志', '1', '2018-06-29 16:15:48', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('147', '用户登录日志', '1', '2018-06-29 16:18:52', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('148', '用户登录日志', '1', '2018-06-29 16:27:37', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('149', '用户登录日志', '1', '2018-06-29 16:35:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('150', '用户登录日志', '1', '2018-06-29 16:36:25', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('151', '用户登录日志', '1', '2018-06-29 16:37:27', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('152', '用户登录日志', '1', '2018-06-29 16:40:26', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('153', '用户登录日志', '1', '2018-06-29 16:41:45', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('154', '用户登录日志', '1', '2018-06-29 16:45:20', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('155', '用户登录日志', '1', '2018-06-29 16:51:05', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('156', '用户登录日志', '1', '2018-06-29 16:54:34', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('157', '用户登录日志', '1', '2018-06-29 16:54:50', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('158', '用户登录日志', '1', '2018-06-29 16:55:41', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('159', '用户登录日志', '1', '2018-06-29 16:56:15', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('160', '用户登录日志', '1', '2018-06-29 16:56:36', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('161', '用户登录日志', '1', '2018-06-29 16:56:55', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('162', '用户登录日志', '1', '2018-06-29 17:02:12', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('163', '用户登录日志', '1', '2018-06-29 17:05:51', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('164', '用户登录日志', '1', '2018-06-29 17:07:18', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('165', '用户登录日志', '1', '2018-06-29 17:08:15', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('166', '用户登录日志', '1', '2018-06-29 17:08:43', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('167', '用户登录日志', '1', '2018-06-29 17:08:51', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('168', '用户登录日志', '1', '2018-06-29 17:09:01', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('169', '用户登录日志', '1', '2018-06-29 17:10:42', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('170', '用户登录日志', '1', '2018-06-29 17:11:02', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('171', '用户登录日志', '1', '2018-06-29 17:13:40', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('172', '用户登录日志', '1', '2018-06-29 17:19:17', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('173', '用户登录日志', '1', '2018-07-02 09:00:41', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('174', '用户登录日志', '1', '2018-07-02 10:28:29', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('175', '用户登录日志', '1', '2018-07-03 10:24:58', '1', '登录成功', '127.0.0.1', '1');
+INSERT INTO `account_log` VALUES ('176', '用户登录日志', '1', '2018-07-03 16:36:01', '1', '登录成功', '127.0.0.1', '1');
 
 -- ----------------------------
 -- Table structure for apk
@@ -89,17 +219,32 @@ CREATE TABLE `apk` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(30) NOT NULL COMMENT '上传者的Id',
   `name` varchar(30) DEFAULT NULL,
+  `package_name` varchar(255) NOT NULL COMMENT '包名',
   `version` varchar(30) DEFAULT NULL,
   `importance` int(3) DEFAULT '100' COMMENT '重要性 0 - 100 (数值越小越重要)',
   `path` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `enable` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apk
 -- ----------------------------
+INSERT INTO `apk` VALUES ('47', '1', 'muv_db.sql', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('49', '1', 'sdfsdg', 'com.muv.newx', '1.1.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('50', '1', 'xbd', 'com.muv.newx', '1.19.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('51', '1', 'dhdb', 'com.muv.newx', '2.20.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('52', '1', 'dfger', 'com.muv.newx', '2.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('53', '1', 'dfgdg', 'com.muv.newx', '3.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('54', '1', 'dbervgf', 'com.muv.newx', '9.0.1', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('55', '1', 'dfwe', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('56', '1', 'sgs', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('57', '1', 'wd', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('58', '1', 'sdfcx', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('59', '1', 'sdwegg', 'com.muv.newx', '1.0.0', '4', '/apk/10023B219F291909CE8D2F5C40F27F08', '描述', '1');
+INSERT INTO `apk` VALUES ('60', '1', 'app-beijing-release.apk', 'com.beijing', '1.0.0', '4', '/apk/A94204BBC0F9DE35B30E2D64BE3294B5', 'aa', '1');
+INSERT INTO `apk` VALUES ('61', '1', 'demo3.apk', 'Demo', '1.2.0', '4', '/apk/8B321C8A5759A4C7FCA97A33B877AB32', '描述', '1');
 
 -- ----------------------------
 -- Table structure for apk_plugin
@@ -116,6 +261,28 @@ CREATE TABLE `apk_plugin` (
 -- ----------------------------
 -- Records of apk_plugin
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for file
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `md5` varchar(32) DEFAULT NULL,
+  `path` varchar(100) NOT NULL,
+  `upload_time` datetime(3) NOT NULL,
+  `enable` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of file
+-- ----------------------------
+INSERT INTO `file` VALUES ('5', 'HK_Buy22114.PNG', 'B417805AFC3BB5EE12D3F8E83DDCC70A', '/apk/B417805AFC3BB5EE12D3F8E83DDCC70A', '2018-07-03 17:26:14.000', '1');
+INSERT INTO `file` VALUES ('6', 'app-beijing-release.apk', 'A94204BBC0F9DE35B30E2D64BE3294B5', '/apk/A94204BBC0F9DE35B30E2D64BE3294B5', '2018-07-03 17:26:55.000', '1');
+INSERT INTO `file` VALUES ('7', 'app-beijing-release.apk', 'A94204BBC0F9DE35B30E2D64BE3294B5', '/apk/A94204BBC0F9DE35B30E2D64BE3294B5', '2018-07-03 18:59:07.000', '1');
+INSERT INTO `file` VALUES ('8', 'demo3.apk', '8B321C8A5759A4C7FCA97A33B877AB32', '/apk/8B321C8A5759A4C7FCA97A33B877AB32', '2018-07-03 19:00:54.000', '1');
 
 -- ----------------------------
 -- Table structure for operation_log
@@ -235,11 +402,11 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('100', 'role_admin', '管理员角色', '2018-06-26 14:47:33', '2018-06-26 14:47:33', '1');
-INSERT INTO `role` VALUES ('101', 'role_user', '用户角色', '2018-06-26 09:31:14', '2018-06-26 09:31:54', '1');
-INSERT INTO `role` VALUES ('102', 'role_guest', '访客角色', '2018-06-26 09:31:17', '2018-06-26 09:31:57', '1');
-INSERT INTO `role` VALUES ('103', 'role_anon', '非角色', '2018-06-26 09:32:00', '2018-06-26 09:32:03', '1');
-INSERT INTO `role` VALUES ('114', 'List', '修改', '2018-06-26 14:55:30', '2018-06-26 14:55:30', '0');
+INSERT INTO `role` VALUES ('100', 'admin', '管理员角色', '2018-06-26 14:47:33', '2018-06-26 14:47:33', '1');
+INSERT INTO `role` VALUES ('101', 'user', '用户角色', '2018-06-26 09:31:14', '2018-06-26 09:31:54', '1');
+INSERT INTO `role` VALUES ('102', 'guest', '访客角色', '2018-06-26 09:31:17', '2018-06-26 09:31:57', '1');
+INSERT INTO `role` VALUES ('103', 'anon', '非角色', '2018-06-26 09:32:00', '2018-06-26 09:32:03', '1');
+INSERT INTO `role` VALUES ('114', 'Modify', '修改', '2018-06-26 14:55:30', '2018-06-26 14:55:30', '0');
 
 -- ----------------------------
 -- Table structure for role_resource

@@ -50,6 +50,10 @@
         delete from file where id = #{id}
     </delete>
 
+    <delete id="deleteByPath" parameterType="java.lang.String">
+        delete from file where path = #{path}
+    </delete>
+
     <select id="getByFile" parameterType="com.newx.muv.entity.bo.File" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

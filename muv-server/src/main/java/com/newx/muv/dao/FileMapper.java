@@ -32,6 +32,8 @@ public interface FileMapper {
      */
     int deleteById(Long id);
 
+    int deleteByPath(String path);
+
     /**
      * 根据一个或多个属性获取File
      * @param file

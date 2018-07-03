@@ -8,6 +8,7 @@ public class Apk {
     private int id;
     private String userId;
     private String name;
+    private String packageName;
     private String version;
     private int importance;
     private String path;
@@ -36,6 +37,14 @@ public class Apk {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String getVersion() {

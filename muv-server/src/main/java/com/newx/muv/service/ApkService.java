@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface ApkService {
 
+    Apk selectApkByPK(Integer id) throws DataAccessException;
+
     boolean deleteById(Integer id) throws DataAccessException;
 
     boolean insert(Apk record) throws DataAccessException;
@@ -17,4 +19,6 @@ public interface ApkService {
     boolean update(Apk record) throws DataAccessException;
 
     List<Apk> getApkList() throws DataAccessException;
+
+    Apk queryLatestApk(String packageName) throws DataAccessException;
 }

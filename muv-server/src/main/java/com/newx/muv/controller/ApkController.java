@@ -4,7 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.newx.muv.common.RespCode;
 import com.newx.muv.common.RespKey;
 import com.newx.muv.common.RespMsg;
-import com.newx.muv.controller.upload.Uploader;
+import com.newx.muv.controller.file.DeleteUtil;
+import com.newx.muv.controller.file.Uploader;
 import com.newx.muv.entity.bo.Apk;
 import com.newx.muv.entity.vo.Message;
 import com.newx.muv.service.ApkService;
@@ -14,9 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.ServletRequest;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -58,18 +58,6 @@ public class ApkController extends BasicAction {
             return new Message().error(RespCode.ERROR, RespMsg.ERROR);
         }
     }
-    @ApiOperation(value = "获取文件的上传状态", httpMethod = "GET")
-    @GetMapping("/checkMd5")
-    public int checkMd5(String md5) {
-        return mUploader.checkMd5(md5);
-    }
-
-
-    @ApiOperation(value = "上传Apk", httpMethod = "POST")
-    @PostMapping("/upload")
-    public String chunkUpload(ServletRequest request) throws IOException {
-        return mUploader.upload(request);
-    }
 
     @ApiOperation(value = "更新Apk", httpMethod = "PUT")
     @PutMapping("/update")
@@ -87,12 +75,24 @@ public class ApkController extends BasicAction {
     @DeleteMapping("/delete/{id}")
     public Message deleteApkById(@PathVariable Integer id) {
         LOGGER.info(id.toString() + "==========");
-        boolean flag = mApkService.deleteById(id);
+        Apk apk = mApkService.selectApkByPK(id);
+        boolean flag = false;
+        if (null != apk && null != apk.getPath()){
+            if(DeleteUtil.deleteFile(apk.getPath())){
+                flag = mApkService.deleteById(id) && mUploader.deleteByPath(apk.getPath());
+            }
+        }
         if (flag) {
-            return new Message().ok(RespCode.OK, RespMsg.SUCCESS);
+            return new Message().ok();
         } else {
-            return new Message().error(RespCode.ERROR, RespMsg.ERROR);
+            return new Message().error();
         }
     }
 
+    @ApiOperation(value = "根据包名查询最新Apk", httpMethod = "GET")
+    @GetMapping("/latest/{packageName}")
+    public Message queryLatestApk(@PathVariable String packageName){
+       Apk apk = mApkService.queryLatestApk(packageName);
+       return new Message().ok().addData(RespKey.INFO,apk);
+    }
 }

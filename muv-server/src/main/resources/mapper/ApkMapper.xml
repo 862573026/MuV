@@ -5,6 +5,7 @@
         <id column="ID" jdbcType="INTEGER" property="id"/>
         <result column="USER_ID" jdbcType="VARCHAR" property="userId"/>
         <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PACKAGE_NAME" jdbcType="VARCHAR" property="packageName"/>
         <result column="VERSION" jdbcType="VARCHAR" property="version"/>
         <result column="IMPORTANCE" jdbcType="INTEGER" property="importance"/>
         <result column="PATH" jdbcType="VARCHAR" property="path"/>
@@ -12,9 +13,9 @@
         <result column="ENABLE" jdbcType="SMALLINT" property="enable"/>
     </resultMap>
     <sql id="Apk_Column_List">
-    ID, USER_ID, NAME, VERSION, IMPORTANCE, PATH,DESCRIPTION,ENABLE
+    ID, USER_ID, NAME,PACKAGE_NAME, VERSION, IMPORTANCE, PATH,DESCRIPTION,ENABLE
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ApkResultMap">
+    <select id="selectApkByPK" parameterType="java.lang.Integer" resultMap="ApkResultMap">
         select
         <include refid="Apk_Column_List"/>
         from apk
@@ -26,15 +27,16 @@
   </delete>
     <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.newx.muv.entity.bo.Apk"
             useGeneratedKeys="true">
-    insert into apk (USER_ID, NAME, VERSION, IMPORTANCE, PATH, DESCRIPTION, ENABLE)
-    values (#{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR},
-      #{importance,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-      #{enable,jdbcType=SMALLINT})
+    insert into apk (USER_ID, NAME,PACKAGE_NAME, VERSION, IMPORTANCE, PATH, DESCRIPTION, ENABLE)
+    values (#{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR},
+      #{version,jdbcType=VARCHAR}, #{importance,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},#{enable,jdbcType=SMALLINT})
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.newx.muv.entity.bo.Apk">
     update apk
     set USER_ID = #{userId,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
+      PACKAGE_NAME = #{packageName,jdbcType=VARCHAR},
       VERSION = #{version,jdbcType=VARCHAR},
       IMPORTANCE = #{importance,jdbcType=INTEGER},
       PATH = #{path,jdbcType=VARCHAR},
@@ -43,6 +45,14 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
     <select id="selectApkList" resultMap="ApkResultMap">
-    select * from apk
+    select * from apk order by id desc
   </select>
+
+    <select id="queryLatestApk" parameterType="java.lang.String" resultMap="ApkResultMap">
+        select
+        <include refid="Apk_Column_List"/>
+        from apk
+        where PACKAGE_NAME = #{packageName,jdbcType=INTEGER}
+        order by version desc limit 1
+    </select>
 </mapper>

@@ -21,4 +21,6 @@ public interface FileService {
 
     public int checkMd5(String md5);
 
+    public boolean deleteByPath(String path);
+
 }

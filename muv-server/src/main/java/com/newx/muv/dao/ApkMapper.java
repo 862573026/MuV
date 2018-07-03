@@ -14,9 +14,11 @@ public interface ApkMapper {
 
     int insert(Apk record) throws DataAccessException;
 
-    Apk selectByPrimaryKey(Integer id) throws DataAccessException;
+    Apk selectApkByPK(Integer id) throws DataAccessException;
 
     int updateByPrimaryKey(Apk record) throws DataAccessException;
 
     List<Apk> selectApkList() throws DataAccessException;
+
+    Apk queryLatestApk(String packageName) throws DataAccessException;
 }

@@ -19,6 +19,11 @@ public class ApkServiceImpl implements ApkService {
     private ApkMapper mApkMapper;
 
     @Override
+    public Apk selectApkByPK(Integer id) throws DataAccessException {
+        return  mApkMapper.selectApkByPK(id);
+    }
+
+    @Override
     public boolean deleteById(Integer id) throws DataAccessException {
         int result = mApkMapper.deleteByPrimaryKey(id);
         return result == 1 ? Boolean.TRUE : Boolean.FALSE;
@@ -40,5 +45,10 @@ public class ApkServiceImpl implements ApkService {
     @Override
     public List<Apk> getApkList() throws DataAccessException {
         return mApkMapper.selectApkList();
+    }
+
+    @Override
+    public Apk queryLatestApk(String packageName) throws DataAccessException {
+        return mApkMapper.queryLatestApk(packageName);
     }
 }

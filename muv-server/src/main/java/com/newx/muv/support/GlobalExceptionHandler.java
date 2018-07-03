@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
      * @Return Message
      */
     @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.OK)
+//    @ResponseStatus(HttpStatus.OK)
     public Message notFoundException(RuntimeException e) {
         LOGGER.error("运行时异常:",e);
         return new Message().error(RespCode.ERROR,"服务器开小差");

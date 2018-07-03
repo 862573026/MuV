@@ -1,4 +1,4 @@
-package com.newx.muv.controller.upload;
+package com.newx.muv.controller.file;
 
 import com.newx.muv.service.FileService;
 import com.newx.muv.util.RequestResponseUtil;
@@ -51,21 +51,25 @@ public class Uploader {
 //     * @param file
      * @throws IOException
      */
-    public String upload(ServletRequest request) throws IOException {
+    public String upload(String path, HttpServletRequest request) throws IOException {
         Map<String, String> map = RequestResponseUtil.getRequestParameters(request);
         String name = map.get("name");
         String md5 = map.get("md5");
         long size = Long.parseLong(map.get("size"));
         int chunks = map.get("chunks") == null ? -1 : Integer.parseInt(map.get("chunks"));
-        int chunk = map.get("chunks") == null ? -1 : Integer.parseInt(map.get("chunks"));
+        int chunk = map.get("chunk") == null ? -1 : Integer.parseInt(map.get("chunk"));
         MultiValueMap<String, MultipartFile> fileMap = RequestResponseUtil.getRequestMultiParameters(request);
         MultipartFile file = fileMap.get("file").get(0);
-        String path = ((HttpServletRequest) request).getServletPath();
+//        String path = request.getServletPath();
 
         if (chunks != -1 && chunks != 0) {
            return mFileService.uploadWithBlock(name, path, md5, size, chunks, chunk, file);
         } else {
             return mFileService.upload(name, path, md5, file);
         }
+    }
+
+    public boolean deleteByPath(String path) {
+        return mFileService.deleteByPath(path);
     }
 }
