@@ -72,6 +72,7 @@ export default {
     no: '否',
     browse: '浏览',
     upload: '上传',
+    download: '下载',
     operateSuccess: '操作成功',
     fileInputHint: '请选择文件'
   },
@@ -119,6 +120,7 @@ export default {
   apk: {
     id: 'ApkId',
     name: '名称',
+    packageName: '包名',
     version: '版本',
     importance: '重要性',
     path: '路径',

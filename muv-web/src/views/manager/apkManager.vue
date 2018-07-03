@@ -49,6 +49,12 @@
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
+      <!--包名-->
+      <el-table-column align="center" :label="$t('apk.packageName')" min-width="65px">
+        <template slot-scope="scope">
+          <span>{{scope.row.packageName}}</span>
+        </template>
+      </el-table-column>
       <!--版本-->
       <el-table-column align="center" :label="$t('apk.version')" min-width="65px">
         <template slot-scope="scope">
@@ -78,6 +84,7 @@
           <el-button v-if="scope.row.enable!='deleted'" size="mini" type="danger" @click="handleDelete(scope.row)">
             {{$t('table.delete')}}
           </el-button>
+          <el-button type="warning" size="mini" @click="handleDownload(scope.row)">{{$t('base.download')}}</el-button>
         </template>
       </el-table-column>
 
@@ -99,7 +106,7 @@
           <div v-else>
             <uploader
               browse_button="browse_button"
-              :url="server_config.url+'/manager/apk/upload/'"
+              :url="'/api/upload/apk'"
               :multi_selection="false"
               chunk_size="2MB"
               :FilesAdded="filesAdded"
@@ -108,17 +115,24 @@
               :FileUploaded="fileUploaded"
             />
             <span v-for="file in files">{{file.name}}</span>
-            <el-button id="browse_button" type="primary" size="mini">选择文件</el-button>
-            <el-button type="danger" @click="uploadStart()" size="mini">开始上传</el-button>
-            <div>
-              <el-progress v-if="files.length>0" :text-inside="true" :stroke-width="20" :percentage="files[0].percent"></el-progress>
+            <el-button id="browse_button" type="primary" size="mini" :disabled="!btnChooseEnable">选择文件</el-button>
+            <el-button type="danger" @click="uploadStart()" size="mini" :disabled="!btnUploadEnable">开始上传</el-button>
+            <div  v-if="files.length>0">
+              <span v-if="!fileMd5Flag">正在计算MD5...</span>
+              <el-progress  v-else :text-inside="true" :stroke-width="20"
+                           :percentage="files[0].percent"></el-progress>
             </div>
           </div>
+        </el-form-item>
+        <!-- 包名 -->
+        <el-form-item :label="$t('apk.packageName')" prop="packageName">
+          <span v-if="dialogStatus==='delete'">{{temp.packageName}}</span>
+          <el-input v-else v-model="temp.packageName"></el-input>
         </el-form-item>
         <!--版本-->
         <el-form-item :label="$t('apk.version')" prop="version">
           <span v-if="dialogStatus==='delete'">{{temp.version}}</span>
-          <el-input v-else v-model="temp.version"></el-input>
+          <el-input v-else v-model="temp.version" onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></el-input>
         </el-form-item>
         <!-- 描述 -->
         <el-form-item :label="$t('apk.description')" prop="description">
@@ -141,7 +155,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
+        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData" :disabled="!uploadFlag">{{$t('table.confirm')}}</el-button>
         <el-button v-else-if="dialogStatus=='update'" type="primary" @click="updateData">{{$t('table.confirm')}}
         </el-button>
         <el-button v-else-if="dialogStatus=='delete'" type="primary" @click="deleteData">{{$t('table.confirm')}}
@@ -179,10 +193,12 @@
     data() {
       return {
         tableKey: 0,
-        server_config: this.global.server_config,
         up: {},
         files: [],
-        uploadTag: undefined,
+        uploadFlag: false, // 上传状态
+        btnChooseEnable: true,
+        btnUploadEnable: false, // 上传按钮
+        fileMd5Flag: false, // MD5状态
         list: null,
         total: null,
         listLoading: true,
@@ -190,7 +206,7 @@
           pageIndex: 1,
           pageSize: 20
         },
-        importanceOptions: [1, 2, 3],
+        importanceOptions: [1, 2, 3, 4, 5],
         enableOptions: [
           { key: true, display_name: this.$t('base.yes') },
           { key: false, display_name: this.$t('base.no') }
@@ -200,6 +216,7 @@
         temp: {
           userId: undefined,
           name: undefined,
+          packageName: undefined,
           version: undefined,
           importance: 1,
           path: undefined,
@@ -208,10 +225,9 @@
         },
         rules: {
           name: [{ required: true, message: '请选择文件', trigger: 'blur' }],
-          version: [{ required: true, message: 'version is required', trigger: 'change' }],
-          importance: [{ required: true, message: 'importance is required', trigger: 'change' }],
-          description: [{ required: true, message: 'description is required', trigger: 'blur' }],
-          enable: [{ required: true, message: 'enable is required', trigger: 'change' }]
+          version: [{ required: true, message: '请输入版本号', trigger: 'blur' }],
+          packageName: [{ required: true, message: '请输入Apk包名', trigger: 'blur' }],
+          description: [{ required: true, message: '请输入Apk描述', trigger: 'blur' }]
         },
         dialogFormVisible: false,
         dialogStatus: '',
@@ -236,7 +252,7 @@
     watch: {
       status() {
         if (this.status === 5) {
-          this.uploadTag = true
+          this.uploadFlag = true
           // this.temp.name = this.files[0].name
           this.$notify({
             title: '提示',
@@ -310,7 +326,9 @@
           enable: true
         }
         this.files = []
-        this.uploadTag = false
+        this.uploadFlag = false
+        this.btnUploadEnable = false
+        this.btnChooseEnable = true
       },
       handleCreate() {
         this.dialogStatus = 'create'
@@ -323,29 +341,20 @@
         this.$refs['dataForm'].validate((valid) => {
           console.log(this.temp)
           if (valid) {
-            if (this.uploadTag === true) {
-              const user = JSON.parse(Cookie.get('user-info'))
-              var uid = user.uid
-              this.temp.userId = uid
-              addApk(this.temp).then(() => {
-                // this.list.unshift(this.temp)
-                this.getList()
-                this.dialogFormVisible = false
-                this.$notify({
-                  title: '成功',
-                  message: '创建成功',
-                  type: 'success',
-                  duration: 2000
-                })
-              })
-            } else {
+            const user = JSON.parse(Cookie.get('user-info'))
+            var uid = user.uid
+            this.temp.userId = uid
+            addApk(this.temp).then(() => {
+              // this.list.unshift(this.temp)
+              this.getList()
+              this.dialogFormVisible = false
               this.$notify({
-                title: '失败',
-                message: '请先上传文件',
-                type: 'error',
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
                 duration: 2000
               })
-            }
+            })
           }
         })
       },
@@ -361,15 +370,10 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             const tempData = Object.assign({}, this.temp)
-            updateApk(tempData).then(() => {
+            updateApk(tempData).then((resp) => {
               this.getList()
               this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '更新成功',
-                type: 'success',
-                duration: 2000
-              })
+              this.handleResponse(resp)
             })
           }
         })
@@ -385,24 +389,15 @@
       deleteData() {
         const id = this.temp.id
         if (id !== undefined) {
-          deleteApk(id).then(() => {
+          deleteApk(id).then((resp) => {
             this.getList()
             this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '删除成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        } else {
-          this.$notify({
-            title: '失败',
-            message: '删除失败',
-            type: 'error',
-            duration: 2000
+            this.handleResponse(resp)
           })
         }
+      },
+      handleDownload(row) {
+        window.open('/api/download' + row.path + '/' + row.name)
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
@@ -417,14 +412,19 @@
         if (up.files.length > 1) {
           up.removeFile(up.files[0])
         }
+        var _this = this
+        this.btnUploadEnable = false
+        this.fileMd5Flag = false
         browserMD5File(up.files[0].getNative(), function(err, md5) {
           if (err) {
             console.log(err)
             return
           }
+          console.log('md5=====>' + md5)
           up.files[0]['md5'] = md5.toUpperCase()
           up.files[0].status = 1
-          console.log('md5=====>' + md5)
+          _this.btnUploadEnable = true
+          _this.fileMd5Flag = true
         })
         this.files = files
         this.temp.name = files[0].name
@@ -438,11 +438,32 @@
         up.setOption('multipart_params', { 'size': file.size, 'md5': file.md5 })
       },
       uploadStart() {
+        this.btnChooseEnable = false
+        this.btnUploadEnable = false
         this.up.start()
       },
       fileUploaded(uploader, file, resp) {
         this.temp.path = resp.response
         console.log('All: ' + resp.response)
+      },
+      handleResponse(response) {
+        const code = response.data.code
+        const data = response.data.message
+        if (code === 200) {
+          this.$notify({
+            title: '成功',
+            message: data,
+            type: 'success',
+            duration: 2000
+          })
+        } else {
+          this.$notify({
+            title: '失败',
+            message: data,
+            type: 'error',
+            duration: 2000
+          })
+        }
       }
     },
     components: {
