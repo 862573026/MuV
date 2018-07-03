@@ -102,7 +102,7 @@ jasypt:
 
 #  上传配置
 upload:
-  path: /upload
+  path: /opt/tomcat/upload
   apk-path: /apk/
           #1024*1024=1 048 576,5M=5 242 880
 #          chunkSize: 5 242 880
