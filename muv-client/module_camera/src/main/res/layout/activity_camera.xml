@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:newx="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.wysaid.view.CameraRecordGLSurfaceView
+            android:id="@+id/view_camera"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/btn_flash"
+            android:layout_width="@dimen/default_icon_medium_size"
+            android:layout_height="@dimen/default_icon_medium_size"
+            android:layout_marginLeft="@dimen/default_larger_margin"
+            android:layout_marginTop="@dimen/status_bar_height"
+            android:onClick="clickFlash"
+            newx:layout_constraintLeft_toLeftOf="parent"
+            newx:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_switch"
+            android:layout_width="@dimen/default_icon_medium_size"
+            android:layout_height="@dimen/default_icon_medium_size"
+            android:layout_marginRight="@dimen/default_larger_margin"
+            android:layout_marginTop="@dimen/status_bar_height"
+            android:onClick="clickSwitch"
+            newx:layout_constraintRight_toRightOf="parent"
+            newx:layout_constraintTop_toTopOf="parent" />
+
+
+        <include
+            android:id="@+id/layout_options"
+            layout="@layout/layout_camera_options"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_column_height"
+            newx:layout_constraintBottom_toTopOf="@+id/layout_shot_container"></include>
+
+        <RelativeLayout
+            android:id="@+id/layout_shot_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_shot_height"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            newx:layout_constraintBottom_toBottomOf="parent">
+
+            <include
+                android:id="@+id/layout_shot"
+                layout="@layout/layout_camera_shot"></include>
+
+            <include
+                android:id="@+id/layout_filter"
+                layout="@layout/layout_camera_filter"></include>
+
+        </RelativeLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

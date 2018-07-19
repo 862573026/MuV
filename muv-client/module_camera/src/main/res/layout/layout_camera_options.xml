@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_column_height">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_filter"
+                style="@style/ViewLargerPadding"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/camera_filter_text"
+                android:gravity="center"
+                android:onClick="clickFilter" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</layout>

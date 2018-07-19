@@ -1,0 +1,104 @@
+apply plugin: 'com.android.library'
+apply from: '../micro.gradle'
+
+
+android {
+    compileSdkVersion build_versions.target_sdk
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            zipAlignEnabled false
+            shrinkResources false
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            zipAlignEnabled false
+            minifyEnabled false
+            debuggable true
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = p_src_dirs
+            res.srcDirs = p_res_dirs
+            aidl.srcDirs = p_aidl_dirs
+            assets.srcDirs = p_assets_dirs
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+
+    api project(':lib-annotation')
+    annotationProcessor project(':lib-compiler')
+
+    compileOnly project(':lib-compiler-helper')
+
+    //Support
+    api deps.support.app_compat
+    api deps.support.v4
+    api deps.support.v13
+    api deps.support.design
+    api deps.support.cardview
+    api deps.support.percent
+    api deps.support.recyclerview
+    api deps.support.multidex
+    api deps.constraint_layout
+
+    api deps.gson
+
+    api deps.rxjava2
+    api deps.rxandroid2
+    api deps.rxbinding2
+    api deps.rxlifecycle2
+    api deps.rxlifecycle2_components
+
+    api deps.arch_lifecycle_runtime
+    api deps.arch_lifecycle_extensions
+    annotationProcessor deps.arch_lifecycle_compiler
+
+    api deps.retrofit2
+    api deps.retrofit2_adapter_rxjava2
+    api deps.retrofit2_converter_gson
+    api deps.retrofit2_converter_scalars
+    api deps.retrofit_url_manager
+
+    api deps.glide4
+    annotationProcessor deps.glide4_compiler
+
+    api deps.bindingcollectionadapter
+    api deps.bindingcollectionadapter_recyclerview
+
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    api('com.mikepenz:materialdrawer:6.0.7@aar') {
+        transitive = true
+    }}

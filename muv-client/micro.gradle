@@ -1,0 +1,96 @@
+import java.util.function.Function
+import java.util.function.Predicate
+import java.util.stream.Collectors
+
+/**
+ * 微模块扫描，扫描当前目录下p_开头的文件夹
+ * 但是还是不能实现代码隔离，gradle的implement可以实现模块间的隔离
+ * 解决方案：1.微信 -> 使用codeCheck，在编译时排除，但是应该会增加编译时间
+ *          2.美团 -> 把模块封装，提供API，使用ServiceLoader（AutoService）调用
+ *          3.可以考虑模仿implement（首要解决，怎么把对应的pins对应各自的代码区域？）
+ *            既然模块间已经加入implement，我总感觉Google马上要推出官方的代码隔离了...
+ * pins也不过是觉得module太多，把原有的两层拓展到三层，但是官方还没支持第三层之间代码的隔离，
+ * 现在先约定大于配置，先不允许各个子模块间相互调用
+ */
+def src_dir = new File(projectDir, 'src')
+// 扫描当前模块下的Pins模块，并生成List
+def p_module_names =
+        src_dir
+                .list()
+                .toList()
+                .stream()
+                .filter(
+                new Predicate<String>() {
+                    @Override
+                    boolean test(String name) {
+                        return name == 'main' || (name.startsWith('p_') && new File(src_dir, name).isDirectory())
+                    }
+                })
+                .collect(Collectors.toList())
+// 把生成的List合成为srcDir格式
+def p_src_dirs =
+        p_module_names
+                .stream()
+                .map(
+                new Function() {
+                    @Override
+                    Object apply(Object module) {
+                        return ['src', module, 'java'].join('/')
+                    }
+                })
+                .collect(Collectors.toList())
+
+def p_res_dirs =
+        p_module_names
+                .stream()
+                .map(
+                new Function() {
+                    @Override
+                    Object apply(Object module) {
+                        return ['src', module, 'res'].join('/')
+                    }
+                })
+                .collect(Collectors.toList())
+
+def p_jniLibs_dirs =
+        p_module_names
+                .stream()
+                .map(
+                new Function() {
+                    @Override
+                    Object apply(Object module) {
+                        return ['src', module, 'libs'].join('/')
+                    }
+                })
+                .collect(Collectors.toList())
+
+def p_aidl_dirs =
+        p_module_names
+                .stream()
+                .map(
+                new Function() {
+                    @Override
+                    Object apply(Object module) {
+                        return ['src', module, 'aidl'].join('/')
+                    }
+                })
+                .collect(Collectors.toList())
+
+def p_assets_dirs =
+        p_module_names
+                .stream()
+                .map(
+                new Function() {
+                    @Override
+                    Object apply(Object module) {
+                        return ['src', module, 'assets'].join('/')
+                    }
+                })
+                .collect(Collectors.toList())
+
+ext.p_src_dirs = p_src_dirs
+ext.p_res_dirs = p_res_dirs
+ext.p_jniLibs_dirs = p_jniLibs_dirs
+ext.p_aidl_dirs = p_aidl_dirs
+ext.p_assets_dirs = p_assets_dirs
+

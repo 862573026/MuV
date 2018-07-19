@@ -1,0 +1,36 @@
+package com.newx.user.view;
+
+import com.android.databinding.library.baseAdapters.BR;
+import com.newx.base.route.RP;
+import com.newx.common.frameworks.route.facade.annotation.Route;
+import com.newx.common.frameworks.support.mvvm.NxMvvMFragment;
+import com.newx.user.R;
+import com.newx.user.databinding.FragmentLoginPswBinding;
+import com.newx.user.vm.LoginByPswVM;
+
+
+
+/**
+ * Created by xuzhijian on 2018/5/3 0003.
+ */
+@Route(path = RP.LoginByPswFragment)
+public class LoginByPswFragment extends NxMvvMFragment<FragmentLoginPswBinding, LoginByPswVM> {
+
+    @Override
+    public int initContentView() {
+        return R.layout.fragment_login_psw;
+    }
+
+    @Override
+    public int initVariableId() {
+        return BR.loginVM;
+    }
+
+
+    @Override
+    public LoginByPswVM initVM() {
+        return new LoginByPswVM(getContext());
+    }
+
+
+}

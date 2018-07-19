@@ -1,0 +1,84 @@
+if (!isModule.toBoolean()) {
+    apply from: '../micro.gradle'
+    apply plugin: 'org.greenrobot.greendao' // apply plugin
+    apply plugin: 'com.android.library'
+    android {
+        compileSdkVersion build_versions.target_sdk
+
+        defaultConfig {
+            minSdkVersion build_versions.min_sdk
+            targetSdkVersion build_versions.target_sdk
+            versionCode 1
+            versionName "1.0"
+
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = [ moduleName : project.getName() ]
+                }
+            }
+        }
+
+        sourceSets {
+            main {
+
+                java.srcDirs = p_src_dirs
+                res.srcDirs = p_res_dirs
+                jniLibs.srcDirs = p_jniLibs_dirs
+                if (isModule.toBoolean()) {
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                    java {
+                        exclude 'com/newx/muv/main/service/**'
+                    }
+                } else {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                    //集成开发模式下排除debug文件夹中的所有Java文件
+                    java {
+                        exclude 'debug/**'
+                    }
+                }
+            }
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        dataBinding {
+            enabled = true
+        }
+    }
+
+    greendao {
+        //数据库的schema版本，也可以理解为数据库版本号
+        schemaVersion 1
+        //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径
+        daoPackage 'com.newx.muv.main.entity.gen'
+        //设置DaoMaster、DaoSession、Dao目录
+        targetGenDir 'src/main/java'
+    }
+
+    dependencies {
+        api fileTree(include: ['*.jar'], dir: 'libs')
+        annotationProcessor project(':lib-compiler')
+        api project(':lib-common')
+        api deps.dagger
+        annotationProcessor deps.dagger_compiler
+        api deps.greendao
+
+        api project(':lib-compiler-helper')
+
+        if (!isModule.toBoolean()) {
+            api project(':module_user')
+            api project(':module_camera')
+            api project(':module_player')
+        }
+    }
+}

@@ -8,24 +8,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/host" />
             <option value="$PROJECT_DIR$/lib-annotation" />
+            <option value="$PROJECT_DIR$/lib-common" />
             <option value="$PROJECT_DIR$/lib-compiler" />
-            <option value="$PROJECT_DIR$/lib-replugin-host" />
-            <option value="$PROJECT_DIR$/lib-replugin-plugin" />
-            <option value="$PROJECT_DIR$/lib_armv5" />
-            <option value="$PROJECT_DIR$/lib_armv64" />
-            <option value="$PROJECT_DIR$/lib_armv7a" />
-            <option value="$PROJECT_DIR$/lib_base" />
-            <option value="$PROJECT_DIR$/lib_camera" />
-            <option value="$PROJECT_DIR$/lib_entity" />
-            <option value="$PROJECT_DIR$/lib_media" />
-            <option value="$PROJECT_DIR$/lib_res" />
-            <option value="$PROJECT_DIR$/lib_service" />
-            <option value="$PROJECT_DIR$/lib_test" />
-            <option value="$PROJECT_DIR$/lib_x86" />
-            <option value="$PROJECT_DIR$/lib_x86_64" />
+            <option value="$PROJECT_DIR$/lib-compiler-helper" />
+            <option value="$PROJECT_DIR$/module_app" />
+            <option value="$PROJECT_DIR$/module_camera" />
+            <option value="$PROJECT_DIR$/module_main" />
+            <option value="$PROJECT_DIR$/module_player" />
+            <option value="$PROJECT_DIR$/module_user" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

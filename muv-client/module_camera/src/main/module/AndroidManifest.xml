@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.newx.camera">
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name="debug.CameraApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/module_camera"
+        android:supportsRtl="true"
+        android:theme="@style/TransparentAppTheme">
+
+        <activity android:name=".focus.CameraActivity">
+
+        </activity>
+
+        <activity android:name=".muv.CameraActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.ActivityRoot">
+
+        </activity>
+
+        <activity android:name=".muv.CameraDemoActivity">
+
+        </activity>
+
+        <activity android:name="com.newx.common.frameworks.view.NxFragmentActivity"></activity>
+
+        <activity android:name="com.newx.utils.utilcode.util.PermissionUtils$PermissionActivity"></activity>
+    </application>
+
+</manifest>

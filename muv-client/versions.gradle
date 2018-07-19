@@ -1,0 +1,134 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+
+def build_versions = [:]
+build_versions.min_sdk = 16
+build_versions.target_sdk = 26
+build_versions.build_tools = "27.0.3"
+ext.build_versions = build_versions
+
+def versions = [:]
+versions.android_gradle_plugin = "3.0.0"
+versions.greendao_gradle_plugin = "3.2.2"
+versions.kotlin = "1.1.51"
+versions.support = "26.1.0"
+versions.multidex = "1.0.2"
+versions.constraint_layout = "1.0.2"
+versions.dagger = "2.11"
+versions.glide = "3.8.0"
+versions.rxjava2 = "2.1.12"
+versions.rx_android = "2.0.2"
+versions.retrofit = "2.4.0"
+versions.javapoet = "1.7.0"
+versions.auto_service = "1.0-rc2"
+versions.commons_lang3 = "3.7"
+versions.commons_collections = "4.1"
+versions.gson = "2.2.4"
+versions.rxjava2 = "2.1.12"
+versions.rxandroid2 = "2.0.2"
+versions.rxbinding2 = "2.1.1"
+versions.rxlifecycle2 = "2.2.1"
+versions.arch_lifecycle = "1.1.0"
+versions.gpuimage = "1.4.1"
+versions.ijkplayer = "0.8.8"
+versions.exoplayer = "2.6.1"
+versions.transitionseverywhere = "1.7.0"
+versions.dagger = "2.15"
+versions.bindingcollectionadapter = "2.2.0"
+versions.glide4 = "4.6.1"
+versions.greendao = "3.2.2"
+versions.retrofit2 = "2.4.0"
+versions.retrofit_url_manager = "1.2.5"
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.greendao_gradle_plugin = "org.greenrobot:greendao-gradle-plugin:$versions.greendao_gradle_plugin"
+
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+deps.kotlin = kotlin
+
+def support = [:]
+support.annotations = "com.android.support:support-annotations:$versions.support"
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.v13 = "com.android.support:support-v13:$versions.support"
+support.percent = "com.android.support:percent:$versions.support"
+support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
+support.cardview = "com.android.support:cardview-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.v4 = "com.android.support:support-v4:$versions.support"
+support.core_utils = "com.android.support:support-core-com.newx.media.utils:$versions.support"
+support.multidex = "com.android.support:multidex:$versions.multidex"
+deps.support = support
+
+deps.arch_lifecycle_runtime = "android.arch.lifecycle:runtime:$versions.arch_lifecycle"
+deps.arch_lifecycle_extensions = "android.arch.lifecycle:extensions:$versions.arch_lifecycle"
+deps.arch_lifecycle_compiler = "android.arch.lifecycle:compiler:$versions.arch_lifecycle"
+
+
+deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+
+
+deps.javapoet = "com.squareup:javapoet:$versions.javapoet"
+deps.auto_service = "com.google.auto.service:auto-service:$versions.auto_service"
+deps.commons_lang3 = "org.apache.commons:commons-lang3:$versions.commons_lang3"
+deps.commons_collections = "org.apache.commons:commons-collections4:$versions.commons_collections"
+
+deps.gson = "com.google.code.gson:gson:$versions.gson"
+
+//rxjava
+deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+deps.rxandroid2 = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid2"
+deps.rxbinding2 = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding2"
+deps.rxlifecycle2 = "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle2"
+deps.rxlifecycle2_components = "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle2"
+
+//RecyclerView使用DataBinding
+deps.bindingcollectionadapter = "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:$versions.bindingcollectionadapter"
+deps.bindingcollectionadapter_recyclerview = "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:$versions.bindingcollectionadapter"
+
+deps.gpuimage = "jp.co.cyberagent.android.gpuimage:gpuimage-library:$versions.gpuimage"
+
+//media
+deps.ijkplayer_java = "tv.danmaku.ijk.media:ijkplayer-java:$versions.ijkplayer"
+deps.ijkplayer_exo = "tv.danmaku.ijk.media:ijkplayer-exo:$versions.ijkplayer"
+deps.exoplayer = "com.google.android.exoplayer:exoplayer:$versions.exoplayer"
+deps.exoplayer_extension_rtmp = "com.google.android.exoplayer:extension-rtmp:$versions.exoplayer"
+deps.transitionseverywhere = "com.andkulikov:transitionseverywhere:$versions.transitionseverywhere"
+
+//retrofit2
+deps.retrofit2 = "com.squareup.retrofit2:retrofit:$versions.retrofit2"
+deps.retrofit2_adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit2"
+//retrofit-gson
+deps.retrofit2_converter_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit2"
+//retrofit-string
+deps.retrofit2_converter_scalars = "com.squareup.retrofit2:converter-scalars:$versions.retrofit2"
+//retrofit的baseUrl管理
+deps.retrofit_url_manager = "me.jessyan:retrofit-url-manager:$versions.retrofit_url_manager"
+
+//dagger
+deps.dagger = "com.google.dagger:dagger:$versions.dagger"
+deps.dagger_compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+
+//Glide
+deps.glide4 = "com.github.bumptech.glide:glide:$versions.glide4"
+deps.glide4_compiler = "com.github.bumptech.glide:compiler:$versions.glide4"
+
+deps.greendao = "org.greenrobot:greendao:$versions.greendao"
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    //Add the JitPack repository
+    handler.maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+
+}
+
+ext.addRepos = this.&addRepos

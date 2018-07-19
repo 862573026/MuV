@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/glviewFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.wysaid.view.CameraRecordGLSurfaceView
+            android:id="@+id/myGLSurfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal|top" />
+
+    </FrameLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/menuLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/takePicBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="TakePicture"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/takeShotBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="TakeShot"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/pauseBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Pause"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/resumeBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Resume"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/switchCameraBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Switch"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/recordBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Record"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/flashBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Flash"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/fitViewBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="fitScreen"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/customFilterBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:onClick="customFilterClicked"
+                android:text="Custom"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/dynamicFilterBtn"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:onClick="dynamicFilterClicked"
+                android:text="Dynamic"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</RelativeLayout>

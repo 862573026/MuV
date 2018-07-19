@@ -1,0 +1,36 @@
+{
+  "servers": [
+    {
+      "name": "服务器10.0.3.2",
+      "ip": "http://10.0.3.2",
+      "http_port": 8080,
+      "tcp_port": 6666,
+      "enable":true,
+      "visible":true
+    },
+    {
+      "name": "服务器118.24.15.41",
+      "ip": "http://118.24.15.41",
+      "http_port": 8888,
+      "tcp_port": 6666,
+      "enable":true,
+      "visible":true
+    },
+    {
+      "name": "服务器127.0.0.1",
+      "ip": "http://127.0.0.1",
+      "http_port": 8080,
+      "tcp_port": 6666,
+      "enable":true,
+      "visible":true
+    },
+    {
+      "name": "服务器10.0.2.2",
+      "ip": "http://10.0.2.2",
+      "http_port": 8080,
+      "tcp_port": 6666,
+      "enable":true,
+      "visible":true
+    }
+  ]
+}

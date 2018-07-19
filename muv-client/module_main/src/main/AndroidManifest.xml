@@ -1,0 +1,23 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.newx.muv.main">
+
+    <application>
+        <activity android:name="com.newx.muv.main.view.temp.TempActivity">
+
+        </activity>
+
+        <activity android:name="com.newx.splash.view.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.newx.api.router.WideRouterConnectService"
+            android:process="com.newx.wide.router" />
+
+    </application>
+
+</manifest>

@@ -1,6 +1,6 @@
 package com.newx.compiler.utils;
 
-import com.newx.base.frameworks.route.facade.enums.TypeKind;
+import com.newx.common.frameworks.route.facade.enums.TypeKind;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;

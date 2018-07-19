@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.newx.common" >
+
+    <application>
+        <!-- Activity -->
+        <activity android:name="com.newx.common.frameworks.view.NxFragmentActivity"></activity>
+
+        <activity android:name="com.newx.common.frameworks.view.NxSwipeBackActivity"></activity>
+
+        <!-- Service -->
+        <service android:name="com.newx.net.CommunicationService"></service>
+    </application>
+</manifest>

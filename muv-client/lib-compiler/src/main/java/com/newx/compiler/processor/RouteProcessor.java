@@ -3,10 +3,10 @@ package com.newx.compiler.processor;
 import com.newx.compiler.utils.Consts;
 import com.newx.compiler.utils.Logger;
 import com.newx.compiler.utils.TypeUtils;
-import com.newx.base.frameworks.route.facade.annotation.Autowired;
-import com.newx.base.frameworks.route.facade.annotation.Route;
-import com.newx.base.frameworks.route.facade.enums.RouteType;
-import com.newx.base.frameworks.route.facade.model.RouteMeta;
+import com.newx.common.frameworks.route.facade.annotation.Autowired;
+import com.newx.common.frameworks.route.facade.annotation.Route;
+import com.newx.common.frameworks.route.facade.enums.RouteType;
+import com.newx.common.frameworks.route.facade.model.RouteMeta;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -63,7 +63,7 @@ import static com.newx.compiler.utils.Consts.WARNING_TIPS;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
- * A processor used for find com.newx.base.frameworks.route.
+ * A processor used for find com.newx.common.frameworks.route.
  *
  * @author Alex <a href="mailto:zhilong.liu@aliyun.com">Contact me.</a>
  * @version 1.0
@@ -100,11 +100,11 @@ public class RouteProcessor extends AbstractProcessor {
         super.init(processingEnv);
 
         mFiler = processingEnv.getFiler();                  // Generate class.
-        types = processingEnv.getTypeUtils();            // Get type utils.
+        types = processingEnv.getTypeUtils();            // Get type com.newx.media.utils.
         elements = processingEnv.getElementUtils();      // Get class meta.
 
         typeUtils = new TypeUtils(types, elements);
-        logger = new Logger(processingEnv.getMessager());   // Package the log utils.
+        logger = new Logger(processingEnv.getMessager());   // Package the log com.newx.media.utils.
 
         // Attempt to get user configuration [moduleName]
         Map<String, String> options = processingEnv.getOptions();
@@ -219,7 +219,7 @@ public class RouteProcessor extends AbstractProcessor {
                 RouteMeta routeMeta = null;
 
                 if (types.isSubtype(tm, type_Activity)) {                 // Activity
-                    logger.info(">>> Found activity com.newx.base.frameworks.route: " + tm.toString() + " <<<");
+                    logger.info(">>> Found activity com.newx.common.frameworks.route: " + tm.toString() + " <<<");
 
                     // Get all fields annotation by @Autowired
                     Map<String, Integer> paramsType = new HashMap<>();
@@ -232,13 +232,13 @@ public class RouteProcessor extends AbstractProcessor {
                     }
                     routeMeta = new RouteMeta(route, element, RouteType.ACTIVITY, paramsType);
                 } else if (types.isSubtype(tm, iProvider)) {         // IProvider
-                    logger.info(">>> Found provider com.newx.base.frameworks.route: " + tm.toString() + " <<<");
+                    logger.info(">>> Found provider com.newx.common.frameworks.route: " + tm.toString() + " <<<");
                     routeMeta = new RouteMeta(route, element, RouteType.PROVIDER, null);
                 } else if (types.isSubtype(tm, type_Service)) {           // Service
-                    logger.info(">>> Found service com.newx.base.frameworks.route: " + tm.toString() + " <<<");
+                    logger.info(">>> Found service com.newx.common.frameworks.route: " + tm.toString() + " <<<");
                     routeMeta = new RouteMeta(route, element, RouteType.parse(SERVICE), null);
                 } else if (types.isSubtype(tm, fragmentTm) || types.isSubtype(tm, fragmentTmV4)) {
-                    logger.info(">>> Found fragment com.newx.base.frameworks.route: " + tm.toString() + " <<<");
+                    logger.info(">>> Found fragment com.newx.common.frameworks.route: " + tm.toString() + " <<<");
                     routeMeta = new RouteMeta(route, element, RouteType.parse(FRAGMENT), null);
                 } else {
                     throw new RuntimeException("ARouter::Compiler >>> Found unsupported class type, type = [" + types.toString() + "].");
@@ -268,7 +268,7 @@ public class RouteProcessor extends AbstractProcessor {
                 Set<RouteMeta> groupData = entry.getValue();
                 for (RouteMeta routeMeta : groupData) {
                     switch (routeMeta.getType()) {
-                        case PROVIDER:  // Need cache provider's super class
+                        case PROVIDER:  // Need com.newx.media.cache provider's super class
                             List<? extends TypeMirror> interfaces = ((TypeElement) routeMeta.getRawType()).getInterfaces();
                             for (TypeMirror tm : interfaces) {
                                 if (types.isSameType(tm, iProvider)) {   // Its implements iProvider interface himself.
@@ -400,7 +400,7 @@ public class RouteProcessor extends AbstractProcessor {
     }
 
     /**
-     * Verify the com.newx.base.frameworks.route meta
+     * Verify the com.newx.common.frameworks.route meta
      *
      * @param meta raw meta
      */

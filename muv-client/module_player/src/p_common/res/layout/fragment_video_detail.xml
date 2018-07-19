@@ -1,0 +1,71 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:newx="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="mVideoDetailModel"
+            type="com.newx.muv.player.vm.VideoDetailVM"></variable>
+
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+
+    </data>
+
+
+    <com.newx.ui.combinetransfer.observable.TBSNestedScrollView
+        android:id="@+id/view_comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.newx.media.video.StandardGSYVideoPlayer
+                android:id="@+id/view_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.newx.media.video.StandardGSYVideoPlayer>
+
+            <Button
+                android:id="@+id/pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pause" />
+
+            <TextView
+                android:id="@+id/text_hot_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{mVideoDetailModel.mHotComment}" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_hot_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                newx:itemBinding="@{mVideoDetailModel.onItemBind}"
+                newx:items="@{mVideoDetailModel.mHotCommentList}"
+                newx:layoutManager="@{LayoutManagers.linear()}"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/text_newest_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{mVideoDetailModel.mNewestComment}" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_newest_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                newx:itemBinding="@{mVideoDetailModel.onItemBind}"
+                newx:items="@{mVideoDetailModel.mNewestCommentList}"
+                newx:layoutManager="@{LayoutManagers.linear()}"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </com.newx.ui.combinetransfer.observable.TBSNestedScrollView>
+
+</layout>

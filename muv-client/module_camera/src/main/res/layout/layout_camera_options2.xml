@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_column_height">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_flashlight"
+                android:padding="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="clickFlashLight" />
+
+
+            <TextView
+                android:id="@+id/tv_camera_direction"
+                android:layout_width="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="clickCameraDirection" />
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</layout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:newx="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="_ItemCameraFilterVM"
+            type="com.newx.camera.vm.ItemCameraFilterVM"></variable>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            newx:layout_constraintLeft_toLeftOf="parent"
+            newx:layout_constraintRight_toRightOf="parent"
+            newx:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{_ItemCameraFilterVM.mFilter.name}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -20,7 +20,7 @@ public class Consts {
     public static final String NAME_OF_GROUP = PROJECT + SEPARATOR + "Group" + SEPARATOR;
     public static final String NAME_OF_INTERCEPTOR = PROJECT + SEPARATOR + "Interceptors";
     public static final String NAME_OF_AUTOWIRED = SEPARATOR + PROJECT + SEPARATOR + "Autowired";
-    public static final String PACKAGE_OF_GENERATE_FILE = "com.newx.android.arouter.routes";
+    public static final String PACKAGE_OF_GENERATE_FILE = "com.newx.android.compile";
 
     // System interface
     public static final String ACTIVITY = "android.app.Activity";
@@ -41,7 +41,7 @@ public class Consts {
     public static final String STRING = LANG + ".String";
 
     // Custom interface
-    private static final String FACADE_PACKAGE = "com.newx.base.frameworks.route.facade";
+    private static final String FACADE_PACKAGE = "com.newx.common.frameworks.route.facade";
     private static final String TEMPLATE_PACKAGE = ".template";
     private static final String SERVICE_PACKAGE = ".service";
     public static final String IPROVIDER = FACADE_PACKAGE + TEMPLATE_PACKAGE + ".IProvider";

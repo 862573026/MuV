@@ -3,8 +3,8 @@ package com.newx.compiler.processor;
 import com.newx.compiler.utils.Consts;
 import com.newx.compiler.utils.Logger;
 import com.newx.compiler.utils.TypeUtils;
-import com.newx.base.frameworks.route.facade.annotation.Autowired;
-import com.newx.base.frameworks.route.facade.enums.TypeKind;
+import com.newx.common.frameworks.route.facade.annotation.Autowired;
+import com.newx.common.frameworks.route.facade.enums.TypeKind;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -68,7 +68,7 @@ public class AutowiredProcessor extends AbstractProcessor {
     private TypeUtils typeUtils;
     private Elements elements;
     private Map<TypeElement, List<Element>> parentAndChild = new HashMap<>();   // Contain field need autowired and his super class.
-    private static final ClassName ARouterClass = ClassName.get("com.newx.base.frameworks.route.launcher", "ARouter");
+    private static final ClassName ARouterClass = ClassName.get("com.newx.common.frameworks.route.launcher", "ARouter");
     private static final ClassName AndroidLog = ClassName.get("android.util", "Log");
 
     @Override
@@ -76,12 +76,12 @@ public class AutowiredProcessor extends AbstractProcessor {
         super.init(processingEnvironment);
 
         mFiler = processingEnv.getFiler();                  // Generate class.
-        types = processingEnv.getTypeUtils();            // Get type utils.
+        types = processingEnv.getTypeUtils();            // Get type com.newx.media.utils.
         elements = processingEnv.getElementUtils();      // Get class meta.
 
         typeUtils = new TypeUtils(types, elements);
 
-        logger = new Logger(processingEnv.getMessager());   // Package the log utils.
+        logger = new Logger(processingEnv.getMessager());   // Package the log com.newx.media.utils.
 
         logger.info(">>> AutowiredProcessor init. <<<");
     }
@@ -245,7 +245,7 @@ public class AutowiredProcessor extends AbstractProcessor {
         } else if (type == TypeKind.PARCELABLE.ordinal()) {
             statement += (isActivity ? ("getParcelableExtra($S)") : ("getParcelable($S)"));
         } else if (type == TypeKind.OBJECT.ordinal()) {
-            statement = "serializationService.parseObject(substitute." + (isActivity ? "getIntent()." : "getArguments().") + (isActivity ? "getStringExtra($S)" : "getString($S)") + ", new com.newx.com.newx.base.frameworks.route.facade.model.TypeWrapper<$T>(){}.getType())";
+            statement = "serializationService.parseObject(substitute." + (isActivity ? "getIntent()." : "getArguments().") + (isActivity ? "getStringExtra($S)" : "getString($S)") + ", new com.newx.com.newx.common.frameworks.route.facade.com.newx.media.model.TypeWrapper<$T>(){}.getType())";
         }
 
         return statement;

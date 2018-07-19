@@ -1,0 +1,8 @@
+<resources>
+    <string name="p_ui">p_ui</string>
+
+
+    <string name="setting_text">设置</string>
+    <string name="search_text">搜索</string>
+
+</resources>

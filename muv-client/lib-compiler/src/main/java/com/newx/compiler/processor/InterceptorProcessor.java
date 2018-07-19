@@ -2,7 +2,7 @@ package com.newx.compiler.processor;
 
 import com.newx.compiler.utils.Consts;
 import com.newx.compiler.utils.Logger;
-import com.newx.base.frameworks.route.facade.annotation.Interceptor;
+import com.newx.common.frameworks.route.facade.annotation.Interceptor;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -83,7 +83,7 @@ public class InterceptorProcessor extends AbstractProcessor {
 
         mFiler = processingEnv.getFiler();                  // Generate class.
         elementUtil = processingEnv.getElementUtils();      // Get class meta.
-        logger = new Logger(processingEnv.getMessager());   // Package the log utils.
+        logger = new Logger(processingEnv.getMessager());   // Package the log com.newx.media.utils.
 
         // Attempt to get user configuration [moduleName]
         Map<String, String> options = processingEnv.getOptions();
@@ -139,7 +139,7 @@ public class InterceptorProcessor extends AbstractProcessor {
         if (CollectionUtils.isNotEmpty(elements)) {
             logger.info(">>> Found interceptors, size is " + elements.size() + " <<<");
 
-            // Verify and cache, sort incidentally.
+            // Verify and com.newx.media.cache, sort incidentally.
             for (Element element : elements) {
                 if (verify(element)) {  // Check the interceptor meta
                     logger.info("A interceptor verify over, its " + element.asType());
